@@ -328,6 +328,14 @@ Selecione um dia no calendário.
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
 <script>
 
+const perfil = localStorage.getItem("perfil");
+
+if(!perfil){
+window.location.href = "login.html";
+}
+ </script>
+
+ <script>
 let calendario;
 
 let agendamentos =
