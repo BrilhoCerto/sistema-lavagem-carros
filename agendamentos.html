@@ -115,6 +115,26 @@ background:#f0f7ff;
 background:#d8e9ff !important;
 }
 
+@media (max-width: 768px){
+
+.sidebar{
+display:none;
+}
+
+.content{
+margin-left:0;
+padding:10px;
+}
+
+#calendar{
+height:auto !important;
+}
+
+.card-custom{
+padding:12px;
+}
+
+} 
 </style>
 
 </head>
@@ -400,6 +420,16 @@ locale: 'pt',
 
 height: 700,
 
+eventDidMount: function(info){
+
+info.el.style.backgroundColor = "#dc3545";
+info.el.style.borderColor = "#dc3545";
+info.el.style.color = "#fff";
+
+}
+
+hiddenDays: [0],
+
 headerToolbar: {
 
 left: 'prev,next today',
@@ -418,7 +448,17 @@ selecionarDia(info.dateStr);
 
 eventClick: function(info){
 
-abrirAgendamento(info.event.id);
+const e = info.event;
+
+alert(
+"📅 DETALHE DO AGENDAMENTO\n\n" +
+"Cliente: " + (e.extendedProps.cliente || "") + "\n" +
+"Telefone: " + (e.extendedProps.telefone || "") + "\n" +
+"Modelo: " + (e.extendedProps.modelo || "") + "\n" +
+"Serviços: " + ((e.extendedProps.servicos || []).join(", ")) + "\n" +
+"Valor: €" + (e.extendedProps.valor || "") + "\n" +
+"Observações: " + (e.extendedProps.observacoes || "")
+);
 
 }
 
@@ -516,15 +556,18 @@ calendario.removeAllEvents();
 agendamentos.forEach(item=>{
 
 calendario.addEvent({
-
 id:item.id,
+title: item.hora + " - " + item.cliente,
+start: item.data + "T" + item.hora,
 
-title:
-item.hora +
-" - " +
-item.cliente,
-
-start:item.data
+extendedProps: {
+cliente: item.cliente,
+telefone: item.telefone,
+modelo: item.modelo,
+servicos: item.servicos,
+valor: item.valor,
+observacoes: item.observacoes
+}
 
 });
 
