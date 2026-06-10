@@ -420,14 +420,6 @@ locale: 'pt',
 
 height: 700,
 
-eventDidMount: function(info){
-
-info.el.style.backgroundColor = "#dc3545";
-info.el.style.borderColor = "#dc3545";
-info.el.style.color = "#fff";
-
-}
-
 hiddenDays: [0],
 
 headerToolbar: {
@@ -440,26 +432,20 @@ right: 'dayGridMonth,timeGridWeek'
 
 },
 
-dateClick: function(info){
+eventDidMount: function(info){
 
-selecionarDia(info.dateStr);
+info.el.style.backgroundColor = "#dc3545";
+info.el.style.borderColor = "#dc3545";
+info.el.style.color = "#fff";
 
 },
 
+dateClick: function(info){
+selecionarDia(info.dateStr);
+},
+
 eventClick: function(info){
-
-const e = info.event;
-
-alert(
-"📅 DETALHE DO AGENDAMENTO\n\n" +
-"Cliente: " + (e.extendedProps.cliente || "") + "\n" +
-"Telefone: " + (e.extendedProps.telefone || "") + "\n" +
-"Modelo: " + (e.extendedProps.modelo || "") + "\n" +
-"Serviços: " + ((e.extendedProps.servicos || []).join(", ")) + "\n" +
-"Valor: €" + (e.extendedProps.valor || "") + "\n" +
-"Observações: " + (e.extendedProps.observacoes || "")
-);
-
+abrirAgendamento(info.event.id);
 }
 
 });
