@@ -1,152 +1,320 @@
 <!DOCTYPE html>
 <html lang="pt">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Sistema Oficina - Versão 2</title>
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Brilho Certo - Lavagem de Carros</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
+
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet">
 
 <style>
 
 body{
+background:#eef3f8;
+font-family:Arial, sans-serif;
 margin:0;
-background:#eef2f7;
-font-family:Arial;
-}
-
-/* LAYOUT APP */
-.app{
-display:flex;
-height:100vh;
 }
 
 /* MENU */
-.menu{
+
+.sidebar{
+position:fixed;
+left:0;
+top:0;
 width:260px;
+height:100vh;
 background:#0d6efd;
-color:white;
 padding:20px;
+color:white;
+overflow:auto;
 }
 
-.menu h2{
-font-size:18px;
-margin-bottom:20px;
+.sidebar h3{
+font-weight:bold;
+margin-bottom:25px;
 }
 
-.menu button{
+.menu-btn{
 width:100%;
 margin-bottom:10px;
 border:none;
-padding:10px;
+padding:12px;
 border-radius:8px;
 background:white;
 color:#0d6efd;
 font-weight:bold;
+cursor:pointer;
 }
 
 /* CONTEÚDO */
-.conteudo{
-flex:1;
+
+.content{
+margin-left:280px;
 padding:20px;
-overflow:auto;
 }
 
-/* CARD */
-.card{
-border:none;
-border-radius:12px;
-box-shadow:0 4px 15px rgba(0,0,0,0.1);
-padding:15px;
+/* CARDS */
+
+.card-custom{
 background:white;
-}
-
-/* FORM */
-input, select{
-margin-bottom:10px;
+border-radius:15px;
+padding:20px;
+box-shadow:0 2px 15px rgba(0,0,0,0.10);
+margin-bottom:20px;
 }
 
 /* CALENDÁRIO */
+
 #calendar{
 background:white;
 padding:10px;
-border-radius:12px;
+border-radius:15px;
 }
 
-.badge{
-font-size:12px;
+/* FORM */
+
+.form-label{
+font-weight:bold;
+}
+
+.servico-item{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:8px;
+margin-bottom:5px;
+background:#f7f7f7;
+border-radius:8px;
+}
+
+#btnAtualizar{
+display:none;
+}
+
+#listaDia{
+max-height:300px;
+overflow:auto;
+}
+
+.agendamento-item{
+padding:10px;
+border-bottom:1px solid #ddd;
+cursor:pointer;
+}
+
+.agendamento-item:hover{
+background:#f0f7ff;
+}
+
+.fc-daygrid-day.fc-day-selecionado{
+background:#d8e9ff !important;
 }
 
 </style>
+
 </head>
 
 <body>
 
-<div class="app">
+<div class="sidebar">
 
-<!-- MENU -->
-<div class="menu">
+<h3>🚗 Brilho Certo</h3>
 
-<h2>🚗 Oficina System</h2>
+<button class="menu-btn">
+📅 Agenda
+</button>
 
-<button>Dashboard</button>
-<button>Agenda</button>
-<button>Clientes</button>
-<button>Relatórios</button>
+<button class="menu-btn">
+💳 Pagamentos
+</button>
 
-</div>
-
-<!-- CONTEÚDO -->
-<div class="conteudo">
-
-<div class="row">
-
-<!-- CALENDÁRIO -->
-<div class="col-md-8">
-<div class="card">
-<div id="calendar"></div>
-</div>
-</div>
-
-<!-- FORM -->
-<div class="col-md-4">
-
-<div class="card">
-
-<h5>Novo Agendamento</h5>
-
-<input type="text" id="nome" class="form-control" placeholder="Cliente">
-
-<input type="text" id="telefone" class="form-control" placeholder="Telefone">
-
-<input type="text" id="modelo" class="form-control" placeholder="Modelo do carro">
-
-<input type="time" id="hora" class="form-control">
-
-<select id="servico" class="form-control">
-<option value="15">Aspiração interior e exterior</option>
-<option value="25">Estofos sem teto</option>
-<option value="30">Estofos com teto</option>
-<option value="20">Faróis</option>
-<option value="50">Polimento</option>
-<option value="35">Lavagem bancos</option>
-</select>
-
-<select id="pagamento" class="form-control">
-<option>Dinheiro</option>
-<option>MB Way</option>
-<option>Cartão</option>
-<option>Transferência</option>
-</select>
-
-<button class="btn btn-primary w-100 mt-2" onclick="salvar()">
-Salvar
+<button class="menu-btn">
+📊 Relatórios
 </button>
 
 </div>
 
+<div class="content">
+
+<div class="row">
+
+<div class="col-lg-8">
+
+<div class="card-custom">
+
+<div id="calendar"></div>
+
+</div>
+
+</div>
+
+<div class="col-lg-4">
+
+<div class="card-custom">
+
+<h4>Novo Agendamento</h4>
+
+<form id="formAgendamento">
+
+<label class="form-label">
+Nome do Cliente
+</label>
+
+<input
+type="text"
+id="cliente"
+class="form-control mb-3"
+required>
+
+<label class="form-label">
+Telefone
+</label>
+
+<input
+type="text"
+id="telefone"
+class="form-control mb-3"
+required>
+
+<label class="form-label">
+Modelo do Carro
+</label>
+
+<input
+type="text"
+id="modelo"
+class="form-control mb-3"
+required>
+
+<label class="form-label">
+Data do Agendamento
+</label>
+
+<input
+type="date"
+id="data"
+class="form-control mb-3"
+required>
+
+<label class="form-label">
+Hora do Agendamento
+</label>
+
+<select
+id="hora"
+class="form-control mb-3"
+required>
+</select>
+
+<label class="form-label">
+Serviços
+</label>
+
+<div class="servico-item">
+<label>
+<input type="checkbox" value="Aspiração interior e exterior">
+ Aspiração interior e exterior
+</label>
+</div>
+
+<div class="servico-item">
+<label>
+<input type="checkbox" value="Estofos sem teto">
+ Estofos sem teto
+</label>
+</div>
+
+<div class="servico-item">
+<label>
+<input type="checkbox" value="Estofos com teto">
+ Estofos com teto
+</label>
+</div>
+
+<div class="servico-item">
+<label>
+<input type="checkbox" value="Faróis">
+ Faróis
+</label>
+</div>
+
+<div class="servico-item">
+<label>
+<input type="checkbox" value="Polimento">
+ Polimento
+</label>
+</div>
+
+<div class="servico-item">
+<label>
+<input type="checkbox" value="Lavagem dos bancos">
+ Lavagem dos bancos
+</label>
+</div>
+
+<label class="form-label mt-3">
+Valor Total (€)
+</label>
+
+<input
+type="number"
+id="valor"
+class="form-control mb-3">
+
+<label class="form-label">
+Observações
+</label>
+
+<textarea
+id="observacoes"
+class="form-control mb-3"
+rows="3"></textarea>
+
+<button
+type="submit"
+class="btn btn-primary w-100"
+id="btnSalvar">
+
+Salvar Agendamento
+
+</button>
+
+<button
+type="button"
+class="btn btn-warning w-100 mt-2"
+id="btnAtualizar">
+
+Salvar Alterações
+
+<button
+type="button"
+class="btn btn-danger w-100 mt-2"
+onclick="excluirAgendamento()">
+
+Apagar Agendamento
+
+</button>
+
+
+</form>
+
+</div>
+
+<div class="card-custom">
+
+<h5>
+Agendamentos do Dia
+</h5>
+
+<div id="listaDia">
+
+Selecione um dia no calendário.
+
 </div>
 
 </div>
@@ -155,79 +323,533 @@ Salvar
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+</div>
 
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
 <script>
 
-let eventos = JSON.parse(localStorage.getItem("eventos")) || [];
+let calendario;
 
-let calendar;
+let agendamentos =
+JSON.parse(localStorage.getItem("agendamentos")) || [];
 
-document.addEventListener('DOMContentLoaded', function() {
+let agendamentoEditando = null;
 
-calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
+let diaSelecionado = null;
+
+/* HORÁRIOS */
+
+function carregarHorarios(){
+
+const selectHora =
+document.getElementById("hora");
+
+selectHora.innerHTML = "";
+
+for(let hora=8; hora<=18; hora++){
+
+for(let minuto of [0,30]){
+
+if(hora === 18 && minuto === 30){
+continue;
+}
+
+const horario =
+String(hora).padStart(2,'0')
++ ':'
++
+String(minuto).padStart(2,'0');
+
+const option =
+document.createElement("option");
+
+option.value = horario;
+option.textContent = horario;
+
+selectHora.appendChild(option);
+
+}
+
+}
+
+}
+
+/* CALENDÁRIO */
+
+document.addEventListener('DOMContentLoaded', function(){
+
+carregarHorarios();
+
+const calendarEl =
+document.getElementById('calendar');
+
+calendario =
+new FullCalendar.Calendar(calendarEl, {
 
 initialView: 'dayGridMonth',
 
+locale: 'pt',
+
+height: 700,
+
 headerToolbar: {
+
 left: 'prev,next today',
+
 center: 'title',
-right: 'dayGridMonth,timeGridWeek,timeGridDay'
+
+right: 'dayGridMonth,timeGridWeek'
+
 },
 
 dateClick: function(info){
-alert("Dia selecionado: " + info.dateStr);
+
+selecionarDia(info.dateStr);
+
 },
 
 eventClick: function(info){
 
-if(confirm("Deseja apagar este agendamento?")){
-
-eventos = eventos.filter(e => e.id !== info.event.id);
-
-localStorage.setItem("eventos", JSON.stringify(eventos));
-
-info.event.remove();
+abrirAgendamento(info.event.id);
 
 }
 
-},
+});
 
-events: eventos
+calendario.render();
+
+atualizarCalendario();
 
 });
 
-calendar.render();
+/* SELEÇÃO DE DIA */
+
+function selecionarDia(data){
+
+diaSelecionado = data;
+
+document
+.querySelectorAll(".fc-daygrid-day")
+.forEach(d=>{
+
+d.classList.remove("fc-day-selecionado");
 
 });
 
-function salvar(){
+const celulas =
+document.querySelectorAll("[data-date='"+data+"']");
 
-let dataHoje = new Date().toISOString().split("T")[0];
+celulas.forEach(c=>{
 
-let novo = {
+c.classList.add("fc-day-selecionado");
+
+});
+
+mostrarAgendamentosDoDia(data);
+
+document
+.getElementById("data")
+.value = data;
+
+}
+
+/* LISTAGEM DO DIA */
+
+function mostrarAgendamentosDoDia(data){
+
+const lista =
+document.getElementById("listaDia");
+
+const encontrados =
+agendamentos.filter(a => a.data === data);
+
+if(encontrados.length === 0){
+
+lista.innerHTML = `
+<p>Nenhum agendamento.</p>
+`;
+
+return;
+
+}
+
+lista.innerHTML = "";
+
+encontrados
+.sort((a,b)=>a.hora.localeCompare(b.hora))
+.forEach(item=>{
+
+lista.innerHTML += `
+
+<div
+class="agendamento-item"
+onclick="abrirAgendamento('${item.id}')">
+
+<strong>${item.hora}</strong><br>
+
+${item.cliente}<br>
+
+${item.modelo}
+
+</div>
+
+`;
+
+});
+
+}
+
+/* CALENDÁRIO */
+
+function atualizarCalendario(){
+
+calendario.removeAllEvents();
+
+agendamentos.forEach(item=>{
+
+calendario.addEvent({
+
+id:item.id,
+
+title:
+item.hora +
+" - " +
+item.cliente,
+
+start:item.data
+
+});
+
+});
+
+}
+
+/* ABRIR AGENDAMENTO */
+
+function abrirAgendamento(id){
+
+const item =
+agendamentos.find(a => a.id === id);
+
+if(!item) return;
+
+agendamentoEditando = id;
+
+document
+.getElementById("cliente")
+.value = item.cliente;
+
+document
+.getElementById("telefone")
+.value = item.telefone;
+
+document
+.getElementById("modelo")
+.value = item.modelo;
+
+document
+.getElementById("data")
+.value = item.data;
+
+document
+.getElementById("hora")
+.value = item.hora;
+
+document
+.getElementById("valor")
+.value = item.valor;
+
+document
+.getElementById("observacoes")
+.value = item.observacoes;
+
+document
+.querySelectorAll(
+'.servico-item input[type="checkbox"]'
+)
+.forEach(cb=>{
+
+cb.checked =
+item.servicos.includes(cb.value);
+
+});
+
+document
+.getElementById("btnSalvar")
+.style.display = "none";
+
+document
+.getElementById("btnAtualizar")
+.style.display = "block";
+
+}
+
+</script>
+
+<script>
+
+/* LIMPAR FORMULÁRIO */
+
+function limparFormulario(){
+
+document.getElementById("formAgendamento").reset();
+
+document
+.querySelectorAll(
+'.servico-item input[type="checkbox"]'
+)
+.forEach(cb => cb.checked = false);
+
+agendamentoEditando = null;
+
+document
+.getElementById("btnSalvar")
+.style.display = "block";
+
+document
+.getElementById("btnAtualizar")
+.style.display = "none";
+
+}
+
+/* CAPTURA SERVIÇOS */
+
+function obterServicos(){
+
+const servicos = [];
+
+document
+.querySelectorAll(
+'.servico-item input[type="checkbox"]:checked'
+)
+.forEach(cb => {
+
+servicos.push(cb.value);
+
+});
+
+return servicos;
+
+}
+
+/* VERIFICA DUPLICIDADE */
+
+function horarioOcupado(data,hora,idIgnorar=null){
+
+return agendamentos.some(a =>
+
+a.data === data
+&&
+a.hora === hora
+&&
+a.id !== idIgnorar
+
+);
+
+}
+
+/* SALVAR NOVO */
+
+document
+.getElementById("formAgendamento")
+.addEventListener("submit", function(e){
+
+e.preventDefault();
+
+const cliente =
+document.getElementById("cliente").value;
+
+const telefone =
+document.getElementById("telefone").value;
+
+const modelo =
+document.getElementById("modelo").value;
+
+const data =
+document.getElementById("data").value;
+
+const hora =
+document.getElementById("hora").value;
+
+const valor =
+document.getElementById("valor").value;
+
+const observacoes =
+document.getElementById("observacoes").value;
+
+const servicos =
+obterServicos();
+
+/* DUPLICIDADE */
+
+if(horarioOcupado(data,hora)){
+
+alert(
+"Este horário já possui um agendamento."
+);
+
+return;
+
+}
+
+const novo = {
 
 id: Date.now().toString(),
 
-title: document.getElementById("nome").value + " - " + document.getElementById("modelo").value,
-
-start: dataHoje + "T" + document.getElementById("hora").value,
-
-extendedProps:{
-telefone: document.getElementById("telefone").value,
-servico: document.getElementById("servico").value,
-pagamento: document.getElementById("pagamento").value
-}
+cliente,
+telefone,
+modelo,
+data,
+hora,
+valor,
+observacoes,
+servicos
 
 };
 
-eventos.push(novo);
+agendamentos.push(novo);
 
-localStorage.setItem("eventos", JSON.stringify(eventos));
+localStorage.setItem(
+"agendamentos",
+JSON.stringify(agendamentos)
+);
 
-calendar.addEvent(novo);
+atualizarCalendario();
 
-alert("Agendamento criado com sucesso!");
+mostrarAgendamentosDoDia(data);
+
+alert("Agendamento criado com sucesso.");
+
+limparFormulario();
+
+});
+
+/* ATUALIZAR */
+
+document
+.getElementById("btnAtualizar")
+.addEventListener("click", function(){
+
+if(!agendamentoEditando){
+return;
+}
+
+const cliente =
+document.getElementById("cliente").value;
+
+const telefone =
+document.getElementById("telefone").value;
+
+const modelo =
+document.getElementById("modelo").value;
+
+const data =
+document.getElementById("data").value;
+
+const hora =
+document.getElementById("hora").value;
+
+const valor =
+document.getElementById("valor").value;
+
+const observacoes =
+document.getElementById("observacoes").value;
+
+const servicos =
+obterServicos();
+
+/* DUPLICIDADE */
+
+if(
+horarioOcupado(
+data,
+hora,
+agendamentoEditando
+)
+){
+
+alert(
+"Já existe um agendamento nesse horário."
+);
+
+return;
+
+}
+
+const indice =
+agendamentos.findIndex(
+a => a.id === agendamentoEditando
+);
+
+if(indice === -1){
+return;
+}
+
+agendamentos[indice] = {
+
+id: agendamentoEditando,
+
+cliente,
+telefone,
+modelo,
+data,
+hora,
+valor,
+observacoes,
+servicos
+
+};
+
+localStorage.setItem(
+"agendamentos",
+JSON.stringify(agendamentos)
+);
+
+atualizarCalendario();
+
+mostrarAgendamentosDoDia(data);
+
+alert("Agendamento atualizado.");
+
+limparFormulario();
+
+});
+
+/* EXCLUIR */
+
+function excluirAgendamento(){
+
+if(!agendamentoEditando){
+return;
+}
+
+if(
+!confirm(
+"Deseja apagar este agendamento?"
+)
+){
+return;
+}
+
+agendamentos =
+agendamentos.filter(
+a => a.id !== agendamentoEditando
+);
+
+localStorage.setItem(
+"agendamentos",
+JSON.stringify(agendamentos)
+);
+
+atualizarCalendario();
+
+if(diaSelecionado){
+mostrarAgendamentosDoDia(diaSelecionado);
+}
+
+alert("Agendamento removido.");
+
+limparFormulario();
 
 }
 
