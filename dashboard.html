@@ -85,29 +85,39 @@ padding:10px;
 </style>
 </head>
 <body>
+  
 <div class="sidebar">
+
 <h3>🚗 Brilho Certo</h3>
-<button class="menu-btn">
+
+<button
+class="menu-btn"
+onclick="location.href='dashboard.html'">
 🏠 Início
 </button>
 
+<button
+class="menu-btn"
+onclick="location.href='agendamentos.html'">
 📅 Agenda
-
 </button>
-<button class="menu-btn">
 
+<button
+class="menu-btn">
 💳 Pagamentos
-
 </button>
-<button class="menu-btn">
 
+<button
+class="menu-btn">
 📊 Relatórios
-
 </button>
 
+<button
+class="menu-btn"
+onclick="logout()">
 🚪 Sair
-
 </button>
+
 </div>
 <div class="content">
 <h2>Dashboard do Dia</h2>
@@ -182,21 +192,38 @@ Nenhum agendamento.
 <div class="row">
 <div class="col-md-4 mb-2">
 
+<button
+class="btn btn-primary w-100"
+onclick="location.href='agendamentos.html'">
+
 ➕ Novo Agendamento
 
 </button>
+
 </div>
+
 <div class="col-md-4 mb-2">
+
+<button
+class="btn btn-success w-100"
+id="btnAtendimentoImediato">
 
 🚗 Atendimento Imediato
 
 </button>
+
 </div>
+
 <div class="col-md-4 mb-2">
+
+<button
+class="btn btn-dark w-100"
+onclick="location.href='agendamentos.html'">
 
 📅 Abrir Agenda
 
 </button>
+
 </div>
 </div>
 </div>
