@@ -548,19 +548,18 @@ calendario.removeAllEvents();
 agendamentos.forEach(item=>{
 
 calendario.addEvent({
-id:item.id,
-title: item.hora + " - " + item.cliente,
-start: item.data + "T" + item.hora,
+    id: item.id,
+    title: item.cliente || "Sem nome",
+    start: item.data + "T" + item.hora,
 
-extendedProps: {
-cliente: item.cliente,
-telefone: item.telefone,
-modelo: item.modelo,
-servicos: item.servicos,
-valor: item.valor,
-observacoes: item.observacoes
-}
-
+    extendedProps: {
+        cliente: item.cliente,
+        telefone: item.telefone,
+        modelo: item.modelo,
+        servicos: item.servicos,
+        valor: item.valor,
+        observacoes: item.observacoes
+    }
 });
 
 });
