@@ -172,7 +172,7 @@ Nenhum atendimento para hoje.
 </div>
 </div>
 <div class="card-dashboard">
-<h4>📋 Agendamentos de Hoje</h4>
+<h4>📋 próximos 7 Dias</h4>
 <div id="listaHoje">
 
 Nenhum agendamento.
@@ -211,14 +211,26 @@ const agendamentos =
 JSON.parse(
 localStorage.getItem("agendamentos")
 ) || [];
-const hoje =
-new Date()
-.toISOString()
-.split("T")[0];
-const agendamentosHoje =
-agendamentos.filter(
-a => a.data === hoje
+const hoje = new Date();
+
+const seteDias =
+new Date();
+
+seteDias.setDate(
+hoje.getDate() + 7
 );
+
+const agendamentosHoje =
+agendamentos.filter(item => {
+
+const dataAgendamento =
+new Date(item.data);
+
+return dataAgendamento >= hoje
+&&
+dataAgendamento <= seteDias;
+
+});
 document
 .getElementById("totalHoje")
 .textContent =
@@ -247,10 +259,21 @@ document
 .textContent =
 valorTotal.toFixed(2);
 
-agendamentosHoje.sort(
-(a,b)=>
-a.hora.localeCompare(b.hora)
+agendamentosHoje.sort((a,b)=>{
+
+const dataA =
+new Date(
+a.data + "T" + a.hora
 );
+
+const dataB =
+new Date(
+b.data + "T" + b.hora
+);
+
+return dataA - dataB;
+
+});
 
 if(agendamentosHoje.length > 0){
 
