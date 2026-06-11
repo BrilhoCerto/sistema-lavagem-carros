@@ -308,13 +308,13 @@ html += `
 
 <div class="lista-item">
 
-${item.hora}
+<strong>${item.hora}</strong><br>
 
-${item.cliente}
+${item.cliente}<br>
 
-${item.modelo}
+${item.modelo}<br>
 
-${(item.servicos || []).join(”, “)}
+${(item.servicos || []).join(", ")}<br>
 
 ${emoji} ${status}
 
