@@ -281,14 +281,14 @@ const proximo =
 agendamentosHoje[0];
 
 document
-.getElementById(“proximoAtendimento”)
+.getElementById("proximoAtendimento")
 .innerHTML = `
 
-${proximo.hora}
+<strong>${proximo.hora}</strong><br>
 
-${proximo.cliente}
+${proximo.cliente}<br>
 
-${(proximo.servicos || []).join(”, “)}
+${(proximo.servicos || []).join(", ")}
 
 `;
 
