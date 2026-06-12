@@ -8,6 +8,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
+
 body{
 background:#eef3f8;
 font-family:Arial,sans-serif;
@@ -23,9 +24,11 @@ height:100vh;
 background:#0d6efd;
 padding:20px;
 color:white;
+overflow:auto;
 }
 
 .sidebar h3{
+font-weight:bold;
 margin-bottom:25px;
 }
 
@@ -41,6 +44,10 @@ font-weight:bold;
 cursor:pointer;
 }
 
+.menu-btn:hover{
+background:#dbeafe;
+}
+
 .content{
 margin-left:280px;
 padding:20px;
@@ -54,15 +61,28 @@ box-shadow:0 2px 15px rgba(0,0,0,0.08);
 margin-bottom:20px;
 }
 
-.numero{
-font-size:32px;
-font-weight:bold;
-color:#0d6efd;
+.card-futuro{
+background:white;
+padding:20px;
+border-radius:15px;
+box-shadow:0 2px 15px rgba(0,0,0,0.08);
+height:120px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:14px;
+color:#999;
+margin-bottom:20px;
 }
 
 .lista-item{
-padding:12px;
+padding:8px;
 border-bottom:1px solid #eee;
+font-size:13px;
+}
+
+.lista-item:hover{
+background:#f8fafc;
 }
 
 @media(max-width:768px){
@@ -77,6 +97,7 @@ padding:10px;
 }
 
 }
+
 </style>
 </head>
 
@@ -96,6 +117,14 @@ onclick="location.href='agendamentos.html'">
 📅 Agenda
 </button>
 
+<button class="menu-btn">
+💳 Pagamentos
+</button>
+
+<button class="menu-btn">
+📊 Relatórios
+</button>
+
 <button class="menu-btn"
 onclick="logout()">
 🚪 Sair
@@ -110,16 +139,14 @@ onclick="logout()">
 <div class="row">
 
 <div class="col-md-6">
-<div class="card-dashboard">
-<div>Total de Agendamentos</div>
-<div class="numero" id="totalAgendamentos">0</div>
+<div class="card-futuro">
+Card Futuro 1
 </div>
 </div>
 
 <div class="col-md-6">
-<div class="card-dashboard">
-<div>Valor Total (€)</div>
-<div class="numero" id="valorTotal">0.00</div>
+<div class="card-futuro">
+Card Futuro 2
 </div>
 </div>
 
@@ -139,27 +166,17 @@ Carregando...
 
 <script>
 
-const perfil = localStorage.getItem("perfil");
+const perfil =
+localStorage.getItem("perfil");
 
 if(!perfil){
-window.location.href="login.html";
+window.location.href = "login.html";
 }
 
 const agendamentos =
-JSON.parse(localStorage.getItem("agendamentos")) || [];
-
-document.getElementById("totalAgendamentos").textContent =
-agendamentos.length;
-
-const total =
-agendamentos.reduce(
-(soma,item)=>
-soma + (parseFloat(item.valor)||0),
-0
-);
-
-document.getElementById("valorTotal").textContent =
-total.toFixed(2);
+JSON.parse(
+localStorage.getItem("agendamentos")
+) || [];
 
 let html = "";
 
@@ -178,23 +195,36 @@ return dataA - dataB;
 .forEach(item=>{
 
 html += `
+
 <div class="lista-item">
-<strong>${item.data}</strong><br>
-${item.hora} - ${item.cliente}<br>
+
+${item.data}
+&nbsp;|&nbsp;
+${item.hora}
+&nbsp;|&nbsp;
+${item.cliente}
+&nbsp;|&nbsp;
 ${item.modelo}
+&nbsp;|&nbsp;
+${(item.servicos || []).join(", ")}
+
 </div>
+
 `;
 
 });
 
-document.getElementById("listaAgendamentos").innerHTML =
+document
+.getElementById("listaAgendamentos")
+.innerHTML =
 html || "Nenhum agendamento encontrado.";
 
 function logout(){
 
 localStorage.removeItem("perfil");
 
-window.location.href="login.html";
+window.location.href =
+"login.html";
 
 }
 
