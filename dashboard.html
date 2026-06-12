@@ -67,9 +67,8 @@ color:#fd7e14;
 color:#0d6efd;
 }
 .lista-item{
-padding:6px 0;
+padding:12px;
 border-bottom:1px solid #eee;
-font-size:14px;
 }
 .lista-item:hover{
 background:#f8fafc;
@@ -288,127 +287,73 @@ valorTotal.toFixed(2);
 agendamentosHoje.sort((a,b)=>{
 
 const dataA =
-new Date(a.data + "T" + a.hora);
+new Date(
+a.data + "T" + a.hora
+);
 
 const dataB =
-new Date(b.data + "T" + b.hora);
+new Date(
+b.data + "T" + b.hora
+);
 
 return dataA - dataB;
 
 });
 
-/* AGENDA DE HOJE */
+if(agendamentosHoje.length > 0){
 
-const somenteHoje =
-agendamentosHoje.filter(item=>{
-
-const dataItem =
-new Date(item.data);
-
-dataItem.setHours(0,0,0,0);
-
-return dataItem.getTime() === hoje.getTime();
-
-});
-
-let htmlHoje = "";
-
-if(somenteHoje.length === 0){
-
-htmlHoje =
-"Nenhum agendamento para hoje.";
-
-}else{
-
-htmlHoje =
-<strong>${hoje.toLocaleDateString("pt-PT")}</strong><br><br>;
-
-somenteHoje.forEach(item=>{
-
-htmlHoje += `
-<div class="lista-item">
-
-${item.hora}
-&nbsp;|&nbsp;
-
-${item.cliente}
-&nbsp;|&nbsp;
-
-${(item.servicos || []).join(", ")}
-
-</div>
-`;
-
-});
-
-}
+const proximo =
+agendamentosHoje[0];
 
 document
 .getElementById("proximoAtendimento")
-.innerHTML = htmlHoje;
+.innerHTML = `
 
-/* PRÓXIMOS 7 DIAS */
+<strong>${proximo.hora}</strong><br>
 
-const futuros =
-agendamentosHoje.filter(item=>{
+${proximo.cliente}<br>
 
-const dataItem =
-new Date(item.data);
+${(proximo.servicos || []).join(", ")}
 
-dataItem.setHours(0,0,0,0);
-
-return dataItem.getTime() > hoje.getTime();
-
-});
-
-let htmlFuturo = "";
-
-if(futuros.length === 0){
-
-htmlFuturo =
-"Nenhum agendamento nos próximos 7 dias.";
-
-}else{
-
-let dataAtual = "";
-
-futuros.forEach(item=>{
-
-if(item.data !== dataAtual){
-
-dataAtual = item.data;
-
-htmlFuturo += `
-<hr>
-<strong>
-${new Date(item.data)
-.toLocaleDateString("pt-PT")}
-</strong><br>
 `;
 
-}
+let html = "";
 
-htmlFuturo += `
+agendamentosHoje.forEach(item=>{
+
+const status =
+item.status || "Agendado";
+
+const emoji =
+status === "Concluído"
+? "🟢"
+: "🟡";
+
+html += `
+
 <div class="lista-item">
 
-${item.hora}
-&nbsp;|&nbsp;
+<strong>${item.hora}</strong><br>
 
-${item.cliente}
-&nbsp;|&nbsp;
+${item.cliente}<br>
 
-${(item.servicos || []).join(", ")}
+${item.modelo}<br>
+
+${(item.servicos || []).join(", ")}<br>
+
+${emoji} ${status}
 
 </div>
+
 `;
 
 });
-
-}
 
 document
 .getElementById("listaHoje")
-.innerHTML = htmlFuturo;
+.innerHTML = html;
+
+}
 
 function logout(){
 
