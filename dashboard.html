@@ -239,13 +239,11 @@ JSON.parse(
 localStorage.getItem("agendamentos")
 ) || [];
 const hoje = new Date();
+hoje.setHours(0,0,0,0);
 
-const seteDias =
-new Date();
-
-seteDias.setDate(
-hoje.getDate() + 7
-);
+const seteDias = new Date();
+seteDias.setDate(hoje.getDate() + 7);
+seteDias.setHours(23,59,59,999);
 
 const agendamentosHoje =
 agendamentos.filter(item => {
