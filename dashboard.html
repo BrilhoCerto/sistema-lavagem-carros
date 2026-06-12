@@ -317,19 +317,19 @@ ${(proximo.servicos || []).join(", ")}
 
 `;
 
-let html = “”;
+let html = "";
 
 agendamentosHoje.forEach(item=>{
 
 const status =
-item.status || “Agendado”;
+item.status || "Agendado";
 
 const emoji =
-status === “Concluído”
-? “🟢”
-: “🟡”;
+status === "Concluído"
+? "🟢"
+: "🟡";
 
-html+=`
+html += `
 
 <div class="lista-item">
 
@@ -350,30 +350,30 @@ ${emoji} ${status}
 });
 
 document
-.getElementById(“listaHoje”)
+.getElementById("listaHoje")
 .innerHTML = html;
 
 }
 
 function logout(){
 
-localStorage.removeItem(“perfil”);
+localStorage.removeItem("perfil");
 
 window.location.href =
-“login.html”;
+"login.html";
 
 }
 
 document
 .getElementById(
-“btnAtendimentoImediato”
+"btnAtendimentoImediato"
 )
 .addEventListener(
-“click”,
+"click",
 function(){
 
 alert(
-“Funcionalidade disponível na próxima atualização da versão 2.2.”
+"Funcionalidade disponível na próxima atualização da versão 2.2."
 );
 
 }
