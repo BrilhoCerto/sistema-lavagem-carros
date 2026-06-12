@@ -245,13 +245,21 @@ const seteDias = new Date();
 seteDias.setDate(hoje.getDate() + 7);
 seteDias.setHours(23,59,59,999);
 
+const hojeTexto =
+hoje.toISOString().split("T")[0];
+
 const agendamentosHoje =
+agendamentos.filter(
+item => item.data === hojeTexto
+);
+
+const proximosSeteDias =
 agendamentos.filter(item => {
 
 const dataAgendamento =
 new Date(item.data);
 
-return dataAgendamento >= hoje
+return dataAgendamento > hoje
 &&
 dataAgendamento <= seteDias;
 
@@ -302,24 +310,33 @@ return dataA - dataB;
 
 if(agendamentosHoje.length > 0){
 
-const proximo =
-agendamentosHoje[0];
+let agendaHojeHtml = "";
 
-document
-.getElementById("proximoAtendimento")
-.innerHTML = `
+agendamentosHoje.forEach(item=>{
 
-<strong>${proximo.hora}</strong><br>
+agendaHojeHtml += `
 
-${proximo.cliente}<br>
+<div class="lista-item">
 
-${(proximo.servicos || []).join(", ")}
+${item.hora}
+&nbsp;|&nbsp;
+${item.cliente}
+&nbsp;|&nbsp;
+${(item.servicos || []).join(", ")}
+
+</div>
 
 `;
 
+});
+
+document
+.getElementById("proximoAtendimento")
+.innerHTML = agendaHojeHtml;
+
 let html = "";
 
-agendamentosHoje.forEach(item=>{
+proximosSeteDias.forEach(item=>{
 
 const status =
 item.status || "Agendado";
@@ -333,15 +350,11 @@ html += `
 
 <div class="lista-item">
 
-<strong>${item.hora}</strong><br>
+<strong>${item.data}</strong><br>
 
-${item.cliente}<br>
+${item.hora} - ${item.cliente}<br>
 
-${item.modelo}<br>
-
-${(item.servicos || []).join(", ")}<br>
-
-${emoji} ${status}
+${(item.servicos || []).join(", ")}
 
 </div>
 
