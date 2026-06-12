@@ -246,13 +246,17 @@ seteDias.setDate(hoje.getDate() + 7);
 seteDias.setHours(23,59,59,999);
 
 const hojeTexto =
-${hoje.getFullYear()}-${String(hoje.getMonth()+1).padStart(2,'0')}-${String(hoje.getDate()).padStart(2,'0')};
+`${hoje.getFullYear()}-${String(hoje.getMonth()+1).padStart(2,'0')}-${String(hoje.getDate()).padStart(2,'0')};
 
 const agendamentosHoje =
 agendamentos.filter(
 item => item.data === hojeTexto
 );
+console.log("Hoje:", hojeTexto);
 
+console.log("Agendamentos:", agendamentos);
+
+console.log("Agendamentos Hoje:", agendamentosHoje);
 const proximosSeteDias =
 agendamentos.filter(item => {
 
