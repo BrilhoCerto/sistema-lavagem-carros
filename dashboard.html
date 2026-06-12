@@ -67,8 +67,9 @@ color:#fd7e14;
 color:#0d6efd;
 }
 .lista-item{
-padding:12px;
+padding:6px 0;
 border-bottom:1px solid #eee;
+font-size:14px;
 }
 .lista-item:hover{
 background:#f8fafc;
@@ -287,73 +288,127 @@ valorTotal.toFixed(2);
 agendamentosHoje.sort((a,b)=>{
 
 const dataA =
-new Date(
-a.data + "T" + a.hora
-);
+new Date(a.data + "T" + a.hora);
 
 const dataB =
-new Date(
-b.data + "T" + b.hora
-);
+new Date(b.data + "T" + b.hora);
 
 return dataA - dataB;
 
 });
 
-if(agendamentosHoje.length > 0){
+/* AGENDA DE HOJE */
 
-const proximo =
-agendamentosHoje[0];
+const somenteHoje =
+agendamentosHoje.filter(item=>{
 
-document
-.getElementById("proximoAtendimento")
-.innerHTML = `
+const dataItem =
+new Date(item.data);
 
-<strong>${proximo.hora}</strong><br>
+dataItem.setHours(0,0,0,0);
 
-${proximo.cliente}<br>
+return dataItem.getTime() === hoje.getTime();
 
-${(proximo.servicos || []).join(", ")}
+});
 
-`;
+let htmlHoje = "";
 
-let html = "";
+if(somenteHoje.length === 0){
 
-agendamentosHoje.forEach(item=>{
+htmlHoje =
+"Nenhum agendamento para hoje.";
 
-const status =
-item.status || "Agendado";
+}else{
 
-const emoji =
-status === "Concluído"
-? "🟢"
-: "🟡";
+htmlHoje =
+<strong>${hoje.toLocaleDateString("pt-PT")}</strong><br><br>;
 
-html += `
+somenteHoje.forEach(item=>{
 
+htmlHoje += `
 <div class="lista-item">
 
-<strong>${item.hora}</strong><br>
+${item.hora}
+&nbsp;|&nbsp;
 
-${item.cliente}<br>
+${item.cliente}
+&nbsp;|&nbsp;
 
-${item.modelo}<br>
-
-${(item.servicos || []).join(", ")}<br>
-
-${emoji} ${status}
+${(item.servicos || []).join(", ")}
 
 </div>
-
 `;
 
 });
 
+}
+
 document
-.getElementById("listaHoje")
-.innerHTML = html;
+.getElementById("proximoAtendimento")
+.innerHTML = htmlHoje;
+
+/* PRÓXIMOS 7 DIAS */
+
+const futuros =
+agendamentosHoje.filter(item=>{
+
+const dataItem =
+new Date(item.data);
+
+dataItem.setHours(0,0,0,0);
+
+return dataItem.getTime() > hoje.getTime();
+
+});
+
+let htmlFuturo = "";
+
+if(futuros.length === 0){
+
+htmlFuturo =
+"Nenhum agendamento nos próximos 7 dias.";
+
+}else{
+
+let dataAtual = "";
+
+futuros.forEach(item=>{
+
+if(item.data !== dataAtual){
+
+dataAtual = item.data;
+
+htmlFuturo += `
+<hr>
+<strong>
+${new Date(item.data)
+.toLocaleDateString("pt-PT")}
+</strong><br>
+`;
 
 }
+
+htmlFuturo += `
+<div class="lista-item">
+
+${item.hora}
+&nbsp;|&nbsp;
+
+${item.cliente}
+&nbsp;|&nbsp;
+
+${(item.servicos || []).join(", ")}
+
+</div>
+`;
+
+});
+
+}
+
+document
+.getElementById("listaHoje")
+.innerHTML = htmlFuturo;
 
 function logout(){
 
