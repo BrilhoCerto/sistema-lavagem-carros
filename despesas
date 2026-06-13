@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Brilho Certo - Despesas</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<link rel="stylesheet" href="despesas.css">
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+<h3>🚗 Brilho Certo</h3>
+
+<button
+class="menu-btn"
+onclick="location.href='dashboard.html'">
+🏠 Início
+</button>
+
+<button
+class="menu-btn"
+onclick="location.href='agendamentos.html'">
+📅 Agenda
+</button>
+
+<button
+class="menu-btn"
+onclick="location.href='pagamentos.html'">
+💳 Pagamentos
+</button>
+
+<button
+class="menu-btn ativo">
+💸 Despesas
+</button>
+
+<button
+class="menu-btn"
+onclick="location.href='relatorios.html'">
+📊 Relatórios
+</button>
+
+<button
+class="menu-btn"
+onclick="logout()">
+🚪 Sair
+</button>
+
+</div>
+
+<div class="content">
+
+<h2>💸 Controle de Despesas</h2>
+
+<div class="row mb-4">
+
+<div class="col-md-4">
+
+<div class="card-dashboard">
+
+<div>Despesas Hoje</div>
+
+<div
+class="numero text-danger"
+id="despesasHoje">
+
+€ 0,00
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div class="card-dashboard">
+
+<div>Despesas Mês</div>
+
+<div
+class="numero text-warning"
+id="despesasMes">
+
+€ 0,00
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div class="card-dashboard">
+
+<div>Saldo do Mês</div>
+
+<div
+class="numero text-success"
+id="saldoMes">
+
+€ 0,00
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="col-lg-4">
+
+<div class="card-dashboard">
+
+<h5>Nova Despesa</h5>
+
+<form id="formDespesa">
+
+<label class="form-label">
+Origem
+</label>
+
+<select
+id="origem"
+class="form-control mb-3"
+required>
+
+<option value="">
+Selecione
+</option>
+
+<option>
+Caixa Brilho Certo
+</option>
+
+<option>
+Caixa IMO Wash Car
+</option>
+
+</select>
+
+<label class="form-label">
+Categoria
+</label>
+
+<select
+id="categoria"
+class="form-control mb-3"
+required>
+
+<option value="">
+Selecione
+</option>
+
+<option>
+Ordenados
+</option>
+
+<option>
+Comissões
+</option>
+
+<option>
+Despesas Operacionais
+</option>
+
+<option>
+Alimentação
+</option>
+
+<option>
+Contas
+</option>
+
+<option>
+Despesas Pessoais
+</option>
+
+<option>
+Combustível
+</option>
+
+<option>
+Oficina Mecânica
+</option>
+
+<option>
+Outros
+</option>
+
+</select>
+
+<label class="form-label">
+Subcategoria
+</label>
+
+<select
+id="subcategoria"
+class="form-control mb-3"
+required>
+
+<option value="">
+Selecione
+</option>
+
+</select>
+
+<label class="form-label">
+Valor (€)
+</label>
+
+<input
+type="number"
+step="0.01"
+id="valor"
+class="form-control mb-3"
+required>
+
+<label class="form-label">
+Observações
+</label>
+
+<textarea
+id="observacoes"
+class="form-control mb-3"
+rows="3"></textarea>
+
+<button
+type="submit"
+class="btn btn-primary w-100">
+
+Salvar Despesa
+
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+<div class="col-lg-8">
+
+<div class="card-dashboard">
+
+<h5>Filtros</h5>
+
+<div class="row">
+
+<div class="col-md-3">
+
+<input
+type="date"
+id="filtroInicio"
+class="form-control">
+
+</div>
+
+<div class="col-md-3">
+
+<input
+type="date"
+id="filtroFim"
+class="form-control">
+
+</div>
+
+<div class="col-md-3">
+
+<select
+id="filtroCategoria"
+class="form-control">
+
+<option value="">
+Todas Categorias
+</option>
+
+</select>
+
+</div>
+
+<div class="col-md-3">
+
+<select
+id="filtroOrigem"
+class="form-control">
+
+<option value="">
+Todas Origens
+</option>
+
+<option>
+Caixa Brilho Certo
+</option>
+
+<option>
+Caixa IMO Wash Car
+</option>
+
+</select>
+
+</div>
+
+</div>
+
+<button
+class="btn btn-secondary mt-3"
+onclick="filtrarDespesas()">
+
+Pesquisar
+
+</button>
+
+</div>
+
+<div class="card-dashboard">
+
+<h5>Histórico de Despesas</h5>
+
+<div class="table-responsive">
+
+<table class="table table-striped">
+
+<thead>
+
+<tr>
+
+<th>Data</th>
+<th>Hora</th>
+<th>Origem</th>
+<th>Categoria</th>
+<th>Subcategoria</th>
+<th>Valor</th>
+<th>Observações</th>
+
+</tr>
+
+</thead>
+
+<tbody id="tabelaDespesas">
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script src="despesas.js"></script>
+
+</body>
+
+</html>
+
+body{
+background:#eef3f8;
+font-family:Arial,sans-serif;
+font-size:13px;
+margin:0;
+}
+
+/* MENU */
+
+.sidebar{
+position:fixed;
+left:0;
+top:0;
+width:260px;
+height:100vh;
+background:#0d6efd;
+padding:20px;
+color:white;
+overflow:auto;
+}
+
+.sidebar h3{
+font-weight:bold;
+margin-bottom:25px;
+}
+
+.menu-btn{
+width:100%;
+margin-bottom:10px;
+border:none;
+padding:12px;
+border-radius:10px;
+background:white;
+color:#0d6efd;
+font-weight:bold;
+cursor:pointer;
+transition:0.3s;
+}
+
+.menu-btn:hover{
+background:#dbeafe;
+transform:translateX(5px);
+}
+
+.menu-btn.ativo{
+background:#084298;
+color:white;
+}
+
+/* CONTEÚDO */
+
+.content{
+margin-left:280px;
+padding:20px;
+}
+
+/* CARDS */
+
+.card-dashboard{
+background:white;
+padding:20px;
+border-radius:15px;
+box-shadow:0 2px 15px rgba(0,0,0,0.08);
+margin-bottom:20px;
+}
+
+.numero{
+font-size:28px;
+font-weight:bold;
+}
+
+/* TÍTULOS */
+
+h2{
+font-weight:bold;
+margin-bottom:20px;
+}
+
+h5{
+font-weight:bold;
+margin-bottom:15px;
+}
+
+/* FORMULÁRIOS */
+
+.form-label{
+font-weight:bold;
+margin-bottom:5px;
+}
+
+.form-control{
+font-size:13px;
+border-radius:8px;
+}
+
+/* BOTÕES */
+
+.btn{
+border-radius:8px;
+font-size:13px;
+}
+
+/* TABELA */
+
+.table{
+font-size:13px;
+}
+
+.table th{
+background:#f5f7fa;
+white-space:nowrap;
+}
+
+.table td{
+vertical-align:middle;
+}
+
+/* FILTROS */
+
+#filtroInicio,
+#filtroFim,
+#filtroCategoria,
+#filtroOrigem{
+margin-bottom:10px;
+}
+
+/* RESPONSIVO */
+
+@media(max-width:768px){
+
+.sidebar{
+display:none;
+}
+
+.content{
+margin-left:0;
+padding:10px;
+}
+
+.card-dashboard{
+padding:15px;
+}
+
+.numero{
+font-size:22px;
+}
+
+.table{
+font-size:12px;
+}
+
+h2{
+font-size:20px;
+}
+
+}
+
+const perfil = localStorage.getItem("perfil");
+
+if(!perfil){
+window.location.href = "login.html";
+}
+
+let despesas =
+JSON.parse(
+localStorage.getItem("despesas")
+) || [];
+
+const subcategorias = {
+
+"Ordenados":[
+"ADM",
+"Funcionário 1",
+"Funcionário 2",
+"Outros"
+],
+
+"Comissões":[
+"ADM",
+"Funcionário 1",
+"Funcionário 2",
+"Outros"
+],
+
+"Despesas Operacionais":[
+"Produtos",
+"Material",
+"Fornecedores",
+"Equipamentos"
+],
+
+"Alimentação":[
+"Pequeno-almoço",
+"Almoço",
+"Jantar",
+"Café"
+],
+
+"Contas":[
+"Água",
+"Luz",
+"Internet",
+"Segurança Social",
+"Outros"
+],
+
+"Despesas Pessoais":[
+"Compras do Mês",
+"Compras da Semana",
+"Mercado",
+"Casa",
+"Renda da Casa",
+"Diversos"
+],
+
+"Combustível":[
+"Gasóleo",
+"Gasolina",
+"Outros"
+],
+
+"Oficina Mecânica":[
+"Reparação",
+"Peças",
+"Manutenção"
+],
+
+"Outros":[
+"Diversos"
+]
+
+};
+
+/* CARREGAR CATEGORIAS */
+
+document
+.getElementById("categoria")
+.addEventListener(
+"change",
+function(){
+
+const categoria =
+this.value;
+
+const select =
+document.getElementById(
+"subcategoria"
+);
+
+select.innerHTML =
+'<option value="">Selecione</option>';
+
+if(!subcategorias[categoria]){
+return;
+}
+
+subcategorias[categoria]
+.forEach(item=>{
+
+const option =
+document.createElement("option");
+
+option.value = item;
+option.textContent = item;
+
+select.appendChild(option);
+
+});
+
+}
+);
+
+/* FILTRO CATEGORIA */
+
+const filtroCategoria =
+document.getElementById(
+"filtroCategoria"
+);
+
+Object.keys(subcategorias)
+.forEach(cat=>{
+
+const option =
+document.createElement("option");
+
+option.value = cat;
+option.textContent = cat;
+
+filtroCategoria.appendChild(option);
+
+});
+
+/* SALVAR */
+
+document
+.getElementById("formDespesa")
+.addEventListener(
+"submit",
+function(e){
+
+e.preventDefault();
+
+const agora =
+new Date();
+
+const data =
+agora.toISOString().split("T")[0];
+
+const hora =
+agora.toLocaleTimeString(
+"pt-PT",
+{
+hour:'2-digit',
+minute:'2-digit'
+}
+);
+
+const novaDespesa = {
+
+id: Date.now(),
+
+data,
+
+hora,
+
+origem:
+document.getElementById("origem").value,
+
+categoria:
+document.getElementById("categoria").value,
+
+subcategoria:
+document.getElementById("subcategoria").value,
+
+valor:
+parseFloat(
+document.getElementById("valor").value
+),
+
+observacoes:
+document.getElementById("observacoes").value
+
+};
+
+despesas.push(novaDespesa);
+
+localStorage.setItem(
+"despesas",
+JSON.stringify(despesas)
+);
+
+document
+.getElementById("formDespesa")
+.reset();
+
+carregarTabela();
+
+atualizarCards();
+
+alert(
+"Despesa registada com sucesso."
+);
+
+}
+);
+
+/* CARREGAR TABELA */
+
+function carregarTabela(lista = despesas){
+
+const tbody =
+document.getElementById(
+"tabelaDespesas"
+);
+
+tbody.innerHTML = "";
+
+lista
+.sort((a,b)=>
+new Date(b.data) -
+new Date(a.data)
+)
+.forEach(item=>{
+
+tbody.innerHTML += `
+
+<tr>
+
+<td>${item.data}</td>
+
+<td>${item.hora}</td>
+
+<td>${item.origem}</td>
+
+<td>${item.categoria}</td>
+
+<td>${item.subcategoria}</td>
+
+<td>€ ${item.valor.toFixed(2)}</td>
+
+<td>${item.observacoes || ''}</td>
+
+</tr>
+
+`;
+
+});
+
+}
+
+/* CARDS */
+
+function atualizarCards(){
+
+const hoje =
+new Date()
+.toISOString()
+.split("T")[0];
+
+const mesAtual =
+new Date().getMonth();
+
+const anoAtual =
+new Date().getFullYear();
+
+let totalHoje = 0;
+let totalMes = 0;
+
+despesas.forEach(item=>{
+
+if(item.data === hoje){
+
+totalHoje += item.valor;
+
+}
+
+const data =
+new Date(item.data);
+
+if(
+data.getMonth() === mesAtual
+&&
+data.getFullYear() === anoAtual
+){
+
+totalMes += item.valor;
+
+}
+
+});
+
+document
+.getElementById("despesasHoje")
+.textContent =
+"€ " + totalHoje.toFixed(2);
+
+document
+.getElementById("despesasMes")
+.textContent =
+"€ " + totalMes.toFixed(2);
+
+document
+.getElementById("saldoMes")
+.textContent =
+"€ " + (-totalMes).toFixed(2);
+
+}
+
+/* FILTROS */
+
+function filtrarDespesas(){
+
+let resultado =
+[...despesas];
+
+const inicio =
+document.getElementById(
+"filtroInicio"
+).value;
+
+const fim =
+document.getElementById(
+"filtroFim"
+).value;
+
+const categoria =
+document.getElementById(
+"filtroCategoria"
+).value;
+
+const origem =
+document.getElementById(
+"filtroOrigem"
+).value;
+
+if(inicio){
+
+resultado =
+resultado.filter(
+d => d.data >= inicio
+);
+
+}
+
+if(fim){
+
+resultado =
+resultado.filter(
+d => d.data <= fim
+);
+
+}
+
+if(categoria){
+
+resultado =
+resultado.filter(
+d => d.categoria === categoria
+);
+
+}
+
+if(origem){
+
+resultado =
+resultado.filter(
+d => d.origem === origem
+);
+
+}
+
+carregarTabela(resultado);
+
+}
+
+/* LOGOUT */
+
+function logout(){
+
+localStorage.removeItem(
+"perfil"
+);
+
+window.location.href =
+"login.html";
+
+}
+
+/* INICIALIZAÇÃO */
+
+carregarTabela();
+
+atualizarCards();
