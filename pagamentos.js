@@ -25,14 +25,14 @@ document.getElementById(
 "listaServicosHoje"
 );
 
-const hoje = new Date();
-
-const hojeTexto =
-${hoje.getFullYear()}-${String(hoje.getMonth()+1).padStart(2,'0')}-${String(hoje.getDate()).padStart(2,'0')};
+const hoje =
+new Date()
+.toISOString()
+.split("T")[0];
 
 const servicosHoje =
 agendamentos.filter(
-item => item.data === hojeTexto
+a => a.data === hoje
 );
 
 if(servicosHoje.length === 0){
@@ -47,7 +47,9 @@ return;
 lista.innerHTML = "";
 
 servicosHoje
-.sort((a,b)=>a.hora.localeCompare(b.hora))
+.sort((a,b)=>
+a.hora.localeCompare(b.hora)
+)
 .forEach(item=>{
 
 lista.innerHTML += `
@@ -57,9 +59,13 @@ class="item-servico"
 onclick="selecionarAgendamento('${item.id}')">
 
 <strong>${item.hora}</strong>
-&nbsp;|&nbsp;
+
+<br>
+
 ${item.cliente}
-&nbsp;|&nbsp;
+
+<br>
+
 ${item.modelo}
 
 </div>
@@ -69,7 +75,6 @@ ${item.modelo}
 });
 
 }
-
 /* SELECIONAR CLIENTE */
 
 function selecionarAgendamento(id){
@@ -103,7 +108,14 @@ item.modelo || "";
 document
 .getElementById("servicos")
 .value =
-(item.servicos || []).join(", ");
+item.servicos
+? item.servicos.join(", ")
+: "";
+
+document
+.getElementById("valor")
+.value =
+item.valor || "";
 
 }
 
