@@ -1,121 +1,95 @@
 const perfil = localStorage.getItem("perfil");
 
-if(!perfil){
-window.location.href = "login.html";
+if (!perfil) {
+    window.location.href = "login.html";
 }
 
 let pagamentos =
-JSON.parse(
-localStorage.getItem("pagamentos")
-) || [];
+JSON.parse(localStorage.getItem("pagamentos")) || [];
 
 let agendamentos =
-JSON.parse(
-localStorage.getItem("agendamentos")
-) || [];
+JSON.parse(localStorage.getItem("agendamentos")) || [];
 
 let agendamentoSelecionado = null;
 
-/* CARREGAR SERVIÇOS DO DIA */
+/* SERVIÇOS DO DIA */
 
-function carregarServicosHoje(){
+function carregarServicosHoje() {
 
-const lista =
-document.getElementById(
-"listaServicosHoje"
-);
+    const lista =
+    document.getElementById("listaServicosHoje");
 
-const hoje =
-new Date()
-.toISOString()
-.split("T")[0];
+    const hoje =
+    new Date().toISOString().split("T")[0];
 
-const servicosHoje =
-agendamentos.filter(
-a => a.data === hoje
-);
+    const servicosHoje =
+    agendamentos
+    .filter(item => item.data === hoje)
+    .sort((a,b) => a.hora.localeCompare(b.hora));
 
-if(servicosHoje.length === 0){
+    if(servicosHoje.length === 0){
 
-lista.innerHTML =
-"Nenhum serviço agendado para hoje.";
+        lista.innerHTML =
+        "<p>Nenhum serviço agendado para hoje.</p>";
 
-return;
+        return;
+    }
 
-}
+    lista.innerHTML = "";
 
-lista.innerHTML = "";
+    servicosHoje.forEach(item => {
 
-servicosHoje
-.sort((a,b)=>
-a.hora.localeCompare(b.hora)
-)
-.forEach(item=>{
+        lista.innerHTML += `
 
-lista.innerHTML += `
+        <div
+        class="item-servico"
+        onclick="selecionarAgendamento('${item.id}')">
 
-<div
-class="item-servico"
-onclick="selecionarAgendamento('${item.id}')">
+            <strong>${item.hora}</strong><br>
 
-<strong>${item.hora}</strong>
+            ${item.cliente}<br>
 
-<br>
+            ${item.modelo}
 
-${item.cliente}
+        </div>
 
-<br>
+        `;
 
-${item.modelo}
-
-</div>
-
-`;
-
-});
+    });
 
 }
-/* SELECIONAR CLIENTE */
+
+/* SELECIONAR AGENDAMENTO */
 
 function selecionarAgendamento(id){
 
-const item =
-agendamentos.find(
-a => a.id === id
-);
+    const item =
+    agendamentos.find(
+    a => String(a.id) === String(id)
+    );
 
-if(!item){
-return;
-}
+    if(!item){
+        return;
+    }
 
-agendamentoSelecionado = item;
+    agendamentoSelecionado = item;
 
-document
-.getElementById("cliente")
-.value =
-item.cliente || "";
+    document.getElementById("cliente").value =
+    item.cliente || "";
 
-document
-.getElementById("telefone")
-.value =
-item.telefone || "";
+    document.getElementById("telefone").value =
+    item.telefone || "";
 
-document
-.getElementById("modelo")
-.value =
-item.modelo || "";
+    document.getElementById("modelo").value =
+    item.modelo || "";
 
-document
-.getElementById("servicos")
-.value =
-item.servicos
-? item.servicos.join(", ")
-: "";
+    document.getElementById("servicos").value =
+    Array.isArray(item.servicos)
+    ? item.servicos.join(", ")
+    : "";
 
-document
-.getElementById("valor")
-.value =
-item.valor || "";
+    document.getElementById("valor").value =
+    item.valor || "";
 
 }
 
@@ -123,208 +97,176 @@ item.valor || "";
 
 document
 .getElementById("formPagamento")
-.addEventListener(
-"submit",
-function(e){
+.addEventListener("submit", function(e){
 
-e.preventDefault();
+    e.preventDefault();
 
-if(!agendamentoSelecionado){
+    if(!agendamentoSelecionado){
 
-alert(
-"Selecione um cliente."
-);
+        alert(
+        "Selecione um cliente da lista."
+        );
 
-return;
+        return;
+    }
 
-}
+    const valor =
+    document.getElementById("valor").value;
 
-const valor =
-document.getElementById("valor")
-.value;
+    if(!valor){
 
-if(!valor){
+        alert(
+        "Falta preencher o valor."
+        );
 
-alert(
-"Falta informar o valor."
-);
+        return;
+    }
 
-return;
+    const formaPagamento =
+    document.getElementById("formaPagamento").value;
 
-}
+    if(!formaPagamento){
 
-const forma =
-document.getElementById(
-"formaPagamento"
-).value;
+        alert(
+        "Selecione a forma de pagamento."
+        );
 
-if(!forma){
+        return;
+    }
 
-alert(
-"Selecione a forma de pagamento."
-);
+    const status =
+    document.getElementById("status").value;
 
-return;
+    if(!status){
 
-}
+        alert(
+        "Selecione o status."
+        );
 
-const status =
-document.getElementById(
-"status"
-).value;
+        return;
+    }
 
-if(!status){
+    const pagamento = {
 
-alert(
-"Selecione o status."
-);
+        id: Date.now().toString(),
 
-return;
+        agendamentoId:
+        agendamentoSelecionado.id,
 
-}
+        data:
+        new Date()
+        .toISOString()
+        .split("T")[0],
 
-const novoPagamento = {
+        cliente:
+        agendamentoSelecionado.cliente,
 
-id: Date.now(),
+        telefone:
+        agendamentoSelecionado.telefone,
 
-data:
-new Date()
-.toISOString()
-.split("T")[0],
+        modelo:
+        agendamentoSelecionado.modelo,
 
-cliente:
-document.getElementById("cliente").value,
+        servicos:
+        agendamentoSelecionado.servicos,
 
-telefone:
-document.getElementById("telefone").value,
+        valor:
+        parseFloat(valor),
 
-modelo:
-document.getElementById("modelo").value,
+        formaPagamento,
 
-servicos:
-document.getElementById("servicos").value,
+        status,
 
-valor:
-parseFloat(valor),
+        observacoes:
+        document.getElementById("observacoes").value
 
-formaPagamento: forma,
+    };
 
-status: status,
+    pagamentos.push(pagamento);
 
-observacoes:
-document.getElementById("observacoes").value
+    localStorage.setItem(
+    "pagamentos",
+    JSON.stringify(pagamentos)
+    );
 
-};
+    alert(
+    "Pagamento registado com sucesso."
+    );
 
-pagamentos.push(
-novoPagamento
-);
+    document
+    .getElementById("formPagamento")
+    .reset();
 
-localStorage.setItem(
-"pagamentos",
-JSON.stringify(pagamentos)
-);
+    document.getElementById("cliente").value = "";
+    document.getElementById("telefone").value = "";
+    document.getElementById("modelo").value = "";
+    document.getElementById("servicos").value = "";
 
-alert(
-"Pagamento registado com sucesso."
-);
+    agendamentoSelecionado = null;
 
-document
-.getElementById("formPagamento")
-.reset();
+    atualizarCards();
 
-document
-.getElementById("cliente")
-.value = "";
+    carregarPendentes();
 
-document
-.getElementById("telefone")
-.value = "";
-
-document
-.getElementById("modelo")
-.value = "";
-
-document
-.getElementById("servicos")
-.value = "";
-
-agendamentoSelecionado = null;
-
-atualizarCards();
-
-carregarPendentes();
-
-}
-);
+});
 
 /* CARDS */
 
 function atualizarCards(){
 
-const hoje =
-new Date()
-.toISOString()
-.split("T")[0];
+    const hoje =
+    new Date()
+    .toISOString()
+    .split("T")[0];
 
-const mesAtual =
-new Date().getMonth();
+    const mesAtual =
+    new Date().getMonth();
 
-const anoAtual =
-new Date().getFullYear();
+    const anoAtual =
+    new Date().getFullYear();
 
-let recebidoHoje = 0;
-let recebidoMes = 0;
-let pendente = 0;
+    let recebidoHoje = 0;
+    let recebidoMes = 0;
+    let pendente = 0;
 
-pagamentos.forEach(item=>{
+    pagamentos.forEach(item => {
 
-const pago =
-item.status.startsWith("Pago");
+        const pago =
+        item.status.startsWith("Pago");
 
-if(item.data === hoje && pago){
+        if(item.data === hoje && pago){
 
-recebidoHoje += item.valor;
+            recebidoHoje += item.valor;
+        }
 
-}
+        const dataItem =
+        new Date(item.data);
 
-const data =
-new Date(item.data);
+        if(
+            dataItem.getMonth() === mesAtual
+            &&
+            dataItem.getFullYear() === anoAtual
+            &&
+            pago
+        ){
+            recebidoMes += item.valor;
+        }
 
-if(
-data.getMonth() === mesAtual
-&&
-data.getFullYear() === anoAtual
-&&
-pago
-){
+        if(!pago){
 
-recebidoMes += item.valor;
+            pendente += item.valor;
+        }
 
-}
+    });
 
-if(!pago){
+    document.getElementById("recebidoHoje").textContent =
+    "€ " + recebidoHoje.toFixed(2);
 
-pendente += item.valor;
+    document.getElementById("recebidoMes").textContent =
+    "€ " + recebidoMes.toFixed(2);
 
-}
-
-});
-
-document
-.getElementById("recebidoHoje")
-.textContent =
-"€ " + recebidoHoje.toFixed(2);
-
-document
-.getElementById("recebidoMes")
-.textContent =
-"€ " + recebidoMes.toFixed(2);
-
-document
-.getElementById("valorPendente")
-.textContent =
-"€ " + pendente.toFixed(2);
+    document.getElementById("valorPendente").textContent =
+    "€ " + pendente.toFixed(2);
 
 }
 
@@ -332,54 +274,51 @@ document
 
 function carregarPendentes(){
 
-const lista =
-document.getElementById(
-"listaPendentes"
-);
+    const lista =
+    document.getElementById("listaPendentes");
 
-const pendentes =
-pagamentos.filter(
-p => !p.status.startsWith("Pago")
-);
+    const pendentes =
+    pagamentos.filter(
+    p => !p.status.startsWith("Pago")
+    );
 
-if(pendentes.length === 0){
+    if(pendentes.length === 0){
 
-lista.innerHTML =
-"Nenhuma pendência.";
+        lista.innerHTML =
+        "Nenhuma pendência.";
 
-return;
+        return;
+    }
 
-}
+    lista.innerHTML = "";
 
-lista.innerHTML = "";
+    pendentes.forEach(item => {
 
-pendentes.forEach(item=>{
+        lista.innerHTML += `
 
-lista.innerHTML += `
+        <div class="item-pendente">
 
-<div class="item-pendente">
+            <strong>
+            ${item.cliente}
+            </strong>
 
-<strong>
-${item.cliente}
-</strong>
+            <br>
 
-<br>
+            € ${item.valor.toFixed(2)}
 
-€ ${item.valor.toFixed(2)}
+            <br>
 
-<br>
+            <span class="pendente">
 
-<span class="pendente">
+            ${item.status}
 
-${item.status}
+            </span>
 
-</span>
+        </div>
 
-</div>
+        `;
 
-`;
-
-});
+    });
 
 }
 
@@ -387,16 +326,14 @@ ${item.status}
 
 function logout(){
 
-localStorage.removeItem(
-"perfil"
-);
+    localStorage.removeItem("perfil");
 
-window.location.href =
-"login.html";
+    window.location.href =
+    "login.html";
 
 }
 
-/* INICIALIZAÇÃO */
+/* INICIAR */
 
 carregarServicosHoje();
 
