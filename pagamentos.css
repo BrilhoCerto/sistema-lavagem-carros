@@ -93,10 +93,10 @@ font-size:13px;
 border-radius:8px;
 }
 
-/* LISTAS */
+/* SERVIÇOS DO DIA */
 
 .item-servico{
-padding:10px;
+padding:12px;
 border-bottom:1px solid #eee;
 cursor:pointer;
 transition:0.3s;
@@ -106,21 +106,27 @@ transition:0.3s;
 background:#f8fafc;
 }
 
+.item-servico strong{
+color:#0d6efd;
+}
+
+/* PENDÊNCIAS */
+
 .item-pendente{
-padding:10px;
+padding:12px;
 border-bottom:1px solid #eee;
 }
 
 .pendente{
-color:#dc3545;
 font-weight:bold;
+color:#dc3545;
 }
 
 /* BOTÕES */
 
 .btn{
-font-size:13px;
 border-radius:8px;
+font-size:13px;
 }
 
 /* RESPONSIVO */
