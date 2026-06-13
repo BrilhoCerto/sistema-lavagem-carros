@@ -48,12 +48,6 @@ class="menu-btn">
 📊 Relatórios
 </button>
 
-<button
-class="menu-btn"
-onclick="logout()">
-🚪 Sair
-</button>
-
 </div>
 
 <div class="content">
@@ -84,7 +78,7 @@ id="recebidoHoje">
 
 <div class="card-dashboard">
 
-<div>💰 Recebido Mês</div>
+<div>💰 Recebido no Mês</div>
 
 <div
 class="numero text-primary"
@@ -102,7 +96,7 @@ id="recebidoMes">
 
 <div class="card-dashboard">
 
-<div>📌 Valores Pendentes</div>
+<div>📌 Pendente</div>
 
 <div
 class="numero text-danger"
@@ -124,7 +118,7 @@ id="valorPendente">
 
 <div id="listaServicosHoje">
 
-Nenhum serviço carregado.
+A carregar serviços...
 
 </div>
 
@@ -136,14 +130,8 @@ Nenhum serviço carregado.
 
 <form id="formPagamento">
 
-<div class="row">
-
-<div class="col-md-6">
-
 <label class="form-label">
-
 Cliente
-
 </label>
 
 <input
@@ -152,14 +140,8 @@ id="cliente"
 class="form-control mb-3"
 readonly>
 
-</div>
-
-<div class="col-md-6">
-
 <label class="form-label">
-
 Telefone
-
 </label>
 
 <input
@@ -168,18 +150,8 @@ id="telefone"
 class="form-control mb-3"
 readonly>
 
-</div>
-
-</div>
-
-<div class="row">
-
-<div class="col-md-6">
-
 <label class="form-label">
-
 Modelo do Carro
-
 </label>
 
 <input
@@ -188,14 +160,8 @@ id="modelo"
 class="form-control mb-3"
 readonly>
 
-</div>
-
-<div class="col-md-6">
-
 <label class="form-label">
-
 Serviços
-
 </label>
 
 <input
@@ -204,14 +170,8 @@ id="servicos"
 class="form-control mb-3"
 readonly>
 
-</div>
-
-</div>
-
 <label class="form-label">
-
 Valor (€)
-
 </label>
 
 <input
@@ -222,9 +182,7 @@ class="form-control mb-3"
 required>
 
 <label class="form-label">
-
 Forma de Pagamento
-
 </label>
 
 <select
@@ -236,28 +194,26 @@ required>
 Selecione
 </option>
 
-<option>
+<option value="Dinheiro">
 Dinheiro
 </option>
 
-<option>
+<option value="MB Way">
 MB Way
 </option>
 
-<option>
+<option value="Transferência">
 Transferência
 </option>
 
-<option>
+<option value="Multibanco">
 Multibanco
 </option>
 
 </select>
 
 <label class="form-label">
-
 Status
-
 </label>
 
 <select
@@ -269,40 +225,38 @@ required>
 Selecione
 </option>
 
-<option>
+<option value="Pago em Dinheiro">
 Pago em Dinheiro
 </option>
 
-<option>
+<option value="Pago em MB Way">
 Pago em MB Way
 </option>
 
-<option>
+<option value="Pago em Transferência">
 Pago em Transferência
 </option>
 
-<option>
+<option value="Pago em Multibanco">
 Pago em Multibanco
 </option>
 
-<option>
+<option value="MB Way Pendente">
 MB Way Pendente
 </option>
 
-<option>
+<option value="Transferência Pendente">
 Transferência Pendente
 </option>
 
-<option>
+<option value="Entregue sem Pagamento">
 Entregue sem Pagamento
 </option>
 
 </select>
 
 <label class="form-label">
-
 Observações
-
 </label>
 
 <textarea
