@@ -359,8 +359,8 @@ const data =
 new Date().toLocaleDateString("pt-PT")
 .replaceAll("/","-");
 
-link.download =
-backup-brilho-certo-${data}.json;
+link.download =`
+backup-brilho-certo-${data}.json`;
 
 link.click();
 
