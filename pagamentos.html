@@ -77,7 +77,8 @@ id="recebidoHoje">
 
 </div>
 
-<div class="col-md-4">
+<div class="col-md-4"
+id=cardRecebidoMes">
 
 <div class="card-dashboard">
 
@@ -325,7 +326,14 @@ if(localStorage.getItem("perfil") === "funcionario"){
     if(relatorios){
         relatorios.style.display = "none";
     }
+    const cardMes =
+    document.getElementById(
+    "cardRecebidoMes"
+);
 
+if(cardMes){
+    cardMes.style.display = "none";
+}
 }
 
 </script>
