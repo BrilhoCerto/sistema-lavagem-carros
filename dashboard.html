@@ -118,17 +118,20 @@ onclick="location.href='agendamentos.html'">
 </button>
 
 <button class="menu-btn"
-💳 Pagamentos
 onclick="location.href='pagamentos.html'">
+💳 Pagamentos
 </button>
 
 <button
+id="menuDespesas"
 class="menu-btn"
 onclick="location.href='despesas.html'">
 💸 Despesas
 </button>
 
 <button class="menu-btn">
+id="menuRelatorios"
+onclick="location.href='relatorios.html'">
 📊 Relatórios
 </button>
 
@@ -225,6 +228,18 @@ document
 .getElementById("listaAgendamentos")
 .innerHTML =
 html || "Nenhum agendamento encontrado.";
+
+if(perfil === "funcionario"){
+
+document.getElementById(
+"menuDespesas"
+).style.display = "none";
+
+document.getElementById(
+"menuRelatorios"
+).style.display = "none";
+
+}
 
 function logout(){
 
