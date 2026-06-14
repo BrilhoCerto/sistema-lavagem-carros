@@ -225,7 +225,8 @@ Gerar cópia de segurança completa dos dados do sistema.
 </p>
 
 <button
-class="btn btn-primary">
+class="btn btn-primary"
+onclick="exportarBackup()">
 📥 Fazer Backup
 </button>
 
@@ -321,8 +322,51 @@ Em desenvolvimento...
 <script src="relatorios.js"></script>
 
 <script>
+
 aplicarPermissoesMenu();
-</script> 
+
+function exportarBackup(){
+
+const backup = {
+
+dataBackup:
+new Date().toLocaleDateString("pt-PT"),
+
+agendamentos:
+JSON.parse(localStorage.getItem("agendamentos")) || [],
+
+pagamentos:
+JSON.parse(localStorage.getItem("pagamentos")) || [],
+
+despesas:
+JSON.parse(localStorage.getItem("despesas")) || []
+
+};
+
+const blob =
+new Blob(
+[JSON.stringify(backup,null,2)],
+{type:"application/json"}
+);
+
+const link =
+document.createElement("a");
+
+link.href =
+URL.createObjectURL(blob);
+
+const data =
+new Date().toLocaleDateString("pt-PT")
+.replaceAll("/","-");
+
+link.download =
+backup-brilho-certo-${data}.json;
+
+link.click();
+
+}
+
+</script>
   
 </body>
 </html>
