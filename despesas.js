@@ -1,7 +1,11 @@
-const perfil = localStorage.getItem("perfil");
+const perfilDespesa =
+localStorage.getItem("perfil");
 
-if(!perfil){
-window.location.href = "login.html";
+if(!perfilDespesa){
+
+window.location.href =
+"login.html";
+
 }
 
 let despesas =
