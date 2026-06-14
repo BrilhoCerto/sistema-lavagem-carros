@@ -3,7 +3,9 @@ const perfilRelatorio = localStorage.getItem("perfil");
 if (!perfilRelatorio) {
     window.location.href = "login.html";
 }
-
+if(perfilRelatorio === "funcionario"){
+    window.location.href = "pagamentos.html";
+}
 const pagamentos =
 JSON.parse(localStorage.getItem("pagamentos")) || [];
 
