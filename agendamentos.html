@@ -158,12 +158,17 @@ onclick="location.href='pagamentos.html'">
 💳 Pagamentos
 </button>
 
-<button class="menu-btn"
+<button
+id="menuDespesas"
+class="menu-btn"
 onclick="location.href='despesas.html'">
 💸 Despesas
 </button>
 
-<button class="menu-btn">
+<button
+id="menuRelatorios"
+class="menu-btn"
+onclick="location.href='relatorios.html'">
 📊 Relatórios
 </button>
 
@@ -900,7 +905,23 @@ alert("Agendamento removido.");
 limparFormulario();
 
 }
+if(localStorage.getItem("perfil") === "funcionario"){
 
+    const despesas =
+    document.getElementById("menuDespesas");
+
+    if(despesas){
+        despesas.style.display = "none";
+    }
+
+    const relatorios =
+    document.getElementById("menuRelatorios");
+
+    if(relatorios){
+        relatorios.style.display = "none";
+    }
+
+}
 </script>
 
 </body>
