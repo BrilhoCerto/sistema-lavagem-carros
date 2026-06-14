@@ -315,13 +315,25 @@ window.onload = function(){
 
     if(localStorage.getItem("perfil") === "funcionario"){
 
+        const despesas =
+        document.getElementById("menuDespesas");
+
+        if(despesas){
+            despesas.style.display = "none";
+        }
+
+        const relatorios =
+        document.getElementById("menuRelatorios");
+
+        if(relatorios){
+            relatorios.style.display = "none";
+        }
+
         const cardMes =
         document.getElementById("cardRecebidoMes");
 
         if(cardMes){
-
             cardMes.style.display = "none";
-
         }
 
     }
