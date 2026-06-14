@@ -39,3 +39,40 @@ alert(
 return false;
 
 }
+
+/* MENU DINÂMICO */
+
+function aplicarPermissoesMenu(){
+
+const perfil =
+localStorage.getItem("perfil");
+
+/* FUNCIONÁRIO */
+
+if(perfil === "funcionario"){
+
+document
+.querySelectorAll(".menu-restrito")
+.forEach(item => {
+
+item.style.display = "none";
+
+});
+
+}
+
+/* ADMINISTRADOR */
+
+if(perfil === "administrador"){
+
+document
+.querySelectorAll(".menu-funcionario")
+.forEach(item => {
+
+item.style.display = "none";
+
+});
+
+}
+
+}
