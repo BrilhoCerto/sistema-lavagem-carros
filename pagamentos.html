@@ -78,7 +78,7 @@ id="recebidoHoje">
 </div>
 
 <div class="col-md-4"
-id=cardRecebidoMes">
+id="cardRecebidoMes">
 
 <div class="card-dashboard">
 
@@ -311,29 +311,21 @@ Nenhum pagamento registado hoje.
 
 aplicarPermissoesMenu();
 
-if(localStorage.getItem("perfil") === "funcionario"){
+window.onload = function(){
 
-    const despesas =
-    document.getElementById("menuDespesas");
+    if(localStorage.getItem("perfil") === "funcionario"){
 
-    if(despesas){
-        despesas.style.display = "none";
+        const cardMes =
+        document.getElementById("cardRecebidoMes");
+
+        if(cardMes){
+
+            cardMes.style.display = "none";
+
+        }
+
     }
 
-    const relatorios =
-    document.getElementById("menuRelatorios");
-
-    if(relatorios){
-        relatorios.style.display = "none";
-    }
-    const cardMes =
-    document.getElementById(
-    "cardRecebidoMes"
-);
-
-if(cardMes){
-    cardMes.style.display = "none";
-}
 }
 
 </script>
