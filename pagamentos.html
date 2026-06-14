@@ -38,13 +38,16 @@ class="menu-btn ativo">
 </button>
 
 <button
+id="menuDespesas"
 class="menu-btn"
 onclick="location.href='despesas.html'">
 💸 Despesas
 </button>
 
 <button
-class="menu-btn">
+id="menuRelatorios"
+class="menu-btn"
+onclick="location.href='relatorios.html'">
 📊 Relatórios
 </button>
 
@@ -304,7 +307,27 @@ Nenhum pagamento registado hoje.
 <script src="pagamentos.js"></script>
 
 <script>
+
 aplicarPermissoesMenu();
+
+if(localStorage.getItem("perfil") === "funcionario"){
+
+    const despesas =
+    document.getElementById("menuDespesas");
+
+    if(despesas){
+        despesas.style.display = "none";
+    }
+
+    const relatorios =
+    document.getElementById("menuRelatorios");
+
+    if(relatorios){
+        relatorios.style.display = "none";
+    }
+
+}
+
 </script>
 
 </body>
