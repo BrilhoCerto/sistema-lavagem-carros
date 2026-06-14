@@ -20,27 +20,32 @@
 
 <h3>🚗 Brilho Certo</h3>
 
-<button class="menu-btn"
+<button
+class="menu-btn"
 onclick="location.href='dashboard.html'">
 🏠 Início
 </button>
 
-<button class="menu-btn"
+<button
+class="menu-btn"
 onclick="location.href='agendamentos.html'">
 📅 Agenda
 </button>
 
-<button class="menu-btn"
+<button
+class="menu-btn"
 onclick="location.href='pagamentos.html'">
 💳 Pagamentos
 </button>
 
-<button class="menu-btn"
+<button
+class="menu-btn"
 onclick="location.href='despesas.html'">
 💸 Despesas
 </button>
 
-<button class="menu-btn ativo">
+<button
+class="menu-btn ativo">
 📊 Relatórios
 </button>
 
@@ -50,13 +55,17 @@ onclick="location.href='despesas.html'">
 
 <h2>📊 Relatórios e Indicadores</h2>
 
+<!-- CARDS -->
+
 <div class="row mb-4">
 
 <div class="col-md-3">
 
 <div class="card-dashboard">
 
-<div>💰 Receita Hoje</div>
+<div id="tituloReceita">
+💰 Receita do Período
+</div>
 
 <div
 class="numero text-success"
@@ -74,7 +83,9 @@ id="receitaHoje">
 
 <div class="card-dashboard">
 
-<div>💸 Despesa Hoje</div>
+<div id="tituloDespesa">
+💸 Despesa do Período
+</div>
 
 <div
 class="numero text-danger"
@@ -92,7 +103,9 @@ id="despesaHoje">
 
 <div class="card-dashboard">
 
-<div>📈 Saldo Hoje</div>
+<div id="tituloSaldo">
+📈 Saldo do Período
+</div>
 
 <div
 class="numero text-primary"
@@ -110,7 +123,9 @@ id="saldoHoje">
 
 <div class="card-dashboard">
 
-<div>🚗 Veículos Hoje</div>
+<div>
+🚗 Veículos
+</div>
 
 <div
 class="numero"
@@ -126,13 +141,15 @@ id="veiculosHoje">
 
 </div>
 
+<!-- FILTROS -->
+
 <div class="card-dashboard">
 
 <h4>Filtros</h4>
 
-<div class="row">
+<div class="row g-2">
 
-<div class="col-md-4">
+<div class="col-md-3">
 
 <select
 id="filtroPeriodo"
@@ -140,6 +157,14 @@ class="form-control">
 
 <option value="hoje">
 Hoje
+</option>
+
+<option value="ontem">
+Ontem
+</option>
+
+<option value="semana">
+Esta Semana
 </option>
 
 <option value="mes">
@@ -150,19 +175,55 @@ Este Mês
 Este Ano
 </option>
 
+<option value="personalizado">
+Período Personalizado
+</option>
+
 </select>
 
 </div>
 
+<div class="col-md-3">
+
+<input
+type="date"
+id="dataInicial"
+class="form-control">
+
+</div>
+
+<div class="col-md-3">
+
+<input
+type="date"
+id="dataFinal"
+class="form-control">
+
+</div>
+
+<div class="col-md-3">
+
+<button
+id="btnAplicarFiltro"
+class="btn btn-primary w-100">
+
+Aplicar Filtro
+
+</button>
+
 </div>
 
 </div>
+
+</div>
+
+<!-- MOVIMENTAÇÕES -->
 
 <div class="card-dashboard">
 
 <h4>Movimentações</h4>
 
-<table class="table">
+<table class="table table-striped">
 
 <thead>
 
@@ -186,7 +247,49 @@ Este Ano
 
 </table>
 
+<div class="mt-4">
+
+<h5>
+
+💰 Total Receitas:
+
+<span id="totalReceitas">
+
+€ 0,00
+
+</span>
+
+</h5>
+
+<h5>
+
+💸 Total Despesas:
+
+<span id="totalDespesas">
+
+€ 0,00
+
+</span>
+
+</h5>
+
+<h4>
+
+📈 Saldo:
+
+<span id="saldoPeriodo">
+
+€ 0,00
+
+</span>
+
+</h4>
+
 </div>
+
+</div>
+
+<!-- INDICADORES -->
 
 <div class="card-dashboard">
 
