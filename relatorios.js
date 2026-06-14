@@ -1,6 +1,6 @@
-const perfil = localStorage.getItem("perfil");
+const perfilRelatorio = localStorage.getItem("perfil");
 
-if (!perfil) {
+if (!perfilRelatorio) {
     window.location.href = "login.html";
 }
 
