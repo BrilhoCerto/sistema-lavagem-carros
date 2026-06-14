@@ -7,7 +7,9 @@ window.location.href =
 "login.html";
 
 }
-
+if(perfil === "funcionario"){
+    window.location.href = "pagamentos.html";
+}
 let despesas =
 JSON.parse(
 localStorage.getItem("despesas")
