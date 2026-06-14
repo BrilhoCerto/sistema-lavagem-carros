@@ -82,24 +82,90 @@ Somente colaboradores autorizados
 
 function login(){
 
-const user = document.getElementById("user").value;
-const pass = document.getElementById("pass").value;
+const user =
+document.getElementById("user").value;
 
-/* LOGIN SIMPLES (V2) */
+const pass =
+document.getElementById("pass").value;
 
-if(user === "admin" && pass === "123"){
-localStorage.setItem("perfil","admin");
-location.href = "agendamentos.html";
+/* GESTOR */
+
+if(
+user === "eliane"
+&&
+pass === "123"
+){
+
+localStorage.setItem(
+"perfil",
+"gestor"
+);
+
+localStorage.setItem(
+"utilizador",
+"Eliane"
+);
+
+location.href =
+"agendamentos.html";
+
 return;
+
 }
 
-if(user === "funcionario" && pass === "123"){
-localStorage.setItem("perfil","funcionario");
-location.href = "agendamentos.html";
+/* ADMINISTRADOR */
+
+if(
+user === "samuel"
+&&
+pass === "123"
+){
+
+localStorage.setItem(
+"perfil",
+"administrador"
+);
+
+localStorage.setItem(
+"utilizador",
+"Samuel"
+);
+
+location.href =
+"agendamentos.html";
+
 return;
+
 }
 
-alert("Credenciais inválidas");
+/* FUNCIONÁRIO */
+
+if(
+user === "funcionario"
+&&
+pass === "123"
+){
+
+localStorage.setItem(
+"perfil",
+"funcionario"
+);
+
+localStorage.setItem(
+"utilizador",
+"Funcionário"
+);
+
+location.href =
+"agendamentos.html";
+
+return;
+
+}
+
+alert(
+"Credenciais inválidas"
+);
 
 }
 
