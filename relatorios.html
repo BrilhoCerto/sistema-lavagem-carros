@@ -380,7 +380,48 @@ backup-brilho-certo-${data}.json`;
 link.click();
 
 }
+function importarBackup(event){
 
+    const arquivo = event.target.files[0];
+
+    if(!arquivo){
+        return;
+    }
+
+    const leitor = new FileReader();
+
+    leitor.onload = function(e){
+
+        const backup = JSON.parse(e.target.result);
+
+        if(backup.agendamentos){
+            localStorage.setItem(
+                "agendamentos",
+                JSON.stringify(backup.agendamentos)
+            );
+        }
+
+        if(backup.pagamentos){
+            localStorage.setItem(
+                "pagamentos",
+                JSON.stringify(backup.pagamentos)
+            );
+        }
+
+        if(backup.despesas){
+            localStorage.setItem(
+                "despesas",
+                JSON.stringify(backup.despesas)
+            );
+        }
+
+        alert("Backup restaurado com sucesso!");
+
+        location.reload();
+    };
+
+    leitor.readAsText(arquivo);
+}
 </script>
   
 </body>
