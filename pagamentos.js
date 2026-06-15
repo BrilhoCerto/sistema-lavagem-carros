@@ -1,9 +1,3 @@
-const perfil = localStorage.getItem("perfil");
-
-if (!perfil) {
-    window.location.href = "login.html";
-}
-
 let pagamentos =
 JSON.parse(localStorage.getItem("pagamentos")) || [];
 
