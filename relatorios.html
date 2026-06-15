@@ -230,6 +230,21 @@ onclick="exportarBackup()">
 📥 Fazer Backup
 </button>
 
+<br><br>
+
+<input
+type="file"
+id="arquivoBackup"
+accept=".json"
+style="display:none"
+onchange="importarBackup(event)">
+
+<button
+class="btn btn-success"
+onclick="document.getElementById('arquivoBackup').click()">
+📂 Restaurar Backup
+</button>
+
 </div>
 <!-- MOVIMENTAÇÕES -->
 
