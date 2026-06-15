@@ -13,56 +13,76 @@ JSON.parse(localStorage.getItem("agendamentos")) || [];
 let agendamentoSelecionado = null;
 
 /* SERVIÇOS DO DIA */
-
 function carregarServicosHoje() {
 
     const lista =
     document.getElementById("listaServicosHoje");
-
-    const hoje =
-    new Date().toISOString().split("T")[0];
 
     const agendamentosPagos =
     pagamentos.map(
         p => String(p.agendamentoId)
     );
 
-    const servicosHoje =
+    const servicosPendentes =
     agendamentos
     .filter(item =>
-        item.data === hoje &&
         !agendamentosPagos.includes(
             String(item.id)
         )
     )
-    .sort((a, b) =>
-        a.hora.localeCompare(b.hora)
-    );
+    .sort((a,b)=>{
 
-    if (servicosHoje.length === 0) {
+        const dataA =
+        new Date(a.data + "T" + a.hora);
+
+        const dataB =
+        new Date(b.data + "T" + b.hora);
+
+        return dataA - dataB;
+
+    });
+
+    if(servicosPendentes.length === 0){
 
         lista.innerHTML =
-        "<p>Nenhum serviço pendente para hoje.</p>";
+        "<p>Nenhum serviço pendente.</p>";
 
         return;
+
     }
 
     lista.innerHTML = "";
 
-    servicosHoje.forEach(item => {
+    servicosPendentes.forEach(item=>{
 
         lista.innerHTML +=
+
         '<div class="item-servico" onclick="selecionarAgendamento(\'' +
+
         item.id +
+
         '\')">' +
+
         '<strong>' +
-        item.hora +
+
+        item.data +
+
         '</strong> | ' +
-        item.cliente +
+
+        item.hora +
+
         ' | ' +
+
+        item.cliente +
+
+        ' | ' +
+
         item.modelo +
+
         ' | € ' +
+
         (item.valor || 0) +
+
         '</div>';
 
     });
