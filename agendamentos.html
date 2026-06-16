@@ -375,16 +375,54 @@ Selecione um dia no calendário.
 
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
 <script type="module">
+
 import { db } from "./firebase.js";
 
-console.log("Firebase conectado", db);
+import {
+  collection,
+  addDoc
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+console.log("Firebase conectado:", db);
+
+async function testeFirebase() {
+
+  try {
+
+    const docRef = await addDoc(
+      collection(db, "teste"),
+      {
+        mensagem: "Olá Firebase",
+        data: new Date().toISOString()
+      }
+    );
+
+    console.log(
+      "Documento criado com ID:",
+      docRef.id
+    );
+
+  } catch (erro) {
+
+    console.error(
+      "Erro Firebase:",
+      erro.code,
+      erro.message
+    );
+
+  }
+
+}
+
+testeFirebase();
+
 const perfil = localStorage.getItem("perfil");
 
-if(!perfil){
-window.location.href = "login.html";
+if (!perfil) {
+  window.location.href = "login.html";
 }
- </script>
 
+</script>
  <script>
 let calendario;
 
