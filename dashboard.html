@@ -189,9 +189,23 @@ JSON.parse(
 localStorage.getItem("agendamentos")
 ) || [];
 
+const pagamentos =
+JSON.parse(
+localStorage.getItem("pagamentos")
+) || [];
+
+const agendamentosAtivos =
+agendamentos.filter(item =>
+
+    !pagamentos.some(
+        p => String(p.agendamentoId) === String(item.id)
+    )
+
+);
+
 let html = "";
 
-agendamentos
+agendamentosAtivos
 .sort((a,b)=>{
 
 const dataA =
