@@ -244,6 +244,66 @@ document
 .innerHTML =
 html || "Nenhum agendamento encontrado.";
 
+const concluidos =
+agendamentos.filter(item =>
+
+    pagamentos.some(
+        p => String(p.agendamentoId) === String(item.id)
+    )
+
+);
+
+let htmlConcluidos = `
+<hr>
+<h4>✅ Agendamentos Concluídos</h4>
+`;
+
+if(concluidos.length > 0){
+
+    concluidos
+    .sort((a,b)=>{
+
+        const dataA =
+        new Date(a.data + "T" + a.hora);
+
+        const dataB =
+        new Date(b.data + "T" + b.hora);
+
+        return dataA - dataB;
+
+    })
+    .forEach(item=>{
+
+        htmlConcluidos += `
+        <div class="lista-item"
+             style="
+                border-left:5px solid green;
+                opacity:0.8;
+             ">
+            ✅ PAGO
+            &nbsp;|&nbsp;
+            ${item.data}
+            &nbsp;|&nbsp;
+            ${item.hora}
+            &nbsp;|&nbsp;
+            ${item.cliente}
+            &nbsp;|&nbsp;
+            ${item.modelo}
+        </div>
+        `;
+    });
+
+}else{
+
+    htmlConcluidos +=
+    "<p>Nenhum agendamento concluído.</p>";
+
+}
+
+document
+.getElementById("listaAgendamentos")
+.innerHTML += htmlConcluidos;
+    
 if(perfil === "funcionario"){
 
 document.getElementById(
