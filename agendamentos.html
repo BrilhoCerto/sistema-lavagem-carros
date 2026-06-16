@@ -156,7 +156,7 @@ padding:12px;
 
 <button
 class="menu-btn"
-onclick="location.href='dashboard.html'">
+onclick="confirmarSaida('dashboard.html')">
 🏠 Início
 </button>
 
@@ -165,21 +165,21 @@ onclick="location.href='dashboard.html'">
 </button>
 
 <button class="menu-btn"
-onclick="location.href='pagamentos.html'">
+onclick="confirmarSaida('pagamentos.html')">
 💳 Pagamentos
 </button>
 
 <button
 id="menuDespesas"
 class="menu-btn"
-onclick="location.href='despesas.html'">
+onclick="confirmarSaida('despesas.html')">
 💸 Despesas
 </button>
 
 <button
 id="menuRelatorios"
 class="menu-btn"
-onclick="location.href='relatorios.html'">
+onclick="confirmarSaida('relatorios.html')">
 📊 Relatórios
 </button>
 
@@ -850,8 +850,9 @@ mostrarAgendamentosDoDia(data);
 
 alert("Agendamento criado com sucesso.");
 
-limparFormulario();
+formularioAlterado = false;
 
+limparFormulario();
 });
 
 /* ATUALIZAR */
@@ -940,7 +941,7 @@ atualizarCalendario();
 mostrarAgendamentosDoDia(data);
 
 alert("Agendamento atualizado.");
-
+formularioAlterado = false;
 limparFormulario();
 
 });
@@ -978,7 +979,7 @@ mostrarAgendamentosDoDia(diaSelecionado);
 }
 
 alert("Agendamento removido.");
-
+ormularioAlterado = false;
 limparFormulario();
 
 }
@@ -1027,6 +1028,23 @@ window.addEventListener(
 
     }
 );
+ function confirmarSaida(destino){
+
+    if(formularioAlterado){
+
+        const sair = confirm(
+            "Existem alterações não salvas. Deseja sair mesmo assim?"
+        );
+
+        if(!sair){
+            return;
+        }
+
+    }
+
+    location.href = destino;
+
+}
 </script>
 
 </body>
