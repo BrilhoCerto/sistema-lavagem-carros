@@ -999,6 +999,34 @@ if(localStorage.getItem("perfil") === "funcionario"){
     }
 
 }
+ let formularioAlterado = false;
+
+document.querySelectorAll(
+"input, select, textarea"
+).forEach(campo => {
+
+    campo.addEventListener(
+        "change",
+        () => {
+            formularioAlterado = true;
+        }
+    );
+
+});
+
+window.addEventListener(
+    "beforeunload",
+    function(e){
+
+        if(formularioAlterado){
+
+            e.preventDefault();
+            e.returnValue = "";
+
+        }
+
+    }
+);
 </script>
 
 </body>
