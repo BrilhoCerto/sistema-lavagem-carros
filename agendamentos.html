@@ -508,45 +508,111 @@ document
 
 function mostrarAgendamentosDoDia(data){
 
-const lista =
-document.getElementById("listaDia");
+    const lista =
+    document.getElementById("listaDia");
 
-const encontrados =
-agendamentos.filter(a => a.data === data);
+    const pagamentos =
+    JSON.parse(localStorage.getItem("pagamentos")) || [];
 
-if(encontrados.length === 0){
+    const agendamentosDia =
+    agendamentos.filter(a => a.data === data);
 
-lista.innerHTML = `
-<p>Nenhum agendamento.</p>
-`;
+    const ativos = [];
+    const concluidos = [];
 
-return;
+    agendamentosDia.forEach(item => {
 
-}
+        const pago =
+        pagamentos.some(
+            p => String(p.agendamentoId) === String(item.id)
+        );
 
-lista.innerHTML = "";
+        if(pago){
+            concluidos.push(item);
+        }else{
+            ativos.push(item);
+        }
 
-encontrados
-.sort((a,b)=>a.hora.localeCompare(b.hora))
-.forEach(item=>{
+    });
 
-lista.innerHTML += `
+    lista.innerHTML = "";
 
-<div
-class="agendamento-item"
-onclick="abrirAgendamento('${item.id}')">
+    /* ATIVOS */
 
-<strong>${item.hora}</strong><br>
+    lista.innerHTML += `
+        <h6 class="mt-2 mb-2">
+            📅 Agendamentos Ativos
+        </h6>
+    `;
 
-${item.cliente}<br>
+    if(ativos.length === 0){
 
-${item.modelo}
+        lista.innerHTML += `
+            <p>Nenhum agendamento ativo.</p>
+        `;
 
-</div>
+    }else{
 
-`;
+        ativos
+        .sort((a,b)=>a.hora.localeCompare(b.hora))
+        .forEach(item=>{
 
-});
+            lista.innerHTML += `
+            <div
+            class="agendamento-item"
+            onclick="abrirAgendamento('${item.id}')">
+
+                <strong>${item.hora}</strong><br>
+                ${item.cliente}<br>
+                ${item.modelo}
+
+            </div>
+            `;
+
+        });
+
+    }
+
+    /* CONCLUÍDOS */
+
+    lista.innerHTML += `
+        <hr>
+        <h6 class="mt-3 mb-2 text-success">
+            ✅ Agendamentos Concluídos
+        </h6>
+    `;
+
+    if(concluidos.length === 0){
+
+        lista.innerHTML += `
+            <p>Nenhum concluído.</p>
+        `;
+
+    }else{
+
+        concluidos
+        .sort((a,b)=>a.hora.localeCompare(b.hora))
+        .forEach(item=>{
+
+            lista.innerHTML += `
+            <div
+            class="agendamento-item"
+            style="
+                border-left:5px solid green;
+                opacity:0.8;
+            "
+            onclick="abrirAgendamento('${item.id}')">
+
+                <strong>✅ ${item.hora}</strong><br>
+                ${item.cliente}<br>
+                ${item.modelo}
+
+            </div>
+            `;
+
+        });
+
+    }
 
 }
 
