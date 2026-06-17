@@ -550,6 +550,7 @@ if(btnFiltrar){
 
         const dataInicial =
         document.getElementById("filtroDataInicial").value;
+        alert(dataInicial);
 
         const dataFinal =
         document.getElementById("filtroDataFinal").value;
