@@ -349,8 +349,15 @@ function atualizarCards(){
     document.getElementById("recebidoHoje").textContent =
     "€ " + recebidoHoje.toFixed(2);
 
-    document.getElementById("recebidoMes").textContent =
+    const cardRecebidoMes =
+document.getElementById("recebidoMes");
+
+if(cardRecebidoMes){
+
+    cardRecebidoMes.textContent =
     "€ " + recebidoMes.toFixed(2);
+
+}
 
     document.getElementById("valorPendente").textContent =
     "€ " + pendente.toFixed(2);
