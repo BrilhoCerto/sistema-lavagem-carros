@@ -435,7 +435,71 @@ pagamentos.filter(
     });
 
 }
+function carregarRecebidosMes(){
 
+    const lista =
+    document.getElementById(
+        "listaRecebidosMes"
+    );
+
+    if(!lista){
+        return;
+    }
+
+    const mesAtual =
+    new Date().getMonth();
+
+    const anoAtual =
+    new Date().getFullYear();
+
+    const recebidos =
+    pagamentos.filter(item => {
+
+        const dataItem =
+        new Date(item.data);
+
+        return (
+            item.status.startsWith("Pago")
+            &&
+            dataItem.getMonth() === mesAtual
+            &&
+            dataItem.getFullYear() === anoAtual
+        );
+
+    });
+
+    if(recebidos.length === 0){
+
+        lista.innerHTML =
+        "Nenhum pagamento registado este mês.";
+
+        return;
+
+    }
+
+    lista.innerHTML = "";
+
+    recebidos.forEach(item => {
+
+        lista.innerHTML +=
+
+        '<div class="item-pendente">' +
+
+        item.data +
+
+        ' | ' +
+
+        item.cliente +
+
+        ' | € ' +
+
+        item.valor.toFixed(2) +
+
+        '</div>';
+
+    });
+
+}
 /* LOGOUT */
 
 function logout(){
