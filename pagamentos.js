@@ -369,9 +369,11 @@ function carregarPagamentosHoje(){
     .split("T")[0];
 
     const hojePagos =
-    pagamentos.filter(
-        p => p.data === hoje
-    );
+pagamentos.filter(
+    p =>
+        p.data === hoje &&
+        p.status.startsWith("Pago")
+);
 
     if(hojePagos.length === 0){
 
