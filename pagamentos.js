@@ -519,4 +519,6 @@ carregarPendentes();
 
 carregarPagamentosHoje();
 
+carregarRecebidosMes();
+
 atualizarCards();
