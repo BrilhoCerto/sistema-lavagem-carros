@@ -13,9 +13,13 @@ function carregarServicosHoje() {
     document.getElementById("listaServicosHoje");
 
     const agendamentosPagos =
-    pagamentos.map(
-        p => String(p.agendamentoId)
-    );
+pagamentos
+.filter(
+    p => p.status.startsWith("Pago")
+)
+.map(
+    p => String(p.agendamentoId)
+);
 
     const servicosPendentes =
     agendamentos
