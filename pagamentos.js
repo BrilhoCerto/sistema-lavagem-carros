@@ -540,3 +540,13 @@ carregarPagamentosHoje();
 carregarRecebidosMes();
 
 atualizarCards();
+
+document
+.getElementById("btnFiltrarRecebidos")
+?.addEventListener("click", function(){
+
+    alert(
+    "Filtro será implementado no próximo passo."
+    );
+
+});
