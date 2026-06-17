@@ -298,6 +298,8 @@ function atualizarCards(){
     let recebidoHoje = 0;
     let recebidoMes = 0;
     let pendente = 0;
+    let recebidoDinheiro = 0;
+    let recebidoMbway = 0;
 
     pagamentos.forEach(item => {
 
@@ -306,9 +308,20 @@ function atualizarCards(){
 
         if(item.data === hoje && pago){
 
-            recebidoHoje += item.valor;
+    recebidoHoje += item.valor;
 
-        }
+    if(item.formaPagamento === "Dinheiro"){
+        recebidoDinheiro += item.valor;
+    }
+
+    if(
+        item.formaPagamento === "MB Way" ||
+        item.formaPagamento === "Multibanco"
+    ){
+        recebidoMbway += item.valor;
+    }
+
+}
 
         const dataItem =
         new Date(item.data);
@@ -342,6 +355,11 @@ function atualizarCards(){
     document.getElementById("valorPendente").textContent =
     "€ " + pendente.toFixed(2);
 
+    document.getElementById("recebidoDinheiro").textContent =
+    "€ " + recebidoDinheiro.toFixed(2);
+
+    document.getElementById("recebidoMbway").textContent =
+    "€ " + recebidoMbway.toFixed(2);
     }
     /* PENDÊNCIAS */
 
