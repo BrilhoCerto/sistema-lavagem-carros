@@ -540,6 +540,7 @@ carregarPagamentosHoje();
 carregarRecebidosMes();
 
 atualizarCards();
+alert("JS carregou");   
 
 const btnFiltrar =
 document.getElementById("btnFiltrarRecebidos");
