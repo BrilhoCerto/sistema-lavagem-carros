@@ -374,7 +374,9 @@ function carregarPendentes(){
 
     const lista =
     document.getElementById("listaPendentes");
-
+    if(!lista){
+        return;
+    }
     const pendentes =
     pagamentos.filter(
         p => !p.status.startsWith("Pago")
