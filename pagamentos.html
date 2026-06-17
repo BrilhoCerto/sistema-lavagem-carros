@@ -291,7 +291,67 @@ Nenhum pagamento registado hoje.
 <h4>🗓️ Recebidos do Mês</h4>
 
 <div id="listaRecebidosMes">
+<div class="row mb-3">
 
+    <div class="col-md-3">
+        <label>Data Inicial</label>
+        <input
+        type="date"
+        id="filtroDataInicial"
+        class="form-control">
+    </div>
+
+    <div class="col-md-3">
+        <label>Data Final</label>
+        <input
+        type="date"
+        id="filtroDataFinal"
+        class="form-control">
+    </div>
+
+    <div class="col-md-3">
+        <label>Forma Pagamento</label>
+        <select
+        id="filtroFormaPagamento"
+        class="form-control">
+
+            <option value="">
+            Todas
+            </option>
+
+            <option value="Dinheiro">
+            Dinheiro
+            </option>
+
+            <option value="MB Way">
+            MB Way
+            </option>
+
+            <option value="Multibanco">
+            Multibanco
+            </option>
+
+            <option value="Transferência">
+            Transferência
+            </option>
+
+        </select>
+    </div>
+
+    <div class="col-md-3">
+        <label>&nbsp;</label>
+
+        <button
+        type="button"
+        id="btnFiltrarRecebidos"
+        class="btn btn-primary w-100">
+
+        Filtrar
+
+        </button>
+    </div>
+
+</div>
 Nenhum pagamento registado este mês.
 
 </div>
