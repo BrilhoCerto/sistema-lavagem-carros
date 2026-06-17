@@ -96,7 +96,7 @@ item.cliente +
 
 }
 
-/* SELECIONAR AGENDAMENTO */
+/*  AGENDAMENTO */
 
 function selecionarAgendamento(id) {
 
@@ -231,9 +231,25 @@ new Date()
         document.getElementById("observacoes").value
 
     };
+        
+    const indicePendente =
+pagamentos.findIndex(
+    p =>
+    String(p.agendamentoId) ===
+    String(agendamentoSelecionado.id)
+);
+
+if(indicePendente !== -1){
+
+    pagamentos[indicePendente] =
+    pagamento;
+
+}else{
 
     pagamentos.push(pagamento);
 
+}
+    
     localStorage.setItem(
     "pagamentos",
     JSON.stringify(pagamentos)
