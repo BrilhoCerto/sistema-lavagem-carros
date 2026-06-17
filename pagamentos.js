@@ -71,7 +71,16 @@ pagamentos
 
         ' | ' +
 
-        item.cliente +
+        (pagamentos.some(
+    p =>
+    String(p.agendamentoId) === String(item.id)
+    &&
+    !p.status.startsWith("Pago")
+)
+? "🔴 "
+: "") +
+
+item.cliente +
 
         ' | ' +
 
@@ -189,10 +198,15 @@ document
         agendamentoId:
         agendamentoSelecionado.id,
 
-        data:
-        new Date()
-        .toISOString()
-        .split("T")[0],
+       data:
+
+document.getElementById("dataRecebimento").value
+
+||
+
+new Date()
+.toISOString()
+.split("T")[0],
 
         cliente:
         agendamentoSelecionado.cliente,
