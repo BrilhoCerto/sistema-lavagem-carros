@@ -248,7 +248,11 @@ tbody.innerHTML += `
 <td>€ ${item.valor.toFixed(2)}</td>
 
 <td>${item.observacoes || ''}</td>
-
+<td>
+<button onclick="excluirDespesa('${item.id}')">
+Excluir
+</button>
+</td>
 </tr>
 
 `;
@@ -394,7 +398,25 @@ window.location.href =
 "login.html";
 
 }
+function excluirDespesa(id){
 
+if(!confirm("Deseja excluir esta despesa?")){
+return;
+}
+
+despesas = despesas.filter(
+item => item.id != id
+);
+
+localStorage.setItem(
+"despesas",
+JSON.stringify(despesas)
+);
+
+carregarTabela();
+atualizarCards();
+
+}
 /* INICIALIZAÇÃO */
 
 carregarTabela();
