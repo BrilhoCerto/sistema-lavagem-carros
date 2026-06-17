@@ -541,12 +541,91 @@ carregarRecebidosMes();
 
 atualizarCards();
 
-document
-.getElementById("btnFiltrarRecebidos")
-?.addEventListener("click", function(){
+const btnFiltrar =
+document.getElementById("btnFiltrarRecebidos");
 
-    alert(
-    "Filtro será implementado no próximo passo."
-    );
+if(btnFiltrar){
 
-});
+    btnFiltrar.addEventListener("click", function(){
+
+        const dataInicial =
+        document.getElementById("filtroDataInicial").value;
+
+        const dataFinal =
+        document.getElementById("filtroDataFinal").value;
+
+        const formaPagamento =
+        document.getElementById("filtroFormaPagamento").value;
+
+        const lista =
+        document.getElementById("listaRecebidosMes");
+
+        let recebidos =
+        pagamentos.filter(item => {
+
+            if(!item.status.startsWith("Pago")){
+                return false;
+            }
+
+            if(
+                formaPagamento &&
+                item.formaPagamento !== formaPagamento
+            ){
+                return false;
+            }
+
+            if(
+                dataInicial &&
+                item.data < dataInicial
+            ){
+                return false;
+            }
+
+            if(
+                dataFinal &&
+                item.data > dataFinal
+            ){
+                return false;
+            }
+
+            return true;
+
+        });
+
+        if(recebidos.length === 0){
+
+            lista.innerHTML =
+            "Nenhum resultado encontrado.";
+
+            return;
+        }
+
+        lista.innerHTML = "";
+
+        recebidos.forEach(item => {
+
+            lista.innerHTML +=
+
+            '<div class="item-pendente">' +
+
+            item.data +
+
+            ' | ' +
+
+            item.cliente +
+
+            ' | ' +
+
+            item.formaPagamento +
+
+            ' | € ' +
+
+            item.valor.toFixed(2) +
+
+            '</div>';
+
+        });
+
+    });
+
+}
