@@ -60,6 +60,8 @@ initialView: 'dayGridMonth',
 
 locale: 'pt',
 
+allDaySlot: false,
+
 height: 700,
 
 hiddenDays: [0],
