@@ -93,14 +93,20 @@ eventContent: function(info){
     return {
         html: `
             <div>
-                <b>${info.event.extendedProps.cliente || ''}</b><br>
-                ${info.event.extendedProps.modelo || ''}<br>
+                ${info.event.extendedProps.cliente || 'Sem nome'}
+                /
+                ${info.event.extendedProps.modelo || ''}
+                /
                 ${
                     Array.isArray(info.event.extendedProps.servicos)
                     ? info.event.extendedProps.servicos.join(', ')
                     : info.event.extendedProps.servicos || ''
-                }<br>
-                ${info.event.extendedProps.observacoes || ''}
+                }
+                ${
+                    info.event.extendedProps.observacoes
+                    ? ' / Obs: ' + info.event.extendedProps.observacoes
+                    : ''
+                }
             </div>
         `
     };
