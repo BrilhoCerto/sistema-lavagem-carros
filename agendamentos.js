@@ -88,7 +88,17 @@ center: 'title',
 right: 'timeGridDay,timeGridWeek,dayGridMonth'
 
 },
+eventContent: function(info){
 
+    return {
+        html: `
+            <div>
+                ${info.event.title}
+            </div>
+        `
+    };
+
+},
 eventDidMount: function(info){
 
 info.el.style.backgroundColor = "#dc3545";
