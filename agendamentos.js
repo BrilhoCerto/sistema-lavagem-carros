@@ -18,9 +18,9 @@ selectHora.innerHTML = "";
 
 for(let hora=8; hora<=18; hora++){
 
-for(let minuto of [0,30]){
+for(let minuto of [0,15,30,45]){
 
-if(hora === 18 && minuto === 30){
+if(hora === 18 && minuto === 0){
 continue;
 }
 
