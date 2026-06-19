@@ -60,6 +60,13 @@ initialView: 'dayGridMonth',
 
 locale: 'pt',
 
+slotMinTime: '08:00:00',
+slotMaxTime: '18:00:00',
+scrollTime: '08:00:00',
+
+slotDuration: '00:15:00',
+slotLabelInterval: '00:15:00',
+
 allDaySlot: false,
 
 height: 700,
