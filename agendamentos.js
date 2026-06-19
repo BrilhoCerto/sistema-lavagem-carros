@@ -69,6 +69,11 @@ slotLabelInterval: '00:15:00',
 
 allDaySlot: false,
 
+slotMinTime: "08:00:00",
+slotMaxTime: "18:00:00",
+slotDuration: "00:15:00",
+slotLabelInterval: "00:15:00",
+
 height: 700,
 
 hiddenDays: [0],
