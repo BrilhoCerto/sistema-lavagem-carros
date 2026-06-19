@@ -72,7 +72,7 @@ left: 'prev,next today',
 
 center: 'title',
 
-right: 'dayGridMonth,timeGridWeek'
+right: 'timeGridDay,timeGridWeek,dayGridMonth'
 
 },
 
