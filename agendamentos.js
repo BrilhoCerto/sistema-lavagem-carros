@@ -278,6 +278,11 @@ Array.isArray(item.servicos)
 ),
     start: item.data + "T" + item.hora,
 
+end: new Date(
+    new Date(item.data + "T" + item.hora)
+    .getTime() + (30 * 60000)
+).toISOString(),
+
     extendedProps: {
         cliente: item.cliente,
         telefone: item.telefone,
