@@ -289,7 +289,10 @@ calendario.addEvent({
 Array.isArray(item.servicos)
 ? item.servicos.join(", ")
 : item.servicos || ""
-),
+) +
+(item.observacoes
+? "\nObs: " + item.observacoes
+: ""),
     start: item.data + "T" + item.hora,
 
 end: new Date(
