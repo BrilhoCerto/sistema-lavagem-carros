@@ -266,7 +266,16 @@ agendamentos.forEach(item=>{
 
 calendario.addEvent({
     id: item.id,
-    title: item.cliente || "Sem nome",
+    title:
+(item.cliente || "Sem nome") +
+"\n" +
+(item.modelo || "") +
+"\n" +
+(
+Array.isArray(item.servicos)
+? item.servicos.join(", ")
+: item.servicos || ""
+),
     start: item.data + "T" + item.hora,
 
     extendedProps: {
