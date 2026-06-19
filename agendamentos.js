@@ -104,7 +104,11 @@ eventDidMount: function(info){
 info.el.style.backgroundColor = "#dc3545";
 info.el.style.borderColor = "#dc3545";
 info.el.style.color = "#fff";
+const hora = info.el.querySelector('.fc-event-time');
 
+    if(hora){
+        hora.style.display = 'none';
+    }
 },
 
 dateClick: function(info){
