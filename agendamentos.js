@@ -67,12 +67,13 @@ scrollTime: '08:00:00',
 slotDuration: '00:15:00',
 slotLabelInterval: '00:15:00',
 
-allDaySlot: false,
+slotLabelFormat: {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false
+},
 
-slotMinTime: "08:00:00",
-slotMaxTime: "18:00:00",
-slotDuration: "00:15:00",
-slotLabelInterval: "00:15:00",
+allDaySlot: false,
 
 height: 700,
 
