@@ -369,6 +369,9 @@ if(cardRecebidoMes){
 
     document.getElementById("recebidoMbway").textContent =
     "€ " + recebidoMbway.toFixed(2);
+    
+    document.getElementById("recebidoMultibanco").textContent =
+"€ " + recebidoMultibanco.toFixed(2);
     }
     /* PENDÊNCIAS */
 
