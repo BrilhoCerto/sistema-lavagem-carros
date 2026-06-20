@@ -76,6 +76,14 @@ onclick="location.href='relatorios.html'">
             </div>
         </div>
      </div>
+    <div class="col-md-6">
+    <div class="card-dashboard">
+        <div>🎁 Lavagem Gratuita</div>
+        <div class="numero text-warning" id="lavagemGratuita">
+            € 0,00
+        </div>
+    </div>
+</div>
         <div class="col-md-6">
     <div class="card-dashboard">
         <div>🏦 Multibanco Brilho Certo</div>
@@ -406,7 +414,7 @@ window.onload = function(){
         if(despesas){
             despesas.style.display = "none";
         }
-
+        
         const relatorios =
         document.getElementById("menuRelatorios");
 
