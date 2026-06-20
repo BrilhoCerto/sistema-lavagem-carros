@@ -56,7 +56,7 @@ document.getElementById('calendar');
 calendario =
 new FullCalendar.Calendar(calendarEl, {
 
-initialView: 'timeGridMonth',
+initialView: 'dayGridMonth',
 
 locale: 'pt',
 
