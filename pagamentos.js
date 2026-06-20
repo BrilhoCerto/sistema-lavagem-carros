@@ -378,6 +378,9 @@ if(cardRecebidoMes){
     
     document.getElementById("recebidoMultibanco").textContent =
 "€ " + recebidoMultibanco.toFixed(2);
+    
+    document.getElementById("lavagemGratuita").textContent =
+"€ " + lavagemGratuita.toFixed(2);
     }
     /* PENDÊNCIAS */
 
