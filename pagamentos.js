@@ -300,6 +300,7 @@ function atualizarCards(){
     let pendente = 0;
     let recebidoDinheiro = 0;
     let recebidoMbway = 0;
+    let recebidoMultibanco = 0;
 
     pagamentos.forEach(item => {
 
@@ -314,12 +315,13 @@ function atualizarCards(){
         recebidoDinheiro += item.valor;
     }
 
-    if(
-        item.formaPagamento === "MB Way" ||
-        item.formaPagamento === "Multibanco"
-    ){
-        recebidoMbway += item.valor;
-    }
+   if(item.formaPagamento === "MB Way Samuel"){
+    recebidoMbway += item.valor;
+}
+
+if(item.formaPagamento === "Multibanco Brilho Certo"){
+    recebidoMultibanco += item.valor;
+}
 
 }
 
