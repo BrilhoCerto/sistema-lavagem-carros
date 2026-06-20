@@ -301,6 +301,7 @@ function atualizarCards(){
     let recebidoDinheiro = 0;
     let recebidoMbway = 0;
     let recebidoMultibanco = 0;
+    let lavagemGratuita = 0;
 
     pagamentos.forEach(item => {
 
@@ -321,6 +322,11 @@ function atualizarCards(){
 
 if(item.formaPagamento === "Multibanco Brilho Certo"){
     recebidoMultibanco += item.valor;
+    
+if(item.formaPagamento === "Lavagem Gratuita"){
+    lavagemGratuita += item.valor;
+}
+
 }
 
 }
