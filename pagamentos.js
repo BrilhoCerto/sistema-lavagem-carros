@@ -461,13 +461,13 @@ pagamentos.filter(
     hojePagos.forEach(item => {
 
         lista.innerHTML +=
-        '<div class="item-pendente">' +
+        '<span class="item-pendente">' +
         '<strong>' + item.cliente + '</strong> | ' +
 item.modelo + ' | € ' +
 item.valor.toFixed(2) + ' | ' +
 item.formaPagamento +
 '<button onclick="excluirPagamento(\'' + item.id + '\')">🗑️ Excluir</button>' +
-'</div>';
+'</span>';
 
     });
 
