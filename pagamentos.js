@@ -445,9 +445,7 @@ function carregarPagamentosHoje(){
 
     const hojePagos =
 pagamentos.filter(
-    p =>
-        p.data === hoje &&
-        p.status.startsWith("Pago")
+    p => p.status.startsWith("Pago")
 );
 
     if(hojePagos.length === 0){
