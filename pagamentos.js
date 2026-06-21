@@ -433,7 +433,16 @@ function carregarPagamentosHoje(){
     document.getElementById(
         "listaPagamentosHoje"
     );
+const filtro =
+document.getElementById("filtroDataPagamento");
 
+if (filtro && !filtro.dataset.evento) {
+    filtro.addEventListener(
+        "change",
+        carregarPagamentosHoje
+    );
+    filtro.dataset.evento = "ok";
+}
     if(!lista){
         return;
     }
@@ -443,9 +452,14 @@ function carregarPagamentosHoje(){
     .toISOString()
     .split("T")[0];
 
-    const hojePagos =
+  const filtroData =
+document.getElementById("filtroDataPagamento")?.value;
+
+const hojePagos =
 pagamentos.filter(
-    p => p.status.startsWith("Pago")
+    p =>
+        p.status.startsWith("Pago") &&
+        (!filtroData || p.data === filtroData)
 );
 
     if(hojePagos.length === 0){
