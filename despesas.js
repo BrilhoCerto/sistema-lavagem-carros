@@ -28,7 +28,7 @@ const subcategorias = {
 "Vitória",
 "Mariana",
 "Natália",
-"Eliane"
+"Eliane",
 "Outros"
 ],
     
