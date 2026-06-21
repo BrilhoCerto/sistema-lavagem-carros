@@ -109,7 +109,8 @@ select.innerHTML =
 '<option value="">Selecione</option>';
 
 if(!subcategorias[categoria]){
-return;
+    alert("Categoria não encontrada: " + categoria);
+    return;
 }
 
 subcategorias[categoria]
