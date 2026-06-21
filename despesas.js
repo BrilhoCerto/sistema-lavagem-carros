@@ -24,6 +24,14 @@ const subcategorias = {
 "Outros"
 ],
 
+"Ordenados Diário":[
+"Vitória",
+"Mariana",
+"Natália",
+"Eliane"
+"Outros"
+],
+    
 "Comissões":[
 "ADM",
 "Funcionário 1",
@@ -59,6 +67,7 @@ const subcategorias = {
 "Mercado",
 "Casa",
 "Renda da Casa",
+"Loja das Bombas",
 "Diversos"
 ],
 
