@@ -1,9 +1,9 @@
-import { db } from "./firebase.js";
+ // import { db } from "./firebase.js";
 
-import {
-  collection,
-  addDoc
-} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+//import {
+//  collection,
+//  addDoc
+//} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 let calendario;
 
@@ -458,7 +458,7 @@ a.id !== idIgnorar
 
 document
 .getElementById("formAgendamento")
-.addEventListener("submit", async function(e){
+.addEventListener("submit", function(e){
 
 e.preventDefault();
 
@@ -515,7 +515,7 @@ servicos
 
 agendamentos.push(novo);
   
-await addDoc(collection(db, "agendamentos"), novo);
+// await addDoc(collection(db, "agendamentos"), novo);
 
 localStorage.setItem(
 "agendamentos",
