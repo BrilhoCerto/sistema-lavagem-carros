@@ -462,13 +462,10 @@ pagamentos.filter(
 
         lista.innerHTML +=
         '<div class="item-pendente">' +
-        '<strong>' +
-        item.cliente +
-        '</strong><br>' +
-        '€ ' +
-        item.valor.toFixed(2) +
-        '<br>' +
-       item.formaPagamento +
+        '<strong>' + item.cliente + '</strong> | ' +
+item.modelo + ' | € ' +
+item.valor.toFixed(2) + ' | ' +
+item.formaPagamento +
 '<br><button onclick="excluirPagamento(\'' + item.id + '\')">🗑️ Excluir</button>' +
 '</div>';
 
