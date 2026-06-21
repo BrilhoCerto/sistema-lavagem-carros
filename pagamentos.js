@@ -466,7 +466,7 @@ pagamentos.filter(
 item.modelo + ' | € ' +
 item.valor.toFixed(2) + ' | ' +
 item.formaPagamento +
-'<br><button onclick="excluirPagamento(\'' + item.id + '\')">🗑️ Excluir</button>' +
+'<button onclick="excluirPagamento(\'' + item.id + '\')">🗑️ Excluir</button>' +
 '</div>';
 
     });
