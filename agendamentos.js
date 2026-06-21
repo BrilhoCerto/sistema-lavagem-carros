@@ -458,7 +458,7 @@ a.id !== idIgnorar
 
 document
 .getElementById("formAgendamento")
-.addEventListener("submit", function(e){
+.addEventListener("submit", async function(e){
 
 e.preventDefault();
 
@@ -514,6 +514,8 @@ servicos
 };
 
 agendamentos.push(novo);
+  
+await addDoc(collection(db, "agendamentos"), novo);
 
 localStorage.setItem(
 "agendamentos",
