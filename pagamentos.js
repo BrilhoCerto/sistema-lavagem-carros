@@ -467,7 +467,7 @@ item.modelo + ' | € ' +
 item.valor.toFixed(2) + ' | ' +
 item.formaPagamento +
 '<button onclick="excluirPagamento(\'' + item.id + '\')">🗑️ Excluir</button>' +
-'</div>';
+'</div><hr>';
 
     });
 
