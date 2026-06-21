@@ -470,10 +470,33 @@ pagamentos.filter(
         '€ ' +
         item.valor.toFixed(2) +
         '<br>' +
-        item.formaPagamento +
-        '</div>';
+       item.formaPagamento +
+'<br><button onclick="excluirPagamento(\'' + item.id + '\')">🗑️ Excluir</button>' +
+'</div>';
 
     });
+
+}
+function excluirPagamento(id){
+
+    if(!confirm("Deseja realmente apagar este pagamento?")){
+        return;
+    }
+
+    pagamentos = pagamentos.filter(
+        p => p.id !== id
+    );
+
+    localStorage.setItem(
+        "pagamentos",
+        JSON.stringify(pagamentos)
+    );
+
+    atualizarCards();
+
+    carregarPagamentosHoje();
+
+    carregarPendentes();
 
 }
 function carregarRecebidosMes(){
