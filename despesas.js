@@ -24,7 +24,7 @@ const subcategorias = {
 "Outros"
 ],
 
-"Ordenados Diário":[
+"Ordenado Diário":[
 "Vitória",
 "Mariana",
 "Natália",
