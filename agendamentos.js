@@ -74,6 +74,8 @@ scrollTime: '08:00:00',
 slotDuration: '00:15:00',
 slotLabelInterval: '00:15:00',
 
+SlotEventOverlap: false,
+
 slotLabelFormat: {
     hour: '2-digit',
     minute: '2-digit',
