@@ -562,21 +562,25 @@ function carregarRecebidosMes(){
 
     recebidos.forEach(item => {
 
-        lista.innerHTML +=
+       lista.innerHTML +=
 
-        '<div class="item-pendente">' +
+'<div class="item-pendente">' +
 
-        item.data +
+item.data +
 
-        ' | ' +
+' | ' +
 
-        item.cliente +
+item.cliente +
 
-        ' | € ' +
+' | ' +
 
-        item.valor.toFixed(2) +
+(item.modelo || 'Sem veículo') +
 
-        '</div>';
+' | € ' +
+
+item.valor.toFixed(2) +
+
+'</div>';
 
     });
 
