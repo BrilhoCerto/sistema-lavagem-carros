@@ -574,7 +574,7 @@ item.cliente +
 
 ' | ' +
 
-(item.modelo || 'Sem veículo') +
+(item.modelo || '') +
 
 ' | € ' +
 
