@@ -491,7 +491,10 @@ function excluirPagamento(id){
     if(!confirm("Deseja realmente apagar este pagamento?")){
         return;
     }
-
+    const pagamentoExcluido =
+pagamentos.find(
+    p => p.id === id
+);
     pagamentos = pagamentos.filter(
         p => p.id !== id
     );
