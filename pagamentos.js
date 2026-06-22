@@ -495,6 +495,11 @@ function excluirPagamento(id){
 pagamentos.find(
     p => p.id === id
 );
+
+    alert(
+    pagamentoExcluido.agendamentoId
+);
+    
     pagamentos = pagamentos.filter(
         p => p.id !== id
     );
