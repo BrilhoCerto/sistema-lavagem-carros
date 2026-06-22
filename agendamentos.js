@@ -308,7 +308,7 @@ Array.isArray(item.servicos)
 
 end: new Date(
     new Date(item.data + "T" + item.hora)
-    .getTime() + (30 * 60000)
+    .getTime() + (15 * 60000)
 ),
 
     extendedProps: {
