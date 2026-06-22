@@ -318,7 +318,7 @@ Array.isArray(item.servicos)
 end: new Date(
     new Date(item.data + "T" + item.hora)
     .getTime() + (15 * 60000)
-),
+).toISOString(),
 
     extendedProps: {
         cliente: item.cliente,
