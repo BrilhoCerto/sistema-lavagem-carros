@@ -79,7 +79,7 @@ slotLabelFormat: {
     minute: '2-digit',
     hour12: false
 },
-displayEventtime: false,
+displayEventTime: false,
 allDaySlot: false,
 
 height: 700,
