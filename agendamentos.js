@@ -76,6 +76,8 @@ slotLabelInterval: '00:15:00',
 
 SlotEventOverlap: false,
 
+evenMinHeigth: 50,
+
 slotLabelFormat: {
     hour: '2-digit',
     minute: '2-digit',
