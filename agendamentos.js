@@ -101,19 +101,6 @@ eventContent: function(info){
         html: `
             <div>
                 ${info.event.extendedProps.cliente || 'Sem nome'}
-                /
-                ${info.event.extendedProps.modelo || ''}
-                /
-                ${
-                    Array.isArray(info.event.extendedProps.servicos)
-                    ? info.event.extendedProps.servicos.join(', ')
-                    : info.event.extendedProps.servicos || ''
-                }
-                ${
-                    info.event.extendedProps.observacoes
-                    ? ' / Obs: ' + info.event.extendedProps.observacoes
-                    : ''
-                }
             </div>
         `
     };
