@@ -20,14 +20,29 @@ async function carregarAgendamentosFirebase() {
     const snapshot =
     await getDocs(collection(db, "agendamentos"));
 
-    agendamentos = [];
+    console.log(
+        "LOCALSTORAGE:",
+        agendamentos.length
+    );
 
     snapshot.forEach((doc) => {
 
-        agendamentos.push(doc.data());
+        const item = doc.data();
+
+        const existe = agendamentos.some(
+            a => String(a.id) === String(item.id)
+        );
+
+        if(!existe){
+            agendamentos.push(item);
+        }
 
     });
-    console.log("AGENDAMENTOS FIRABASE:", agendamentos);
+
+    console.log(
+        "TOTAL AGENDAMENTOS:",
+        agendamentos.length
+    );
 }
 
 
