@@ -2,7 +2,8 @@ import { db } from "./firebase.js";
 
 import {
 collection,
-addDoc
+addDoc,
+getDocs
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 let calendario;
@@ -13,6 +14,22 @@ JSON.parse(localStorage.getItem("agendamentos")) || [];
 let agendamentoEditando = null;
 
 let diaSelecionado = null;
+
+async function carregarAgendamentosFirebase() {
+
+    const snapshot =
+    await getDocs(collection(db, "agendamentos"));
+
+    agendamentos = [];
+
+    snapshot.forEach((doc) => {
+
+        agendamentos.push(doc.data());
+
+    });
+
+}
+
 
 /* HORÁRIOS */
 
@@ -53,7 +70,9 @@ selectHora.appendChild(option);
 
 /* CALENDÁRIO */
 
-document.addEventListener('DOMContentLoaded', function(){
+document.addEventListener('DOMContentLoaded', async function(){
+
+await carregarAgendamentosFirebase();
 
 carregarHorarios();
 
