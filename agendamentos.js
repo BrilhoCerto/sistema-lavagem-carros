@@ -458,7 +458,7 @@ a.id !== idIgnorar
 
 document
 .getElementById("formAgendamento")
-.addEventListener("submit", function(e){
+.addEventListener("submit", async function(e){
 
 e.preventDefault();
 
