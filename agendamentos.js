@@ -723,3 +723,4 @@ window.addEventListener(
     location.href = destino;
 
 }
+window.confirmarSaida = confirmarSaida;
