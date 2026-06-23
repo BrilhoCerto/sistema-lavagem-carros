@@ -27,7 +27,7 @@ async function carregarAgendamentosFirebase() {
         agendamentos.push(doc.data());
 
     });
-
+    console.log("AGENDAMENTOS FIRABASE:", agendamentos);
 }
 
 
