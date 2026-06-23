@@ -317,6 +317,11 @@ calendario.removeAllEvents();
 
 agendamentos.forEach(item=>{
 
+if (!item.data || !item.hora) {
+    console.log("Agendamento inválido:", item);
+    return;
+}    
+    
 calendario.addEvent({
     id: item.id,
     title:
@@ -334,10 +339,12 @@ Array.isArray(item.servicos)
 : ""),
     start: item.data + "T" + item.hora,
 
-end: new Date(
-    new Date(item.data + "T" + item.hora)
-    .getTime() + (15 * 60000)
-).toISOString(),
+end: item.data && item.hora
+    ? new Date(
+        new Date(item.data + "T" + item.hora)
+        .getTime() + (15 * 60000)
+      ).toISOString()
+    : null,
 
     extendedProps: {
         cliente: item.cliente,
