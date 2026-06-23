@@ -161,7 +161,7 @@ abrirAgendamento(info.event.id);
 });
 
 calendario.render();
-
+await carregarAgendamentosFirebase();
 atualizarCalendario();
 
 });
