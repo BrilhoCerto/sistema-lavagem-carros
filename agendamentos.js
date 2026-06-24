@@ -708,7 +708,7 @@ limparFormulario();
 
 /* EXCLUIR */
 
-function excluirAgendamento(){
+async function excluirAgendamento(){
 
 if(!agendamentoEditando){
 return;
@@ -720,6 +720,23 @@ if(
 )
 ){
 return;
+}
+
+try{
+
+const q = query(
+collection(db,"agendamentos"),
+where("id","==",agendamentoEditando)
+);
+
+const snapshot = await getDocs(q);
+
+for(const documento of snapshot.docs){
+
+await deleteDoc(
+doc(db,"agendamentos",documento.id)
+);
+
 }
 
 agendamentos =
@@ -741,6 +758,13 @@ mostrarAgendamentosDoDia(diaSelecionado);
 alert("Agendamento removido.");
 formularioAlterado = false;
 limparFormulario();
+
+}catch(erro){
+
+console.error(erro);
+alert("Erro ao apagar agendamento.");
+
+}
 
 }
 if(localStorage.getItem("perfil") === "funcionario"){
