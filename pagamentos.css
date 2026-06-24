@@ -134,9 +134,16 @@ font-size:13px;
 @media(max-width:768px){
 
 .sidebar{
-display:none;
+position:relative;
+width:100%;
+height:auto;
+display:block;
+padding:10px;
 }
-
+.menu-btn{
+margin-bottom:5px;
+font-size:14px;
+}
 .content{
 margin-left:0;
 padding:10px;
