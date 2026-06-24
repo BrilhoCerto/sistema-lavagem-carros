@@ -831,4 +831,21 @@ window.addEventListener(
 }
 window.confirmarSaida = confirmarSaida;
 window.excluirAgendamento = excluirAgendamento;
+
+function logout(){
+
+if(!confirm("Deseja sair do sistema?")){
+return;
+}
+
+localStorage.removeItem("perfil");
+
+window.location.href =
+"login.html";
+
+}
+window.logout = logout;
+
 console.log("FUNÇÃO EXCLUIR REGISTRADA");
+
+
