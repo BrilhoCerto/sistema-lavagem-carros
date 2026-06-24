@@ -240,7 +240,7 @@ c.classList.add("fc-day-selecionado");
 });
 
 mostrarAgendamentosDoDia(data);
-
+limparFormulario();
 document
 .getElementById("data")
 .value = data;
