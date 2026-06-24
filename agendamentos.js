@@ -456,6 +456,7 @@ document
 .forEach(cb=>{
 
 cb.checked =
+Array.isArray(item.servicos) &&
 item.servicos.includes(cb.value);
 
 });
