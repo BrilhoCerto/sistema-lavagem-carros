@@ -39,7 +39,7 @@ pagamentos
         return dataA - dataB;
 
     });
-
+    console.log("SERVICOS PENDENTES", servicosPendentes);
     if(servicosPendentes.length === 0){
 
         lista.innerHTML =
