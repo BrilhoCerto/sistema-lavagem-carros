@@ -723,7 +723,7 @@ return;
 }
 
 try{
-
+console.log("ID para apagar:", agendamentoEditando);
 const q = query(
 collection(db,"agendamentos"),
 where("id","==",agendamentoEditando)
