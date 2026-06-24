@@ -802,3 +802,4 @@ window.addEventListener(
 }
 window.confirmarSaida = confirmarSaida;
 window.excluirAgendamento = excluirAgendamento;
+console.log("FUNÇÃO EXCLUIR REGISTRADA");
