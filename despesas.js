@@ -401,12 +401,16 @@ carregarTabela(resultado);
 
 function logout(){
 
-localStorage.removeItem(
-"perfil"
-);
+    if(!confirm("Deseja realmente sair do sistema?")){
+        return;
+    }
 
-window.location.href =
-"login.html";
+    localStorage.removeItem(
+    "perfil"
+    );
+
+    window.location.href =
+    "login.html";
 
 }
 function excluirDespesa(id){
