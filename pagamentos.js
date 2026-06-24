@@ -597,10 +597,14 @@ item.valor.toFixed(2) +
 
 function logout(){
 
-    localStorage.removeItem("perfil");
+if(!confirm("Deseja sair do sistema?")){
+return;
+}
 
-    window.location.href =
-    "login.html";
+localStorage.removeItem("perfil");
+
+window.location.href =
+"login.html";
 
 }
 
