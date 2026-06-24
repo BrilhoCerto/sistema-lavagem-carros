@@ -730,7 +730,7 @@ where("id","==",agendamentoEditando)
 );
 
 const snapshot = await getDocs(q);
-
+console.log("Documentos encontrados:", snapshot.size);
 for(const documento of snapshot.docs){
 
 await deleteDoc(
