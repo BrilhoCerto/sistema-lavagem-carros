@@ -53,6 +53,14 @@ pagamentos
 
     servicosPendentes.forEach(item=>{
 
+        if(
+    !item ||
+    !item.cliente ||
+    !item.data ||
+    !item.hora
+){
+    return;
+}
         lista.innerHTML +=
 
         '<div class="item-servico" onclick="selecionarAgendamento(\'' +
