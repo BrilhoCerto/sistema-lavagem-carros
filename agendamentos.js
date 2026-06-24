@@ -801,3 +801,4 @@ window.addEventListener(
 
 }
 window.confirmarSaida = confirmarSaida;
+window.excluirAgendamento = excluirAgendamento;
