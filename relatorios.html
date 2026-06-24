@@ -14,6 +14,24 @@
 
 </head>
 
+<script>
+
+const perfil =
+localStorage.getItem("perfil");
+
+if(perfil === "funcionario"){
+
+alert(
+"Acesso não autorizado."
+);
+
+window.location.href =
+"agendamentos.html";
+
+}
+
+</script>
+    
 <body>
 
 <div class="sidebar">
