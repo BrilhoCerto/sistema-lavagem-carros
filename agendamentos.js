@@ -131,22 +131,56 @@ right: 'timeGridDay,timeGridWeek,dayGridMonth'
 },
 eventContent: function(info){
 
+    const view = info.view.type;
+
+    if(view === "dayGridMonth"){
+
+        return {
+            html: `
+                <div>
+                    ${info.event.start.toLocaleTimeString('pt-PT',{
+                        hour:'2-digit',
+                        minute:'2-digit'
+                    })}
+                    <br>
+                    ${info.event.extendedProps.cliente || 'Sem nome'}
+                    <br>
+                    ${info.event.extendedProps.modelo || ''}
+                </div>
+            `
+        };
+
+    }
+
+    if(view === "timeGridWeek"){
+
+        return {
+            html: `
+                <div>
+                    ${info.event.extendedProps.cliente || 'Sem nome'}
+                    <br>
+                    ${info.event.extendedProps.modelo || ''}
+                </div>
+            `
+        };
+
+    }
+
     return {
         html: `
             <div>
                 ${info.event.extendedProps.cliente || 'Sem nome'}
-                /
+                <br>
                 ${info.event.extendedProps.modelo || ''}
-                /
+                <br>
                 ${
                     Array.isArray(info.event.extendedProps.servicos)
                     ? info.event.extendedProps.servicos.join(', ')
                     : info.event.extendedProps.servicos || ''
                 }
+                <br>
                 ${
-                    info.event.extendedProps.observacoes
-                    ? ' / Obs: ' + info.event.extendedProps.observacoes
-                    : ''
+                    info.event.extendedProps.observacoes || ''
                 }
             </div>
         `
