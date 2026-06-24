@@ -272,3 +272,16 @@ carregarRelatorios
 /* INICIAR */
 
 carregarRelatorios();
+
+function logout(){
+
+if(!confirm("Deseja sair do sistema?")){
+return;
+}
+
+localStorage.removeItem("perfil");
+
+window.location.href =
+"login.html";
+
+}
