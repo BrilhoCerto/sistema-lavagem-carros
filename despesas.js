@@ -183,6 +183,9 @@ data,
 hora,
 
 origem:
+document.getElementById("dataDespesa").value,
+
+origem:
 document.getElementById("origem").value,
 
 categoria:
@@ -245,9 +248,7 @@ tbody.innerHTML += `
 
 <tr>
 
-<td>${item.data}</td>
-
-<td>${item.hora}</td>
+<td>${item.dataDespesa || item.data}</td>
 
 <td>${item.origem}</td>
 
