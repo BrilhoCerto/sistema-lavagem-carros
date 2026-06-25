@@ -667,15 +667,15 @@ window.location.href =
 
 /* INICIAR */
 
-carregarServicosHoje();
+//carregarServicosHoje();
 
-carregarPendentes();
+//carregarPendentes();
 
-carregarPagamentosHoje();
+//carregarPagamentosHoje();
 
-carregarRecebidosMes();
+//carregarRecebidosMes();
 
-atualizarCards();
+//atualizarCards();
 //alert("JS carregou");   
 
 const btnFiltrar =
@@ -767,3 +767,20 @@ if(btnFiltrar){
     });
 
 }
+async function iniciarSistema(){
+
+    await carregarPagamentosFirebase();
+
+    carregarServicosHoje();
+
+    carregarPendentes();
+
+    carregarPagamentosHoje();
+
+    carregarRecebidosMes();
+
+    atualizarCards();
+
+}
+
+iniciarSistema();
