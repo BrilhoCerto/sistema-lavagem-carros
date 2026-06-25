@@ -20,6 +20,33 @@ JSON.parse(localStorage.getItem("agendamentos")) || [];
 
 let agendamentoSelecionado = null;
 
+/* FIREBASE */
+
+async function carregarPagamentosFirebase(){
+
+    const snapshot =
+    await getDocs(collection(db, "pagamentos"));
+
+    pagamentos = [];
+
+    snapshot.forEach((documento)=>{
+
+        pagamentos.push(documento.data());
+
+    });
+
+    localStorage.setItem(
+        "pagamentos",
+        JSON.stringify(pagamentos)
+    );
+
+    console.log(
+        "Pagamentos carregados:",
+        pagamentos.length
+    );
+
+}
+
 /* SERVIÇOS DO DIA */
 function carregarServicosHoje() {
     
