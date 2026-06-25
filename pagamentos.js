@@ -33,14 +33,18 @@ pagamentos
     p => String(p.agendamentoId)
 );
 
-    const servicosPendentes =
-    agendamentos
-    .filter(item =>
-        !agendamentosPagos.includes(
-            String(item.id)
-        )
+   const servicosPendentes =
+agendamentos
+.filter(item =>
+
+    item.data === hoje &&
+
+    !agendamentosPagos.includes(
+        String(item.id)
     )
-    .sort((a,b)=>{
+
+)
+.sort((a,b)=>{
 
         const dataA =
         new Date(a.data + "T" + a.hora);
