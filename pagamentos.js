@@ -9,9 +9,17 @@ let agendamentoSelecionado = null;
 /* SERVIÇOS DO DIA */
 function carregarServicosHoje() {
     
-console.log("TOTAL AGENDAMENTOS:",agendamentos.length);
-console.log("TOTAL AGENDAMENTOS:",agendamentos);
-console.log("TOTAL PAGAMENTOS:",pagamentos);
+// Atualiza os dados mais recentes
+agendamentos =
+JSON.parse(localStorage.getItem("agendamentos")) || [];
+
+pagamentos =
+JSON.parse(localStorage.getItem("pagamentos")) || [];
+
+const hoje =
+new Date()
+.toISOString()
+.split("T")[0];
     
     const lista =
     document.getElementById("listaServicosHoje");
