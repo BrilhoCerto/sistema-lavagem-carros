@@ -1,3 +1,17 @@
+import { db } from "./firebase.js";
+
+import {
+collection,
+addDoc,
+getDocs,
+query,
+where,
+deleteDoc,
+doc
+}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
 let pagamentos =
 JSON.parse(localStorage.getItem("pagamentos")) || [];
 
