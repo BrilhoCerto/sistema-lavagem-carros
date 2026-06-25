@@ -568,6 +568,23 @@ document.getElementById("observacoes").value;
 const servicos =
 obterServicos();
 
+if(
+    !cliente.trim() ||
+    !telefone.trim() ||
+    !modelo.trim() ||
+    !data ||
+    !hora ||
+    servicos.length === 0 ||
+    !valor ||
+    parseFloat(valor) <= 0
+){
+
+    alert("Preencha todos os campos obrigatórios.");
+    return;
+
+}
+
+    
 /* DUPLICIDADE */
 
 if(horarioOcupado(data,hora)){
