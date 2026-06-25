@@ -666,6 +666,23 @@ document.getElementById("observacoes").value;
 const servicos =
 obterServicos();
 
+/* CAMPOS OBRIGATÓRIOS */
+
+if(
+    !cliente ||
+    !telefone ||
+    !modelo ||
+    !data ||
+    !hora ||
+    !valor ||
+    servicos.length === 0
+){
+
+    alert("Preencha todos os campos obrigatórios.");
+
+    return;
+}
+    
 /* DUPLICIDADE */
 
 if(
