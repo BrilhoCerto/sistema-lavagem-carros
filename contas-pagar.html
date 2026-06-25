@@ -340,15 +340,28 @@ placeholder="Opcional">
 
 <label class="form-label">
 
-Valor da Parcela (€)
+Valor Total da Dívida (€)
+
+</label>
+
+<label class="form-label">
+
+Valor de Cada Parcela (€)
 
 </label>
 
 <input
+type="text"
+id="valorParcela"
+class="form-control mb-3"
+readonly>
+    
+    
+<input
 type="number"
 step="0.01"
 min="0.01"
-id="valorParcela"
+id="valorTotal"
 class="form-control mb-3"
 required>
 
@@ -389,6 +402,56 @@ class="form-control mb-3"
 rows="3">
 
 </textarea>
+
+<!-- RESUMO DO PARCELAMENTO -->
+
+<div
+class="alert alert-primary"
+id="resumoParcelamentoNovo">
+
+<strong>
+
+Resumo do Parcelamento
+
+</strong>
+
+<hr>
+
+Valor Total:
+<span id="resumoValorTotal">
+
+€ 0,00
+
+</span>
+
+<br>
+
+Quantidade de Parcelas:
+<span id="resumoQuantidade">
+
+0
+
+</span>
+
+<br>
+
+Valor de Cada Parcela:
+<span id="resumoValorParcela">
+
+€ 0,00
+
+</span>
+
+<br>
+
+Primeiro Vencimento:
+<span id="resumoPrimeiroVencimento">
+
+--
+
+</span>
+
+</div>
 
 <button
 type="submit"
