@@ -1,3 +1,7 @@
+<!-- ========================= -->
+<!-- PARTE 1 DE 5 -->
+<!-- ========================= -->
+
 <!DOCTYPE html>
 
 <html lang="pt">
@@ -27,6 +31,8 @@ href="contas-pagar.css">
 </head>
 
 <body>
+
+<!-- SIDEBAR -->
 
 <div class="sidebar">
 
@@ -85,6 +91,8 @@ onclick="logout()">
 
 </div>
 
+<!-- CONTEÚDO -->
+
 <div class="content">
 
 <h2>
@@ -92,6 +100,8 @@ onclick="logout()">
 📋 Contas a Pagar
 
 </h2>
+
+<!-- CARDS -->
 
 <div class="row mb-4">
 
@@ -185,192 +195,7 @@ id="totalOutros">
 
 </div>
 
-<div class="card-dashboard">
-
-<h4>
-
-📅 Pagamentos previstos até
-<span id="fimMes">
-
-31/07/2026
-
-</span>
-
-</h4>
-
-<h3
-class="text-danger"
-id="valorMes">
-
-€ 0,00
-
-</h3>
-
-<p
-id="textoResumo">
-
-Nenhum pagamento previsto para este mês.
-
-</p>
-
-</div>
-
-<div class="card-dashboard">
-
-<h4>
-
-🔎 Filtros
-
-</h4>
-
-<div class="row">
-
-<div class="col-md-3">
-
-<label>
-
-Competência
-
-</label>
-
-<input
-type="month"
-id="competencia"
-class="form-control">
-
-</div>
-
-<div class="col-md-3">
-
-<label>
-
-Entidade
-
-</label>
-
-<select
-id="filtroEntidade"
-class="form-control">
-
-<option value="">
-
-Todas
-
-</option>
-
-<option>
-
-Segurança Social
-
-</option>
-
-<option>
-
-IVA
-
-</option>
-
-<option>
-
-IRC
-
-</option>
-
-<option>
-
-Finanças
-
-</option>
-
-<option>
-
-Fornecedor
-
-</option>
-
-<option>
-
-Empréstimo
-
-</option>
-
-<option>
-
-Outro
-
-</option>
-
-</select>
-
-</div>
-
-<div class="col-md-3">
-
-<label>
-
-Situação
-
-</label>
-
-<select
-id="filtroSituacao"
-class="form-control">
-
-<option value="">
-
-Todas
-
-</option>
-
-<option>
-
-Em dia
-
-</option>
-
-<option>
-
-A vencer
-
-</option>
-
-<option>
-
-Em atraso
-
-</option>
-
-<option>
-
-Quitado
-
-</option>
-
-</select>
-
-</div>
-
-<div class="col-md-3">
-
-<label>
-
-Pesquisar
-
-</label>
-
-<input
-type="text"
-id="pesquisa"
-class="form-control"
-placeholder="Pesquisar...">
-
-</div>
-
-</div>
-
-</div>
-
-  <!--FIM PARTE 1 -->
+<!-- FIM PARTE 1 -->
 
 <!-- ========================= -->
 <!-- PARTE 2 DE 5 -->
@@ -386,11 +211,9 @@ placeholder="Pesquisar...">
 
 </h4>
 
-<div
-id="listaParcelamentos">
+<div id="listaParcelamentos">
 
-<div
-class="alert alert-light">
+<div class="alert alert-light">
 
 Nenhum parcelamento registado.
 
@@ -400,133 +223,32 @@ Nenhum parcelamento registado.
 
 </div>
 
-<!-- DETALHES DO PARCELAMENTO -->
-
-<div class="card-dashboard">
-
-<h4>
-
-📋 Detalhes do Parcelamento
-
-</h4>
-
-<div
-id="detalhesParcelamento">
-
-<div
-class="alert alert-info">
-
-Selecione um parcelamento para visualizar os detalhes.
-
-</div>
-
-</div>
-
-</div>
-
-<!-- CRONOGRAMA -->
-
-<div class="card-dashboard">
-
-<h4>
-
-📅 Cronograma das Parcelas
-
-</h4>
-
-<div
-id="cronogramaParcelas">
-
-<div
-class="alert alert-secondary">
-
-O cronograma será gerado automaticamente após o cadastro do parcelamento.
-
-</div>
-
-</div>
-
-</div>
-
-<!-- AÇÕES RÁPIDAS -->
-
-<div class="card-dashboard">
-
-<h4>
-
-⚡ Ações
-
-</h4>
-
-<div class="row">
-
-<div class="col-md-3 mb-2">
-
-<button
-id="btnRegistrarPagamento"
-class="btn btn-success w-100">
-
-💰 Registrar Pagamento
-
-</button>
-
-</div>
-
-<div class="col-md-3 mb-2">
-
-<button
-id="btnVerCronograma"
-class="btn btn-primary w-100">
-
-📅 Ver Cronograma
-
-</button>
-
-</div>
-
-<div class="col-md-3 mb-2">
-
-<button
-id="btnEditarParcelamento"
-class="btn btn-warning w-100">
-
-✏️ Editar
-
-</button>
-
-</div>
-
-<div class="col-md-3 mb-2">
-
-<button
-id="btnExcluirParcelamento"
-class="btn btn-danger w-100">
-
-🗑️ Excluir
-
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- FIM PARTE 2 -->
-
-<!-- ========================= -->
-<!-- PARTE 3 DE 5 -->
-<!-- ========================= -->
-
 <!-- NOVO PARCELAMENTO -->
 
 <div class="card-dashboard">
 
-<h4>
+<div class="d-flex justify-content-between align-items-center">
+
+<h4 class="mb-0">
 
 ➕ Novo Parcelamento
 
 </h4>
+
+<button
+type="button"
+id="btnMostrarFormulario"
+class="btn btn-primary">
+
+Novo
+
+</button>
+
+</div>
+
+<div
+id="formularioParcelamento"
+style="display:none; margin-top:20px;">
 
 <form id="formContaPagar">
 
@@ -542,35 +264,51 @@ class="form-control mb-3"
 required>
 
 <option value="">
+
 Selecione
+
 </option>
 
 <option value="Segurança Social">
+
 Segurança Social
+
 </option>
 
 <option value="IVA">
+
 IVA
+
 </option>
 
 <option value="IRC">
+
 IRC
+
 </option>
 
 <option value="Finanças">
+
 Finanças
+
 </option>
 
 <option value="Fornecedor">
+
 Fornecedor
+
 </option>
 
 <option value="Empréstimo">
+
 Empréstimo
+
 </option>
 
 <option value="Outro">
+
 Outro
+
 </option>
 
 </select>
@@ -585,8 +323,20 @@ Descrição
 type="text"
 id="descricao"
 class="form-control mb-3"
-placeholder="Ex.: Parcelamento Segurança Social"
+placeholder="Descrição do parcelamento"
 required>
+
+<label class="form-label">
+
+Número do Processo
+
+</label>
+
+<input
+type="text"
+id="processo"
+class="form-control mb-3"
+placeholder="Opcional">
 
 <label class="form-label">
 
@@ -636,8 +386,7 @@ Observações
 <textarea
 id="observacoes"
 class="form-control mb-3"
-rows="4"
-placeholder="Informações adicionais...">
+rows="3">
 
 </textarea>
 
@@ -653,11 +402,135 @@ class="btn btn-success w-100">
 
 </div>
 
-<!-- PREPARAÇÃO PARA RENEGOCIAÇÃO -->
+</div>
 
 <input
 type="hidden"
 id="parcelamentoOrigem">
+
+<!-- FIM PARTE 2 -->
+
+<!-- ========================= -->
+<!-- PARTE 3 DE 5 -->
+<!-- ========================= -->
+
+<!-- DETALHES DO PARCELAMENTO -->
+
+<div
+class="card-dashboard"
+id="cardDetalhesParcelamento">
+
+<h4>
+
+📋 Detalhes do Parcelamento
+
+</h4>
+
+<div id="detalhesParcelamento">
+
+<div class="alert alert-info">
+
+Selecione um parcelamento para visualizar os detalhes.
+
+</div>
+
+</div>
+
+</div>
+
+<!-- CRONOGRAMA DAS PARCELAS -->
+
+<div
+class="card-dashboard"
+id="cardCronograma">
+
+<h4>
+
+📅 Cronograma das Parcelas
+
+</h4>
+
+<div id="cronogramaParcelas">
+
+<div class="alert alert-secondary">
+
+O cronograma será apresentado após selecionar um parcelamento.
+
+</div>
+
+</div>
+
+</div>
+
+<!-- AÇÕES -->
+
+<div
+class="card-dashboard"
+id="cardAcoes">
+
+<h4>
+
+⚡ Ações
+
+</h4>
+
+<div class="row">
+
+<div class="col-md-3 mb-2">
+
+<button
+id="btnRegistrarPagamento"
+class="btn btn-success w-100"
+disabled>
+
+💰 Registrar Pagamento
+
+</button>
+
+</div>
+
+<div class="col-md-3 mb-2">
+
+<button
+id="btnEditarParcelamento"
+class="btn btn-warning w-100"
+disabled>
+
+✏️ Editar
+
+</button>
+
+</div>
+
+<div class="col-md-3 mb-2">
+
+<button
+id="btnRenegociar"
+class="btn btn-primary w-100"
+disabled>
+
+🔄 Renegociar
+
+</button>
+
+</div>
+
+<div class="col-md-3 mb-2">
+
+<button
+id="btnExcluirParcelamento"
+class="btn btn-danger w-100"
+disabled>
+
+🗑️ Excluir
+
+</button>
+
+</div>
+
+</div>
+
+</div>
 
 <!-- FIM PARTE 3 -->
 
@@ -665,17 +538,149 @@ id="parcelamentoOrigem">
 <!-- PARTE 4 DE 5 -->
 <!-- ========================= -->
 
-<!-- PAINEL FINANCEIRO -->
+<!-- RESUMO DO MÊS -->
 
-<div class="card-dashboard">
+<details class="card-dashboard">
 
-<h4>
+<summary>
 
-📊 Painel Financeiro
+📅 Resumo do Mês
+
+</summary>
+
+<div class="mt-3">
+
+<h4 id="valorMes">
+
+€ 0,00
 
 </h4>
 
-<div class="row">
+<p id="textoResumo">
+
+Nenhum pagamento previsto para este mês.
+
+</p>
+
+</div>
+
+</details>
+
+<!-- FILTROS -->
+
+<details class="card-dashboard">
+
+<summary>
+
+🔎 Filtros
+
+</summary>
+
+<div class="row mt-3">
+
+<div class="col-md-3">
+
+<label>
+
+Competência
+
+</label>
+
+<input
+type="month"
+id="competencia"
+class="form-control">
+
+</div>
+
+<div class="col-md-3">
+
+<label>
+
+Entidade
+
+</label>
+
+<select
+id="filtroEntidade"
+class="form-control">
+
+<option value="">Todas</option>
+
+<option>Segurança Social</option>
+
+<option>IVA</option>
+
+<option>IRC</option>
+
+<option>Finanças</option>
+
+<option>Fornecedor</option>
+
+<option>Empréstimo</option>
+
+<option>Outro</option>
+
+</select>
+
+</div>
+
+<div class="col-md-3">
+
+<label>
+
+Situação
+
+</label>
+
+<select
+id="filtroSituacao"
+class="form-control">
+
+<option value="">Todas</option>
+
+<option>Em dia</option>
+
+<option>A vencer</option>
+
+<option>Em atraso</option>
+
+<option>Quitado</option>
+
+</select>
+
+</div>
+
+<div class="col-md-3">
+
+<label>
+
+Pesquisar
+
+</label>
+
+<input
+type="text"
+id="pesquisa"
+class="form-control">
+
+</div>
+
+</div>
+
+</details>
+
+<!-- PAINEL FINANCEIRO -->
+
+<details class="card-dashboard">
+
+<summary>
+
+📊 Painel Financeiro
+
+</summary>
+
+<div class="row mt-3">
 
 <div class="col-md-4">
 
@@ -685,8 +690,7 @@ Saldo Total
 
 </strong>
 
-<h3
-id="saldoTotal">
+<h3 id="saldoTotal">
 
 € 0,00
 
@@ -702,9 +706,7 @@ Total Pago
 
 </strong>
 
-<h3
-class="text-success"
-id="totalPago">
+<h3 class="text-success" id="totalPago">
 
 € 0,00
 
@@ -720,9 +722,7 @@ Saldo em Aberto
 
 </strong>
 
-<h3
-class="text-danger"
-id="saldoAberto">
+<h3 class="text-danger" id="saldoAberto">
 
 € 0,00
 
@@ -732,20 +732,21 @@ id="saldoAberto">
 
 </div>
 
-</div>
+</details>
 
 <!-- PRÓXIMOS VENCIMENTOS -->
 
-<div class="card-dashboard">
+<details class="card-dashboard">
 
-<h4>
+<summary>
 
 📅 Próximos Vencimentos
 
-</h4>
+</summary>
 
 <div
-id="listaVencimentos">
+id="listaVencimentos"
+class="mt-3">
 
 <div class="alert alert-info">
 
@@ -755,20 +756,21 @@ Nenhum vencimento encontrado.
 
 </div>
 
-</div>
+</details>
 
 <!-- ALERTAS -->
 
-<div class="card-dashboard">
+<details class="card-dashboard">
 
-<h4>
+<summary>
 
 🚨 Alertas
 
-</h4>
+</summary>
 
 <div
-id="listaAlertas">
+id="listaAlertas"
+class="mt-3">
 
 <div class="alert alert-success">
 
@@ -778,36 +780,40 @@ Nenhum alerta financeiro.
 
 </div>
 
-</div>
+</details>
 
-<!-- RESUMO DO PARCELAMENTO -->
+<!-- HISTÓRICO -->
 
-<div class="card-dashboard">
+<details class="card-dashboard">
 
-<h4>
+<summary>
 
-📌 Resumo do Parcelamento Selecionado
+📜 Histórico Financeiro
 
-</h4>
+</summary>
 
 <div
-id="resumoParcelamento">
+id="historicoFinanceiro"
+class="mt-3">
 
 <div class="alert alert-light">
 
-Selecione um parcelamento para visualizar o resumo.
+Nenhum histórico disponível.
 
 </div>
 
 </div>
 
-</div>
+</details>
 
 <!-- FIM PARTE 4 -->
+
 
 <!-- ========================= -->
 <!-- PARTE 5 DE 5 -->
 <!-- ========================= -->
+
+<!-- SCRIPTS -->
 
 <script src="seguranca.js"></script>
 
@@ -817,16 +823,31 @@ Selecione um parcelamento para visualizar o resumo.
 
 aplicarPermissoesMenu();
 
-function logout(){
+window.onload = function(){
 
-if(!confirm("Deseja sair do sistema?")){
-return;
+    if(localStorage.getItem("perfil") === "funcionario"){
+
+        const relatorios =
+        document.getElementById("menuRelatorios");
+
+        if(relatorios){
+            relatorios.style.display = "none";
+        }
+
+    }
+
 }
 
-localStorage.removeItem("perfil");
+function logout(){
 
-window.location.href =
-"login.html";
+    if(!confirm("Deseja sair do sistema?")){
+        return;
+    }
+
+    localStorage.removeItem("perfil");
+
+    window.location.href =
+    "login.html";
 
 }
 
@@ -841,5 +862,3 @@ window.location.href =
 <!-- ========================= -->
 <!-- FIM DO ARQUIVO -->
 <!-- ========================= -->
-
-
