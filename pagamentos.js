@@ -428,8 +428,8 @@ function atualizarCards(){
 
     pagamentos.forEach(item => {
 
-        const pago =
-        item.status.startsWith("Pago");
+       const pago =
+(item.status || "").startsWith("Pago");
 
         if(item.data === hoje && pago){
 
@@ -513,7 +513,7 @@ function carregarPendentes(){
     }
     const pendentes =
     pagamentos.filter(
-        p => !p.status.startsWith("Pago")
+       p => !(p.status || "").startsWith("Pago")
     );
 
     if(pendentes.length === 0){
