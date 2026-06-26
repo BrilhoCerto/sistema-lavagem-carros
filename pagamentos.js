@@ -350,6 +350,13 @@ new Date()
         observacoes:
         document.getElementById("observacoes").value
     };
+
+    const indicePendente =
+    pagamentos.findIndex(
+    p =>
+    String(p.agendamentoId) ===
+    String(agendamentoSelecionado.id)
+);
     
 if(indicePendente !== -1){
 
