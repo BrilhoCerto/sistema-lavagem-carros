@@ -582,6 +582,9 @@ pagamentos.filter(
         (!filtroData || p.data === filtroData)
 );
 
+console.log("Pagamentos:", pagamentos);
+console.log("Hoje pagos:", hojePagos);
+    
     if(hojePagos.length === 0){
 
         lista.innerHTML =
