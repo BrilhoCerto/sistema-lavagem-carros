@@ -107,6 +107,9 @@ JSON.parse(localStorage.getItem("agendamentos")) || [];
 pagamentos =
 JSON.parse(localStorage.getItem("pagamentos")) || [];
 
+console.log("AGENDAMENTOS:", agendamentos);
+console.log("PAGAMENTOS:", pagamentos);
+    
 const hoje =
 new Date()
 .toISOString()
