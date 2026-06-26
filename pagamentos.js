@@ -424,25 +424,23 @@ function atualizarCards(){
 
         if(item.data === hoje && pago){
 
-    recebidoHoje += item.valor;
+            recebidoHoje += item.valor;
 
-    if(item.formaPagamento === "Dinheiro"){
-        recebidoDinheiro += item.valor;
+            if(item.formaPagamento === "Dinheiro"){
+            recebidoDinheiro += item.valor;
+            }
+
+           if(item.formaPagamento === "MB Way Samuel"){
+            recebidoMbway += item.valor;
+            }
+
+            if(item.formaPagamento === "Multibanco Brilho Certo"){
+            recebidoMultibanco += item.valor;
+            }
+
+            if(item.formaPagamento === "Lavagem Gratuita"){
+            lavagemGratuita += item.valor;
     }
-
-   if(item.formaPagamento === "MB Way Samuel"){
-    recebidoMbway += item.valor;
-}
-
-if(item.formaPagamento === "Multibanco Brilho Certo"){
-    recebidoMultibanco += item.valor;
-}
-
-if(item.formaPagamento === "Lavagem Gratuita"){
-    lavagemGratuita += item.valor;
-}
-
-}
 
 }
 
@@ -450,10 +448,8 @@ if(item.formaPagamento === "Lavagem Gratuita"){
         new Date(item.data);
 
         if(
-            dataItem.getMonth() === mesAtual
-            &&
-            dataItem.getFullYear() === anoAtual
-            &&
+            dataItem.getMonth() === mesAtual &&
+            dataItem.getFullYear() === anoAtual &&
             pago
         ){
 
