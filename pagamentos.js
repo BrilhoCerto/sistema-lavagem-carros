@@ -433,22 +433,22 @@ function atualizarCards(){
 
         if(item.data === hoje && pago){
 
-            recebidoHoje += item.valor;
+            recebidoHoje += Number(item.valor || 0);
 
             if(item.formaPagamento === "Dinheiro"){
-            recebidoDinheiro += item.valor;
+            recebidoDinheiro += Number(item.valor || 0);
             }
 
            if(item.formaPagamento === "MB Way Samuel"){
-            recebidoMbway += item.valor;
+            recebidoMbway += Number(item.valor || 0);
             }
 
             if(item.formaPagamento === "Multibanco Brilho Certo"){
-            recebidoMultibanco += item.valor;
+            recebidoMultibanco += Number(item.valor || 0);
             }
 
             if(item.formaPagamento === "Lavagem Gratuita"){
-            lavagemGratuita += item.valor;
+            lavagemGratuita += Number(item.valor || 0);
     }
 
 }
@@ -462,13 +462,13 @@ function atualizarCards(){
             pago
         ){
 
-            recebidoMes += item.valor;
+            recebidoMes += Number(item.valor || 0);
 
         }
 
         if(!pago){
 
-            pendente += item.valor;
+            pendente += Number(item.valor || 0);
 
         }
 
