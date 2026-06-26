@@ -363,8 +363,7 @@ if(indicePendente !== -1){
 
 await carregarPagamentosFirebase();
 
-pagamentos =
-JSON.parse(localStorage.getItem("pagamentos")) || [];
+await carregarAgendamentosFirebase();
 
 alert(
 "Pagamento registado com sucesso."
