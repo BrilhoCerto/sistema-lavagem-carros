@@ -59,6 +59,7 @@ async function carregarPagamentosFirebase(){
        pagamentos.push({
     firebaseId: documento.id,
     ...documento.data()
+    });
 });
 
     pagamentos.sort((a,b)=>{
