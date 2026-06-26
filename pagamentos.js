@@ -663,7 +663,7 @@ function carregarRecebidosMes(){
         new Date(item.data);
 
         return (
-            String(p.status || "").startsWith("Pago")
+            String(item.status || "").startsWith("Pago")
             &&
             dataItem.getMonth() === mesAtual
             &&
