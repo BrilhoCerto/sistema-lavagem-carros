@@ -247,7 +247,7 @@ function selecionarAgendamento(id) {
 
 document
 .getElementById("formPagamento")
-.addEventListener("submit", function(e){
+.addEventListener("submit", async function(e){
 
     e.preventDefault();
 
@@ -361,6 +361,11 @@ if(indicePendente !== -1){
 }else{
 
     pagamentos.push(pagamento);
+
+    await addDoc(
+        collection(db, "pagamentos"),
+        pagamento
+    );
 
 }
     
