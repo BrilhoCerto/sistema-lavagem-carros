@@ -31,7 +31,10 @@ async function carregarAgendamentosFirebase(){
 
     snapshot.forEach((documento)=>{
 
-        agendamentos.push(documento.data());
+        agendamentos.push({
+    firebaseId: documento.id,
+    ...documento.data()
+});
 
     });
 
@@ -138,9 +141,9 @@ new Set(
 agendamentos
 .filter(item =>
 
-     !agendamentosPagos.has(
-        String(item.id)
-    )
+    !agendamentosPagos.has(
+    String(item.id || item.firebaseId)
+)
 
 )
 .sort((a,b)=>{
@@ -321,7 +324,7 @@ document
         id: Date.now().toString(),
 
         agendamentoId:
-        String(agendamentoSelecionado.id),
+        String(agendamentoSelecionado.id || agendamentoSelecionado.firebaseId),
 
         data: dataRecebimento,
 
