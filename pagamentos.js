@@ -578,7 +578,7 @@ document.getElementById("filtroDataPagamento")?.value;
 const hojePagos =
 pagamentos.filter(
     p =>
-        (p.status || "").startsWith("Pago")
+        String(p.status || "").startsWith("Pago")&&
         (!filtroData || p.data === filtroData)
 );
 
