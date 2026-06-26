@@ -639,6 +639,7 @@ pagamentos.find(
     carregarPendentes();
 
 }
+window.excluirPagamento = excluirPagamento;
 function carregarRecebidosMes(){
 
     const lista =
