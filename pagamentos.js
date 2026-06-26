@@ -49,6 +49,9 @@ async function PagamentosFirebase(){
 
 /* SERVIÇOS DO DIA */
 function carregarServicosHoje() {
+
+    alert("Entrou em carregarServicosHoje");
+    
 console.log("AGENDAMENTOS:", agendamentos);
 console.log("PAGAMENTOS:", pagamentos);
 console.log("HOJE:", hoje);
