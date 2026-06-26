@@ -56,9 +56,10 @@ async function carregarPagamentosFirebase(){
 
     snapshot.forEach((documento)=>{
 
-        pagamentos.push(documento.data());
-
-    });
+       pagamentos.push({
+    firebaseId: documento.id,
+    ...documento.data()
+});
 
     pagamentos.sort((a,b)=>{
 
