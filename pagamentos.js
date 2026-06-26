@@ -22,7 +22,7 @@ let agendamentoSelecionado = null;
 
 /* FIREBASE */
 
-async function carregarPagamentosFirebase(){
+async function PagamentosFirebase(){
 
     const snapshot =
     await getDocs(collection(db, "pagamentos"));
@@ -65,7 +65,7 @@ const hoje =
 new Date()
 .toISOString()
 .split("T")[0];
-    
+ alert("Agendamentos:" + agendamentos.length + | Pagamentos:" + pagamentos.length):   
     const lista =
     document.getElementById("listaServicosHoje");
 
