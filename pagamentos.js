@@ -117,7 +117,7 @@ pagamentos.length
     const agendamentosPagos =
 pagamentos
 .filter(
-    p => p.status.startsWith("Pago")
+    p => p.status && p.status.startsWith("Pago")
 )
 .map(
     p => String(p.agendamentoId)
