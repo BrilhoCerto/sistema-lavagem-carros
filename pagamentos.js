@@ -125,7 +125,7 @@ pagamentos.length
     const agendamentosPagos =
 new Set(
     pagamentos
-    .filter(p => p.status?.startsWith("Pago"))
+    .filter(p => String(p.status || "").startsWith("Pago"))
     .map(p => String(p.agendamentoId))
 );
 
@@ -195,7 +195,7 @@ agendamentos
     p =>
     String(p.agendamentoId) === String(item.id)
     &&
-    !p.status.startsWith("Pago")
+    String(p.status || "").startsWith("Pago")
 )
 ? "🔴 "
 : "") +
