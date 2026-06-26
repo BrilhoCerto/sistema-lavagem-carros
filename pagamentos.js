@@ -346,17 +346,9 @@ new Date()
 
     };
         
-    const indicePendente =
-pagamentos.findIndex(
-    p =>
-    String(p.agendamentoId) ===
-    String(agendamentoSelecionado.id)
-);
-
 if(indicePendente !== -1){
 
-    pagamentos[indicePendente] =
-    pagamento;
+    pagamentos[indicePendente] = pagamento;
 
 }else{
 
@@ -368,34 +360,36 @@ if(indicePendente !== -1){
     );
 
 }
-    
-    localStorage.setItem(
-    "pagamentos",
-    JSON.stringify(pagamentos)
-    );
 
-    alert(
-    "Pagamento registado com sucesso."
-    );
+await carregarPagamentosFirebase();
 
-    document
-    .getElementById("formPagamento")
-    .reset();
+pagamentos =
+JSON.parse(localStorage.getItem("pagamentos")) || [];
 
-    document.getElementById("cliente").value = "";
-    document.getElementById("telefone").value = "";
-    document.getElementById("modelo").value = "";
-    document.getElementById("servicos").value = "";
+alert(
+"Pagamento registado com sucesso."
+);
 
-    agendamentoSelecionado = null;
+document
+.getElementById("formPagamento")
+.reset();
 
-    atualizarCards();
+document.getElementById("cliente").value = "";
+document.getElementById("telefone").value = "";
+document.getElementById("modelo").value = "";
+document.getElementById("servicos").value = "";
 
-    carregarServicosHoje();
+agendamentoSelecionado = null;
 
-    carregarPendentes();
+atualizarCards();
 
-    carregarPagamentosHoje();
+carregarServicosHoje();
+
+carregarPendentes();
+
+carregarPagamentosHoje();
+
+carregarRecebidosMes();
 
 });
 
