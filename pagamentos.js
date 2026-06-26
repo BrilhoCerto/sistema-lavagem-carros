@@ -49,7 +49,11 @@ async function carregarPagamentosFirebase(){
 
 /* SERVIÇOS DO DIA */
 function carregarServicosHoje() {
-    
+console.log("AGENDAMENTOS:", agendamentos);
+console.log("PAGAMENTOS:", pagamentos);
+console.log("HOJE:", hoje);
+
+
 // Atualiza os dados mais recentes
 agendamentos =
 JSON.parse(localStorage.getItem("agendamentos")) || [];
