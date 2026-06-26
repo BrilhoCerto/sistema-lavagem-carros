@@ -824,3 +824,4 @@ async function iniciarSistema(){
 }
 
 iniciarSistema();
+window.selecionarAgendamento = selecionarAgendamento;
