@@ -22,7 +22,7 @@ let agendamentoSelecionado = null;
 
 /* FIREBASE */
 
-async function PagamentosFirebase(){
+async function carregarPagamentosFirebase(){
 
     const snapshot =
     await getDocs(collection(db, "pagamentos"));
@@ -52,9 +52,9 @@ function carregarServicosHoje() {
 
     alert("Entrou em carregarServicosHoje");
     
-console.log("AGENDAMENTOS:", agendamentos);
-console.log("PAGAMENTOS:", pagamentos);
-console.log("HOJE:", hoje);
+//console.log("AGENDAMENTOS:", agendamentos);
+//console.log("PAGAMENTOS:", pagamentos);
+//console.log("HOJE:", hoje);
 
 
 // Atualiza os dados mais recentes
@@ -68,7 +68,14 @@ const hoje =
 new Date()
 .toISOString()
 .split("T")[0];
- alert("Agendamentos:" + agendamentos.length + | Pagamentos:" + pagamentos.length):   
+  console.log("HOJE:", hoje);
+    
+alert(
+"Agendamentos: " +
+agendamentos.length +
+" | Pagamentos: " +
+pagamentos.length
+); 
     const lista =
     document.getElementById("listaServicosHoje");
 
@@ -394,7 +401,8 @@ function atualizarCards(){
 
 if(item.formaPagamento === "Multibanco Brilho Certo"){
     recebidoMultibanco += item.valor;
-    
+}
+
 if(item.formaPagamento === "Lavagem Gratuita"){
     lavagemGratuita += item.valor;
 }
@@ -674,16 +682,8 @@ window.location.href =
 
 /* INICIAR */
 
-//carregarServicosHoje();
 
-//carregarPendentes();
-
-//carregarPagamentosHoje();
-
-//carregarRecebidosMes();
-
-//atualizarCards();
-alert("JS carregou");   
+//alert("JS carregou");   
 
 const btnFiltrar =
 document.getElementById("btnFiltrarRecebidos");
