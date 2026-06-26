@@ -60,6 +60,12 @@ async function carregarPagamentosFirebase(){
 
     });
 
+    pagamentos.sort((a,b)=>{
+
+        return new Date(b.data) - new Date(a.data);
+
+    });
+
     localStorage.setItem(
         "pagamentos",
         JSON.stringify(pagamentos)
@@ -69,6 +75,8 @@ async function carregarPagamentosFirebase(){
         "Pagamentos carregados:",
         pagamentos.length
     );
+
+    return pagamentos;
 
 }
 
