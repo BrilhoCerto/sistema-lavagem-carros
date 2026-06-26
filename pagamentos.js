@@ -85,7 +85,15 @@ function carregarServicosHoje() {
 // Atualiza os dados mais recentes
 agendamentos =
 JSON.parse(localStorage.getItem("agendamentos")) || [];
-console.log(agendamentos);
+
+    agendamentos.forEach(item => {
+    console.log(
+        "Data do agendamento:",
+        item.data,
+        "| Cliente:",
+        item.cliente
+    );
+});
     
 pagamentos =
 JSON.parse(localStorage.getItem("pagamentos")) || [];
@@ -96,15 +104,7 @@ new Date()
 .split("T")[0];
   console.log("Hoje:", hoje);
 
-agendamentos.forEach(item => {
-    console.log(
-        "Data do agendamento:",
-        item.data,
-        "| Cliente:",
-        item.cliente
-    );
-});
-    
+
 alert(
 "Agendamentos: " +
 agendamentos.length +
