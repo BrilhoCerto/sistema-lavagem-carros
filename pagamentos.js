@@ -534,7 +534,7 @@ function carregarPendentes(){
         item.cliente +
         '</strong><br>' +
         '€ ' +
-        item.valor.toFixed(2) +
+        Number(item.valor || 0).toFixed(2) +
         '<br>' +
         '<span class="pendente">' +
         item.status +
