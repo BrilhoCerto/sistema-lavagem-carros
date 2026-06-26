@@ -259,15 +259,16 @@ document
 
     if(!agendamentoSelecionado){
 
-        alert(
-        "Selecione um cliente da lista."
-        );
+        alert("Selecione um cliente da lista.");
 
         return;
+
     }
 
     const valor =
-    document.getElementById("valor").value;
+    parseFloat(
+        document.getElementById("valor").value
+    );
 
     const formaPagamento =
     document.getElementById("formaPagamento").value;
@@ -275,40 +276,41 @@ document
     const status =
     document.getElementById("status").value;
 
-    if(!valor){
+    const dataRecebimento =
+    document.getElementById("dataRecebimento").value
+    ||
+    new Date()
+    .toISOString()
+    .split("T")[0];
 
-        alert(
-        "Falta preencher o valor."
-        );
+    if(isNaN(valor) || valor <= 0){
+
+        alert("Informe um valor válido.");
 
         return;
+
     }
 
     if(!formaPagamento){
 
-        alert(
-        "Selecione a forma de pagamento."
-        );
+        alert("Selecione a forma de pagamento.");
 
         return;
+
     }
 
     if(!status){
 
-        alert(
-        "Selecione o status."
-        );
+        alert("Selecione o status.");
 
         return;
+
     }
 
-    const confirmar =
-    confirm(
-    "Tem certeza que deseja registar este pagamento?"
-    );
+    if(!confirm("Tem certeza que deseja registar este pagamento?")){
 
-    if(!confirmar){
         return;
+
     }
 
     const pagamento = {
@@ -316,17 +318,9 @@ document
         id: Date.now().toString(),
 
         agendamentoId:
-        agendamentoSelecionado.id,
+        String(agendamentoSelecionado.id),
 
-       data:
-
-document.getElementById("dataRecebimento").value
-
-||
-
-new Date()
-.toISOString()
-.split("T")[0],
+        data: dataRecebimento,
 
         cliente:
         agendamentoSelecionado.cliente,
@@ -340,67 +334,72 @@ new Date()
         servicos:
         agendamentoSelecionado.servicos,
 
-        valor:
-        parseFloat(valor),
+        valor: valor,
 
+        formaPagamento:
         formaPagamento,
 
+        status:
         status,
 
         observacoes:
         document.getElementById("observacoes").value
-    };
 
+    };
+    
     const indicePendente =
     pagamentos.findIndex(
-    p =>
-    String(p.agendamentoId) ===
-    String(agendamentoSelecionado.id)
-);
-    
-if(indicePendente !== -1){
-
-    pagamentos[indicePendente] = pagamento;
-
-}else{
-
-    pagamentos.push(pagamento);
-
-    await addDoc(
-        collection(db, "pagamentos"),
-        pagamento
+        p =>
+        String(p.agendamentoId) ===
+        String(agendamentoSelecionado.id)
     );
 
-}
+    if(indicePendente !== -1){
 
-await carregarPagamentosFirebase();
+        pagamentos[indicePendente] = pagamento;
 
-await carregarAgendamentosFirebase();
+    }else{
 
-alert(
-"Pagamento registado com sucesso."
-);
+        pagamentos.push(pagamento);
 
-document
-.getElementById("formPagamento")
-.reset();
+        await addDoc(
+            collection(db, "pagamentos"),
+            pagamento
+        );
 
-document.getElementById("cliente").value = "";
-document.getElementById("telefone").value = "";
-document.getElementById("modelo").value = "";
-document.getElementById("servicos").value = "";
+    }
 
-agendamentoSelecionado = null;
+    localStorage.setItem(
+        "pagamentos",
+        JSON.stringify(pagamentos)
+    );
 
-atualizarCards();
+    await carregarPagamentosFirebase();
 
-carregarServicosHoje();
+    await carregarAgendamentosFirebase();
 
-carregarPendentes();
+    alert("Pagamento registado com sucesso.");
 
-carregarPagamentosHoje();
+    document
+    .getElementById("formPagamento")
+    .reset();
 
-carregarRecebidosMes();
+    document.getElementById("cliente").value = "";
+    document.getElementById("telefone").value = "";
+    document.getElementById("modelo").value = "";
+    document.getElementById("servicos").value = "";
+
+    agendamentoSelecionado = null;
+
+    atualizarCards();
+
+    carregarServicosHoje();
+
+    carregarPendentes();
+
+    carregarPagamentosHoje();
+
+    carregarRecebidosMes();
 
 });
 
