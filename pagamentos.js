@@ -343,9 +343,8 @@ new Date()
 
         observacoes:
         document.getElementById("observacoes").value
-
     };
-        
+    
 if(indicePendente !== -1){
 
     pagamentos[indicePendente] = pagamento;
