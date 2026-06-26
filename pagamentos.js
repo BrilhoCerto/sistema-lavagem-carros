@@ -610,17 +610,23 @@ item.formaPagamento +
     });
 
 }
-function excluirPagamento(id){
+async function excluirPagamento(id){
 
     if(!confirm("Deseja realmente apagar este pagamento?")){
         return;
     }
-    const pagamentoExcluido =
+   const pagamentoExcluido =
 pagamentos.find(
     p => p.id === id
 );
 
-    alert(
+if (pagamentoExcluido && pagamentoExcluido.firebaseId) {
+    await deleteDoc(
+        doc(db, "pagamentos", pagamentoExcluido.firebaseId)
+    );
+}
+
+alert(
     pagamentoExcluido.agendamentoId
 );
     
