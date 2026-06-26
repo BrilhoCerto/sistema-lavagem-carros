@@ -123,12 +123,10 @@ pagamentos.length
     document.getElementById("listaServicosHoje");
 
     const agendamentosPagos =
-pagamentos
-.filter(
-    p => p.status && p.status.startsWith("Pago")
-)
-.map(
-    p => String(p.agendamentoId)
+new Set(
+    pagamentos
+    .filter(p => p.status?.startsWith("Pago"))
+    .map(p => String(p.agendamentoId))
 );
 
    const servicosPendentes =
@@ -137,7 +135,7 @@ agendamentos
 
     item.data === hoje &&
 
-    !agendamentosPagos.includes(
+    !agendamentosPagos.has(
         String(item.id)
     )
 
