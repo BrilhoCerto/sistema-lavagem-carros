@@ -134,9 +134,7 @@ new Set(
 agendamentos
 .filter(item =>
 
-    item.data === hoje &&
-
-    !agendamentosPagos.has(
+     !agendamentosPagos.has(
         String(item.id)
     )
 
