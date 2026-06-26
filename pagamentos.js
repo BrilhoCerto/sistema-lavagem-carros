@@ -22,6 +22,31 @@ let agendamentoSelecionado = null;
 
 /* FIREBASE */
 
+async function carregarAgendamentosFirebase(){
+
+    const snapshot =
+    await getDocs(collection(db, "agendamentos"));
+
+    agendamentos = [];
+
+    snapshot.forEach((documento)=>{
+
+        agendamentos.push(documento.data());
+
+    });
+
+    localStorage.setItem(
+        "agendamentos",
+        JSON.stringify(agendamentos)
+    );
+
+    console.log(
+        "Agendamentos carregados:",
+        agendamentos.length
+    );
+
+}
+
 async function carregarPagamentosFirebase(){
 
     const snapshot =
@@ -775,6 +800,8 @@ if(btnFiltrar){
 
 }
 async function iniciarSistema(){
+
+    await carregarAgendamentosFirebase();
 
     await carregarPagamentosFirebase();
 
