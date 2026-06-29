@@ -7,6 +7,7 @@ getDocs,
 query,
 where,
 deleteDoc,
+updateDoc,
 doc
 }
 from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
@@ -87,15 +88,8 @@ async function carregarPagamentosFirebase(){
 
 /* SERVIÇOS DO DIA */
 function carregarServicosHoje() {
-
-    alert("Entrou em carregarServicosHoje");
-    
-//console.log("AGENDAMENTOS:", agendamentos);
-//console.log("PAGAMENTOS:", pagamentos);
-//console.log("HOJE:", hoje);
-
-
-// Atualiza os dados mais recentes
+ console.log("Entrou em carregarServicosHoje");
+   
 agendamentos =
 JSON.parse(localStorage.getItem("agendamentos")) || [];
 
@@ -197,14 +191,13 @@ agendamentos
 
         ' | ' +
 
-        (pagamentos.some(
+       (pagamentos.some(
     p =>
-    String(p.agendamentoId) === String(item.id)
-    &&
-    String(p.status || "").startsWith("Pago")
-)
-? "🔴 "
-: "") +
+    String(p.agendamentoId) === String(item.id) &&
+    String(p.status || "").toLowerCase().includes("pendente")
+    )
+    ? "🔴 "
+    : "") +
 
 item.cliente +
 
@@ -219,9 +212,7 @@ item.cliente +
         '</div>';
 
     });
-
 }
-
 /*  AGENDAMENTO */
 
 function selecionarAgendamento(id) {
@@ -362,18 +353,35 @@ document
 
     if(indicePendente !== -1){
 
-        pagamentos[indicePendente] = pagamento;
+    const pagamentoExistente = pagamentos[indicePendente];
 
-    }else{
+    pagamentos[indicePendente] = {
+        ...pagamentoExistente,
+        ...pagamento
+    };
 
-        pagamentos.push(pagamento);
+    if (pagamentoExistente.firebaseId) {
 
-        await addDoc(
-            collection(db, "pagamentos"),
-            pagamento
+        await updateDoc(
+            doc(db, "pagamentos", pagamentoExistente.firebaseId),
+            pagamentos[indicePendente]
         );
 
     }
+
+}else{
+
+    const novoDoc = await addDoc(
+        collection(db, "pagamentos"),
+        pagamento
+    );
+
+    pagamentos.push({
+        ...pagamento,
+        firebaseId: novoDoc.id
+    });
+
+}
 
     localStorage.setItem(
         "pagamentos",
@@ -517,6 +525,7 @@ function carregarPendentes(){
     if(!lista){
         return;
     }
+    console.log(pagamentos);
     const pendentes =
     pagamentos.filter(
        p => !(p.status || "").startsWith("Pago")
@@ -572,20 +581,28 @@ if (filtro && !filtro.dataset.evento) {
     if(!lista){
         return;
     }
+const filtroData =
+document.getElementById("filtroDataPagamento")?.value;
 
+if(!filtroData){
+
+    lista.innerHTML =
+    "<p>Selecione uma data para visualizar os pagamentos.</p>";
+
+    return;
+
+}
     const hoje =
     new Date()
     .toISOString()
     .split("T")[0];
 
-  const filtroData =
-document.getElementById("filtroDataPagamento")?.value;
-
+ 
 const hojePagos =
 pagamentos.filter(
     p =>
-        String(p.status || "").startsWith("Pago")&&
-        (!filtroData || p.data === filtroData)
+        String(p.status || "").startsWith("Pago") &&
+        p.data === filtroData
 );
 
 console.log("Pagamentos:", pagamentos);
