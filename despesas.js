@@ -104,6 +104,13 @@ const subcategorias = {
 "Manutenção"
 ],
 
+"Cartões":[
+"Cartão Crédito Samuel CCA",
+"Cartão Crédito Samuel Millenium",
+"Cartão Crédito Samuel Cetelem",
+"Cartão Crédito Eliane"
+],
+
 "Outros":[
 "Diversos"
 ]
