@@ -20,7 +20,8 @@ window.location.href =
 if(perfilDespesa === "funcionario"){
     window.location.href = "pagamentos.html";
 }
-let despesas =
+let despesas = [];
+
 const despesasRef = collection(db, "despesas");
 
 onSnapshot(despesasRef, (snapshot) => {
