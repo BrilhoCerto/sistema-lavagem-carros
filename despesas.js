@@ -1,3 +1,13 @@
+import { db } from "./firebase.js";
+
+import {
+    collection,
+    addDoc,
+    deleteDoc,
+    doc,
+    onSnapshot
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
 const perfilDespesa =
 localStorage.getItem("perfil");
 
@@ -7,13 +17,23 @@ window.location.href =
 "login.html";
 
 }
-if(perfil === "funcionario"){
+if(perfilDespesa === "funcionario"){
     window.location.href = "pagamentos.html";
 }
 let despesas =
-JSON.parse(
-localStorage.getItem("despesas")
-) || [];
+const despesasRef = collection(db, "despesas");
+
+onSnapshot(despesasRef, (snapshot) => {
+
+    despesas = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+    }));
+
+    carregarTabela();
+    atualizarCards();
+
+});
 
 const subcategorias = {
 
@@ -155,7 +175,7 @@ document
 .getElementById("formDespesa")
 .addEventListener(
 "submit",
-function(e){
+async function(e){
 
 e.preventDefault();
 
@@ -204,12 +224,7 @@ document.getElementById("observacoes").value
 
 };
 
-despesas.push(novaDespesa);
-
-localStorage.setItem(
-"despesas",
-JSON.stringify(despesas)
-);
+await addDoc(despesasRef, novaDespesa);
 
 document
 .getElementById("formDespesa")
