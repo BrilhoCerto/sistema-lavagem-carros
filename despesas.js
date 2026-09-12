@@ -428,23 +428,15 @@ function logout(){
     "login.html";
 
 }
-function excluirDespesa(id){
+async function excluirDespesa(id){
 
-if(!confirm("Deseja excluir esta despesa?")){
-return;
-}
+    if(!confirm("Deseja excluir esta despesa?")){
+        return;
+    }
 
-despesas = despesas.filter(
-item => item.id != id
-);
-
-localStorage.setItem(
-"despesas",
-JSON.stringify(despesas)
-);
-
-carregarTabela();
-atualizarCards();
+    await deleteDoc(
+        doc(db, "despesas", id)
+    );
 
 }
 /* INICIALIZAÇÃO */
