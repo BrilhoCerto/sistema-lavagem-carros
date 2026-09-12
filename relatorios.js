@@ -1,3 +1,10 @@
+import { db } from "./firebase.js";
+
+import {
+    collection,
+    onSnapshot
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
 const perfilRelatorio = localStorage.getItem("perfil");
 
 if (!perfilRelatorio) {
@@ -9,8 +16,21 @@ if(perfilRelatorio === "funcionario"){
 const pagamentos =
 JSON.parse(localStorage.getItem("pagamentos")) || [];
 
-const despesas =
-JSON.parse(localStorage.getItem("despesas")) || [];
+let despesas = [];
+
+const despesasRef =
+collection(db, "despesas");
+
+onSnapshot(despesasRef, (snapshot) => {
+
+    despesas = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+    }));
+
+    carregarRelatorios();
+
+});
 
 /* FORMATAR DATA */
 
