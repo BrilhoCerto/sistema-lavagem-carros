@@ -439,6 +439,8 @@ async function excluirDespesa(id){
     );
 
 }
+window.excluirDespesa = excluirDespesa;
+
 /* INICIALIZAÇÃO */
 
 carregarTabela();
