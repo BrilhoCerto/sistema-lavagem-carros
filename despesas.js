@@ -439,10 +439,6 @@ document
 
 }
 
-
-
-
-
 /* FILTROS */
 
 function filtrarDespesas(){
