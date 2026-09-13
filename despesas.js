@@ -33,6 +33,7 @@ onSnapshot(despesasRef, (snapshot) => {
 
     carregarTabela();
     atualizarCards();
+    atualizarCartoes();
 
 });
 
@@ -361,6 +362,86 @@ document
 "€ " + (-totalMes).toFixed(2);
 
 }
+
+function atualizarCartoes(){
+
+let totais = {
+
+cca: 0,
+millenium: 0,
+cetelem: 0,
+eliane: 0
+
+};
+
+despesas.forEach(item => {
+
+if(
+item.tipo !== "cartao"
+||
+item.statusCartao === "Pago"
+){
+return;
+}
+
+const valor =
+Number(item.valor || 0);
+
+if(
+item.subcategoria ===
+"Cartão Crédito Samuel CCA"
+){
+totais.cca += valor;
+}
+
+if(
+item.subcategoria ===
+"Cartão Crédito Samuel Millenium"
+){
+totais.millenium += valor;
+}
+
+if(
+item.subcategoria ===
+"Cartão Crédito Samuel Cetelem"
+){
+totais.cetelem += valor;
+}
+
+if(
+item.subcategoria ===
+"Cartão Crédito Eliane"
+){
+totais.eliane += valor;
+}
+
+});
+
+document
+.getElementById("cartaoCCA")
+.textContent =
+"€ " + totais.cca.toFixed(2);
+
+document
+.getElementById("cartaoMillenium")
+.textContent =
+"€ " + totais.millenium.toFixed(2);
+
+document
+.getElementById("cartaoCetelem")
+.textContent =
+"€ " + totais.cetelem.toFixed(2);
+
+document
+.getElementById("cartaoEliane")
+.textContent =
+"€ " + totais.eliane.toFixed(2);
+
+}
+
+
+
+
 
 /* FILTROS */
 
