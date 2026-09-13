@@ -3,7 +3,7 @@ import { db } from "./firebase.js";
 import {
     collection,
     addDoc,
-    deleteDoc,f
+    deleteDoc,
     doc,
     onSnapshot
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
@@ -228,6 +228,7 @@ parseFloat(
 document.getElementById("valor").value
 ),
 
+tipo:   
 document.getElementById("origem").value === "Cartões"
 ? "cartao"
 : "normal",
