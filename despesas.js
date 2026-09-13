@@ -378,7 +378,7 @@ eliane: 0
 despesas.forEach(item => {
 
 if(
-item.tipo !== "cartao"
+item.origem !== "cartao"
 ||
 item.statusCartao === "Pago"
 ){
