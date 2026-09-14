@@ -31,7 +31,7 @@ let despesas = [];
 
 
 /* ================================
-   CARREGAR PAGAMENTOS DO FIRESTORE
+   CARREGAR PAGAMENTOS
 ================================ */
 
 async function carregarPagamentosFirebase() {
@@ -72,7 +72,7 @@ async function carregarPagamentosFirebase() {
 
 
 /* ================================
-   CARREGAR DESPESAS DO FIRESTORE
+   CARREGAR DESPESAS
 ================================ */
 
 const despesasRef =
@@ -144,11 +144,9 @@ function obterPeriodo() {
 
     switch (filtro) {
 
-
         case "hoje":
 
             inicio = new Date();
-
             fim = new Date();
 
             break;
@@ -242,7 +240,6 @@ function obterPeriodo() {
         default:
 
             inicio = new Date();
-
             fim = new Date();
 
             break;
@@ -288,9 +285,7 @@ function carregarRelatorios() {
 
 
     let receitas = 0;
-
     let despesasTotal = 0;
-
     let veiculos = 0;
 
 
@@ -309,8 +304,11 @@ function carregarRelatorios() {
 
 
     /* ================================
-       RECEITAS / PAGAMENTOS
+       RECEITAS
     ================================= */
+
+    const pagamentosPeriodo = [];
+
 
     pagamentos.forEach(item => {
 
@@ -342,6 +340,8 @@ function carregarRelatorios() {
             receitas += valor;
 
             veiculos++;
+
+            pagamentosPeriodo.push(item);
 
 
             tabela.innerHTML += `
@@ -441,99 +441,399 @@ function carregarRelatorios() {
        CARDS
     ================================= */
 
-    const receitaHoje =
+    atualizarElemento(
+        "receitaHoje",
+        "€ " + receitas.toFixed(2)
+    );
+
+
+    atualizarElemento(
+        "despesaHoje",
+        "€ " + despesasTotal.toFixed(2)
+    );
+
+
+    atualizarElemento(
+        "saldoHoje",
+        "€ " + saldo.toFixed(2)
+    );
+
+
+    atualizarElemento(
+        "veiculosHoje",
+        veiculos
+    );
+
+
+    atualizarElemento(
+        "totalReceitas",
+        "€ " + receitas.toFixed(2)
+    );
+
+
+    atualizarElemento(
+        "totalDespesas",
+        "€ " + despesasTotal.toFixed(2)
+    );
+
+
+    atualizarElemento(
+        "saldoPeriodo",
+        "€ " + saldo.toFixed(2)
+    );
+
+
+    /* ================================
+       INDICADORES
+    ================================= */
+
+    carregarIndicadores(
+        pagamentosPeriodo,
+        receitas,
+        despesasTotal,
+        saldo,
+        veiculos
+    );
+
+}
+
+
+/* ================================
+   INDICADORES
+================================ */
+
+function carregarIndicadores(
+    pagamentosPeriodo,
+    receitas,
+    despesasTotal,
+    saldo,
+    veiculos
+) {
+
+    const area =
         document.getElementById(
-            "receitaHoje"
+            "indicadores"
         );
 
-    if (receitaHoje) {
 
-        receitaHoje.textContent =
-            "€ " +
-            receitas.toFixed(2);
+    if (!area) {
+        return;
+    }
+
+
+    /* ================================
+       TICKET MÉDIO
+    ================================= */
+
+    let ticketMedio = 0;
+
+    if (veiculos > 0) {
+
+        ticketMedio =
+            receitas / veiculos;
 
     }
 
 
-    const despesaHoje =
-        document.getElementById(
-            "despesaHoje"
-        );
+    /* ================================
+       MELHOR FORMA DE PAGAMENTO
+    ================================= */
 
-    if (despesaHoje) {
+    const formas = {};
 
-        despesaHoje.textContent =
-            "€ " +
-            despesasTotal.toFixed(2);
+
+    pagamentosPeriodo.forEach(item => {
+
+        const forma =
+            item.formaPagamento ||
+            "Não informado";
+
+        const valor =
+            Number(item.valor || 0);
+
+
+        if (!formas[forma]) {
+
+            formas[forma] = 0;
+
+        }
+
+
+        formas[forma] += valor;
+
+    });
+
+
+    let melhorForma =
+        "Nenhuma";
+
+    let maiorValorForma = 0;
+
+
+    Object.keys(formas).forEach(forma => {
+
+        if (
+            formas[forma] >
+            maiorValorForma
+        ) {
+
+            maiorValorForma =
+                formas[forma];
+
+            melhorForma =
+                forma;
+
+        }
+
+    });
+
+
+    /* ================================
+       MAIOR RECEBIMENTO
+    ================================= */
+
+    let maiorRecebimento = 0;
+
+    let clienteMaiorRecebimento =
+        "";
+
+
+    pagamentosPeriodo.forEach(item => {
+
+        const valor =
+            Number(item.valor || 0);
+
+
+        if (
+            valor >
+            maiorRecebimento
+        ) {
+
+            maiorRecebimento =
+                valor;
+
+            clienteMaiorRecebimento =
+                item.cliente ||
+                "Cliente";
+
+        }
+
+    });
+
+
+    /* ================================
+       DESPESA SOBRE RECEITA
+    ================================= */
+
+    let percentualDespesas = 0;
+
+
+    if (receitas > 0) {
+
+        percentualDespesas =
+            (despesasTotal / receitas) *
+            100;
 
     }
 
 
-    const saldoHoje =
-        document.getElementById(
-            "saldoHoje"
-        );
+    /* ================================
+       MARGEM
+    ================================= */
 
-    if (saldoHoje) {
-
-        saldoHoje.textContent =
-            "€ " +
-            saldo.toFixed(2);
-
-    }
+    let margem = 0;
 
 
-    const veiculosHoje =
-        document.getElementById(
-            "veiculosHoje"
-        );
+    if (receitas > 0) {
 
-    if (veiculosHoje) {
-
-        veiculosHoje.textContent =
-            veiculos;
+        margem =
+            (saldo / receitas) *
+            100;
 
     }
 
 
-    const totalReceitas =
-        document.getElementById(
-            "totalReceitas"
-        );
+    /* ================================
+       HTML DOS INDICADORES
+    ================================= */
 
-    if (totalReceitas) {
+    area.innerHTML = `
 
-        totalReceitas.textContent =
-            "€ " +
-            receitas.toFixed(2);
+        <div class="row g-3">
 
-    }
+            <!-- TICKET MÉDIO -->
+
+            <div class="col-md-4">
+
+                <div class="p-3 border rounded bg-light">
+
+                    <div>
+                        🎫 <strong>Ticket Médio</strong>
+                    </div>
+
+                    <div class="fs-4 fw-bold text-success mt-2">
+
+                        € ${ticketMedio.toFixed(2)}
+
+                    </div>
+
+                    <small>
+                        Média recebida por veículo
+                    </small>
+
+                </div>
+
+            </div>
 
 
-    const totalDespesas =
-        document.getElementById(
-            "totalDespesas"
-        );
+            <!-- MELHOR FORMA -->
 
-    if (totalDespesas) {
+            <div class="col-md-4">
 
-        totalDespesas.textContent =
-            "€ " +
-            despesasTotal.toFixed(2);
+                <div class="p-3 border rounded bg-light">
 
-    }
+                    <div>
+                        💳 <strong>Melhor Forma de Pagamento</strong>
+                    </div>
+
+                    <div class="fs-5 fw-bold mt-2">
+
+                        ${melhorForma}
+
+                    </div>
+
+                    <small>
+                        € ${maiorValorForma.toFixed(2)}
+                    </small>
+
+                </div>
+
+            </div>
 
 
-    const saldoPeriodo =
-        document.getElementById(
-            "saldoPeriodo"
-        );
+            <!-- MAIOR RECEBIMENTO -->
 
-    if (saldoPeriodo) {
+            <div class="col-md-4">
 
-        saldoPeriodo.textContent =
-            "€ " +
-            saldo.toFixed(2);
+                <div class="p-3 border rounded bg-light">
+
+                    <div>
+                        🏆 <strong>Maior Recebimento</strong>
+                    </div>
+
+                    <div class="fs-4 fw-bold text-success mt-2">
+
+                        € ${maiorRecebimento.toFixed(2)}
+
+                    </div>
+
+                    <small>
+                        ${clienteMaiorRecebimento}
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- VEÍCULOS -->
+
+            <div class="col-md-4">
+
+                <div class="p-3 border rounded bg-light">
+
+                    <div>
+                        🚗 <strong>Veículos Pagos</strong>
+                    </div>
+
+                    <div class="fs-4 fw-bold mt-2">
+
+                        ${veiculos}
+
+                    </div>
+
+                    <small>
+                        No período selecionado
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- DESPESAS -->
+
+            <div class="col-md-4">
+
+                <div class="p-3 border rounded bg-light">
+
+                    <div>
+                        💸 <strong>Despesas / Receita</strong>
+                    </div>
+
+                    <div class="fs-4 fw-bold text-danger mt-2">
+
+                        ${percentualDespesas.toFixed(1)}%
+
+                    </div>
+
+                    <small>
+                        Percentual da receita consumido
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- MARGEM -->
+
+            <div class="col-md-4">
+
+                <div class="p-3 border rounded bg-light">
+
+                    <div>
+                        📈 <strong>Margem do Período</strong>
+                    </div>
+
+                    <div class="fs-4 fw-bold text-primary mt-2">
+
+                        ${margem.toFixed(1)}%
+
+                    </div>
+
+                    <small>
+                        Resultado sobre a receita
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* ================================
+   ATUALIZAR ELEMENTO
+================================ */
+
+function atualizarElemento(
+    id,
+    valor
+) {
+
+    const elemento =
+        document.getElementById(id);
+
+
+    if (elemento) {
+
+        elemento.textContent =
+            valor;
 
     }
 
@@ -549,6 +849,7 @@ const btnAplicarFiltro =
         "btnAplicarFiltro"
     );
 
+
 if (btnAplicarFiltro) {
 
     btnAplicarFiltro.addEventListener(
@@ -563,6 +864,7 @@ const filtroPeriodo =
     document.getElementById(
         "filtroPeriodo"
     );
+
 
 if (filtroPeriodo) {
 
