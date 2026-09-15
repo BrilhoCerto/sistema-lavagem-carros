@@ -25,7 +25,8 @@ let depositos = [];
    FUNÇÃO AUXILIAR
 ========================================================= */
 
-const $ = (id) => document.getElementById(id);
+const $ = (id) =>
+    document.getElementById(id);
 
 
 /* =========================================================
@@ -52,11 +53,8 @@ function hojeISO() {
 function dinheiro(valor) {
 
     return new Intl.NumberFormat("pt-PT", {
-
         style: "currency",
-
         currency: "EUR"
-
     }).format(Number(valor) || 0);
 }
 
@@ -69,7 +67,9 @@ function numero(valor) {
 
     const n = Number(valor);
 
-    return Number.isFinite(n) ? n : 0;
+    return Number.isFinite(n)
+        ? n
+        : 0;
 }
 
 
@@ -80,16 +80,12 @@ function numero(valor) {
 function ordenarPorData(lista) {
 
     return [...lista].sort(
-
         (a, b) =>
-
             String(b.data || "")
                 .localeCompare(
                     String(a.data || "")
                 )
-
     );
-
 }
 
 
@@ -100,17 +96,11 @@ function ordenarPorData(lista) {
 function escapeHtml(valor) {
 
     return String(valor ?? "")
-
         .replaceAll("&", "&amp;")
-
         .replaceAll("<", "&lt;")
-
         .replaceAll(">", "&gt;")
-
         .replaceAll('"', "&quot;")
-
         .replaceAll("'", "&#039;");
-
 }
 
 
@@ -123,11 +113,8 @@ async function carregarDados() {
     try {
 
         const [
-
             snapFechamentos,
-
             snapDepositos
-
         ] = await Promise.all([
 
             getDocs(
@@ -149,7 +136,6 @@ async function carregarDados() {
 
         fechamentos =
             snapFechamentos.docs.map(
-
                 documento => ({
 
                     id: documento.id,
@@ -157,13 +143,11 @@ async function carregarDados() {
                     ...documento.data()
 
                 })
-
             );
 
 
         depositos =
             snapDepositos.docs.map(
-
                 documento => ({
 
                     id: documento.id,
@@ -171,7 +155,6 @@ async function carregarDados() {
                     ...documento.data()
 
                 })
-
             );
 
 
@@ -188,9 +171,7 @@ async function carregarDados() {
         alert(
             "Não foi possível carregar os dados do IMO."
         );
-
     }
-
 }
 
 
@@ -201,14 +182,8 @@ async function carregarDados() {
 function totalFechamentoDoFormulario() {
 
     const total =
-
         numero($("dinheiro").value) +
-
-        numero($("multibanco").value) +
-
-        numero($("mbway").value) +
-
-        numero($("outros").value);
+        numero($("multibanco").value);
 
 
     $("totalFechamento").value =
@@ -216,7 +191,6 @@ function totalFechamentoDoFormulario() {
 
 
     return total;
-
 }
 
 
@@ -227,16 +201,11 @@ function totalFechamentoDoFormulario() {
 function totalDinheiroFechamentos() {
 
     return fechamentos.reduce(
-
         (soma, item) =>
-
             soma +
             numero(item.dinheiro),
-
         0
-
     );
-
 }
 
 
@@ -247,16 +216,11 @@ function totalDinheiroFechamentos() {
 function totalDepositos() {
 
     return depositos.reduce(
-
         (soma, item) =>
-
             soma +
             numero(item.valor),
-
         0
-
     );
-
 }
 
 
@@ -267,7 +231,6 @@ function totalDepositos() {
 function saldoDinheiro() {
 
     return totalDinheiroFechamentos();
-
 }
 
 
@@ -278,13 +241,9 @@ function saldoDinheiro() {
 function disponivelParaDeposito() {
 
     return (
-
         saldoDinheiro() -
-
         totalDepositos()
-
     );
-
 }
 
 
@@ -342,7 +301,6 @@ function renderizarResumo() {
             "valor-positivo",
             disponivel >= 0
         );
-
 }
 
 
@@ -364,12 +322,9 @@ function renderizarFechamentos() {
 
         lista =
             lista.filter(
-
                 item =>
                     item.data === filtro
-
             );
-
     }
 
 
@@ -380,98 +335,124 @@ function renderizarFechamentos() {
     if (!lista.length) {
 
         tbody.innerHTML = `
-
             <tr>
 
                 <td
-                    colspan="8"
+                    colspan="9"
                     class="vazio"
                 >
-
                     Nenhum fechamento encontrado.
-
                 </td>
 
             </tr>
-
         `;
 
         return;
-
     }
 
 
     tbody.innerHTML =
+        lista.map(item => {
 
-        lista.map(item => `
-
-            <tr>
-
-                <td>
-                    ${escapeHtml(item.data)}
-                </td>
-
-                <td>
-                    ${numero(item.quantidadeCarros)}
-                </td>
-
-                <td>
-                    ${dinheiro(item.dinheiro)}
-                </td>
-
-                <td>
-                    ${dinheiro(item.multibanco)}
-                </td>
-
-                <td>
-                    ${dinheiro(item.mbway)}
-                </td>
-
-                <td>
-                    ${dinheiro(item.outros)}
-                </td>
-
-                <td>
-
-                    <strong>
-                        ${dinheiro(item.total)}
-                    </strong>
-
-                </td>
-
-                <td>
-
-                    <button
-
-                        class="btn btn-sm btn-warning acao-btn"
-
-                        data-editar-fechamento="${item.id}"
-
-                    >
-
-                        ✏️ Editar
-
-                    </button>
+            const retirado =
+                item.valorRetirado === undefined ||
+                item.valorRetirado === null ||
+                item.valorRetirado === ""
+                    ? "—"
+                    : dinheiro(
+                        item.valorRetirado
+                    );
 
 
-                    <button
+            const dinheiroReal =
+                item.dinheiroReal === undefined ||
+                item.dinheiroReal === null ||
+                item.dinheiroReal === ""
+                    ? "—"
+                    : dinheiro(
+                        item.dinheiroReal
+                    );
 
-                        class="btn btn-sm btn-danger acao-btn"
 
-                        data-excluir-fechamento="${item.id}"
+            const observacoes =
+                item.observacoes
+                    ? escapeHtml(
+                        item.observacoes
+                    )
+                    : "—";
 
-                    >
 
-                        🗑️ Apagar
+            return `
 
-                    </button>
+                <tr>
 
-                </td>
+                    <td>
+                        ${escapeHtml(item.data)}
+                    </td>
 
-            </tr>
+                    <td>
+                        ${numero(
+                            item.quantidadeCarros
+                        )}
+                    </td>
 
-        `).join("");
+                    <td>
+                        ${dinheiro(
+                            item.dinheiro
+                        )}
+                    </td>
 
+                    <td>
+                        ${dinheiro(
+                            item.multibanco
+                        )}
+                    </td>
+
+                    <td>
+
+                        <strong>
+                            ${dinheiro(
+                                item.total
+                            )}
+                        </strong>
+
+                    </td>
+
+                    <td>
+                        ${retirado}
+                    </td>
+
+                    <td>
+                        ${dinheiroReal}
+                    </td>
+
+                    <td>
+                        ${observacoes}
+                    </td>
+
+                    <td>
+
+                        <button
+                            class="btn btn-sm btn-warning acao-btn"
+                            data-editar-fechamento="${item.id}"
+                        >
+                            ✏️ Editar
+                        </button>
+
+                        <button
+                            class="btn btn-sm btn-danger acao-btn"
+                            data-excluir-fechamento="${item.id}"
+                        >
+                            🗑️ Apagar
+                        </button>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        }).join("");
 }
 
 
@@ -492,29 +473,23 @@ function renderizarDepositos() {
     if (!lista.length) {
 
         tbody.innerHTML = `
-
             <tr>
 
                 <td
                     colspan="4"
                     class="vazio"
                 >
-
                     Nenhum depósito registado.
-
                 </td>
 
             </tr>
-
         `;
 
         return;
-
     }
 
 
     tbody.innerHTML =
-
         lista.map(item => `
 
             <tr>
@@ -532,36 +507,27 @@ function renderizarDepositos() {
                 </td>
 
                 <td>
+
                     ${escapeHtml(
                         item.observacoes || "-"
                     )}
+
                 </td>
 
                 <td>
 
                     <button
-
                         class="btn btn-sm btn-warning acao-btn"
-
                         data-editar-deposito="${item.id}"
-
                     >
-
                         ✏️ Editar
-
                     </button>
 
-
                     <button
-
                         class="btn btn-sm btn-danger acao-btn"
-
                         data-excluir-deposito="${item.id}"
-
                     >
-
                         🗑️ Apagar
-
                     </button>
 
                 </td>
@@ -569,7 +535,6 @@ function renderizarDepositos() {
             </tr>
 
         `).join("");
-
 }
 
 
@@ -584,7 +549,6 @@ function renderizarTudo() {
     renderizarFechamentos();
 
     renderizarDepositos();
-
 }
 
 
@@ -605,9 +569,9 @@ function limparFormularioFechamento() {
 
     $("multibanco").value = "0";
 
-    $("mbway").value = "0";
+    $("valorRetirado").value = "0";
 
-    $("outros").value = "0";
+    $("dinheiroReal").value = "0";
 
     $("observacoesFechamento").value = "";
 
@@ -622,7 +586,6 @@ function limparFormularioFechamento() {
     $("btnCancelarEdicao")
         .classList
         .add("d-none");
-
 }
 
 
@@ -663,12 +626,12 @@ function editarFechamento(id) {
         numero(item.multibanco);
 
 
-    $("mbway").value =
-        numero(item.mbway);
+    $("valorRetirado").value =
+        numero(item.valorRetirado);
 
 
-    $("outros").value =
-        numero(item.outros);
+    $("dinheiroReal").value =
+        numero(item.dinheiroReal);
 
 
     $("observacoesFechamento").value =
@@ -694,7 +657,6 @@ function editarFechamento(id) {
         behavior: "smooth"
 
     });
-
 }
 
 
@@ -752,7 +714,6 @@ function editarDeposito(id) {
         behavior: "smooth"
 
     });
-
 }
 
 
@@ -791,27 +752,21 @@ async function salvarFechamento(event) {
         );
 
 
-    const mbway =
+    const valorRetirado =
         numero(
-            $("mbway").value
+            $("valorRetirado").value
         );
 
 
-    const outros =
+    const dinheiroReal =
         numero(
-            $("outros").value
+            $("dinheiroReal").value
         );
 
 
     const total =
-
         dinheiroValor +
-
-        multibanco +
-
-        mbway +
-
-        outros;
+        multibanco;
 
 
     const observacoes =
@@ -820,18 +775,16 @@ async function salvarFechamento(event) {
             .trim();
 
 
-    /* VALIDAÇÕES */
+    /* =====================================================
+       VALIDAÇÕES
+    ===================================================== */
 
     if (
-
         !data ||
-
         !Number.isInteger(
             quantidadeCarros
         ) ||
-
         quantidadeCarros < 0
-
     ) {
 
         alert(
@@ -839,21 +792,18 @@ async function salvarFechamento(event) {
         );
 
         return;
-
     }
 
 
     if (
-
         [
             dinheiroValor,
             multibanco,
-            mbway,
-            outros
+            valorRetirado,
+            dinheiroReal
         ].some(
             v => v < 0
         )
-
     ) {
 
         alert(
@@ -861,38 +811,35 @@ async function salvarFechamento(event) {
         );
 
         return;
-
     }
 
 
-    /* NÃO PERMITIR DUAS DATAS IGUAIS */
+    /* =====================================================
+       NÃO PERMITIR DUAS DATAS IGUAIS
+    ===================================================== */
 
     const duplicado =
         fechamentos.find(
-
             item =>
-
                 item.data === data &&
-
                 item.id !== id
-
         );
 
 
     if (duplicado) {
 
         alert(
-
             "Já existe um fechamento para esta data. " +
-
             "Edite o fechamento existente."
-
         );
 
         return;
-
     }
 
+
+    /* =====================================================
+       DADOS DO FECHAMENTO
+    ===================================================== */
 
     const dados = {
 
@@ -905,11 +852,11 @@ async function salvarFechamento(event) {
 
         multibanco,
 
-        mbway,
-
-        outros,
-
         total,
+
+        valorRetirado,
+
+        dinheiroReal,
 
         observacoes,
 
@@ -921,7 +868,9 @@ async function salvarFechamento(event) {
 
     try {
 
-        /* EDITAR */
+        /* =================================================
+           EDITAR
+        ================================================= */
 
         if (id) {
 
@@ -931,20 +880,20 @@ async function salvarFechamento(event) {
                 );
 
 
+            /*
+             * A retirada e o dinheiro real
+             * NÃO interferem no cálculo
+             * do dinheiro disponível para depósito.
+             */
+
             const novoSaldoDisponivel =
-
                 (
-
                     saldoDinheiro() -
-
                     numero(
                         itemAntigo?.dinheiro
                     ) +
-
                     dinheiroValor
-
                 ) -
-
                 totalDepositos();
 
 
@@ -953,17 +902,12 @@ async function salvarFechamento(event) {
             ) {
 
                 alert(
-
                     "Esta alteração deixaria " +
-
                     "o saldo de dinheiro negativo " +
-
                     "porque já existem depósitos registados."
-
                 );
 
                 return;
-
             }
 
 
@@ -982,7 +926,9 @@ async function salvarFechamento(event) {
         }
 
 
-        /* NOVO */
+        /* =================================================
+           NOVO
+        ================================================= */
 
         else {
 
@@ -1014,15 +960,14 @@ async function salvarFechamento(event) {
 
         limparFormularioFechamento();
 
+
         await carregarDados();
 
 
         alert(
 
             id
-
                 ? "Fechamento atualizado com sucesso."
-
                 : "Fechamento guardado com sucesso."
 
         );
@@ -1035,9 +980,7 @@ async function salvarFechamento(event) {
         alert(
             "Erro ao guardar o fechamento."
         );
-
     }
-
 }
 
 
@@ -1056,44 +999,37 @@ async function excluirFechamento(id) {
     if (!item) return;
 
 
+    /*
+     * Mantém a lógica original:
+     * somente o dinheiro do fechamento
+     * interfere no saldo dos depósitos.
+     */
+
     const novoSaldo =
-
         saldoDinheiro() -
-
         numero(item.dinheiro) -
-
         totalDepositos();
 
 
     if (novoSaldo < 0) {
 
         alert(
-
             "Não é possível apagar este fechamento " +
-
             "porque já existem depósitos que dependem " +
-
             "do dinheiro acumulado."
-
         );
 
         return;
-
     }
 
 
     if (
-
         !confirm(
-
             `Apagar o fechamento de ${item.data}?`
-
         )
-
     ) {
 
         return;
-
     }
 
 
@@ -1120,9 +1056,7 @@ async function excluirFechamento(id) {
         alert(
             "Erro ao apagar o fechamento."
         );
-
     }
-
 }
 
 
@@ -1149,7 +1083,6 @@ function limparFormularioDeposito() {
     $("btnCancelarEdicaoDeposito")
         .classList
         .add("d-none");
-
 }
 
 
@@ -1192,27 +1125,20 @@ async function salvarDeposito(event) {
         );
 
         return;
-
     }
 
 
     const depositoAtual =
-
         id
-
             ? depositos.find(
                 item => item.id === id
             )
-
             : null;
 
 
     const disponivelSemEste =
-
         saldoDinheiro() -
-
         totalDepositos() +
-
         numero(
             depositoAtual?.valor
         );
@@ -1223,15 +1149,12 @@ async function salvarDeposito(event) {
     ) {
 
         alert(
-
             `O valor disponível para depósito é ${dinheiro(
                 disponivelSemEste
             )}.`
-
         );
 
         return;
-
     }
 
 
@@ -1251,7 +1174,9 @@ async function salvarDeposito(event) {
 
     try {
 
-        /* EDITAR */
+        /* =================================================
+           EDITAR
+        ================================================= */
 
         if (id) {
 
@@ -1270,7 +1195,9 @@ async function salvarDeposito(event) {
         }
 
 
-        /* NOVO */
+        /* =================================================
+           NOVO
+        ================================================= */
 
         else {
 
@@ -1302,15 +1229,14 @@ async function salvarDeposito(event) {
 
         limparFormularioDeposito();
 
+
         await carregarDados();
 
 
         alert(
 
             id
-
                 ? "Depósito atualizado com sucesso."
-
                 : "Depósito registado com sucesso."
 
         );
@@ -1323,9 +1249,7 @@ async function salvarDeposito(event) {
         alert(
             "Erro ao guardar o depósito."
         );
-
     }
-
 }
 
 
@@ -1345,19 +1269,13 @@ async function excluirDeposito(id) {
 
 
     if (
-
         !confirm(
-
             `Apagar o depósito de ${item.data}, ` +
-
             `no valor de ${dinheiro(item.valor)}?`
-
         )
-
     ) {
 
         return;
-
     }
 
 
@@ -1384,9 +1302,7 @@ async function excluirDeposito(id) {
         alert(
             "Erro ao apagar o depósito."
         );
-
     }
-
 }
 
 
@@ -1403,7 +1319,9 @@ function configurarAbas() {
             botao => {
 
                 botao.addEventListener(
+
                     "click",
+
                     () => {
 
                         const tab =
@@ -1445,12 +1363,12 @@ function configurarAbas() {
                             .add("ativo");
 
                     }
+
                 );
 
             }
 
         );
-
 }
 
 
@@ -1460,19 +1378,11 @@ function configurarAbas() {
 
 function configurarEventos() {
 
-
     /* ATUALIZA TOTAL AUTOMATICAMENTE */
 
     [
-
         "dinheiro",
-
-        "multibanco",
-
-        "mbway",
-
-        "outros"
-
+        "multibanco"
     ].forEach(
 
         id => {
@@ -1548,7 +1458,9 @@ function configurarEventos() {
         );
 
 
-    /* AÇÕES FECHAMENTOS */
+    /* =====================================================
+       AÇÕES FECHAMENTOS
+    ===================================================== */
 
     $("tabelaFechamentos")
         .addEventListener(
@@ -1572,8 +1484,10 @@ function configurarEventos() {
                 if (editar) {
 
                     editarFechamento(
+
                         editar.dataset
                             .editarFechamento
+
                     );
 
                 }
@@ -1582,8 +1496,10 @@ function configurarEventos() {
                 if (excluir) {
 
                     excluirFechamento(
+
                         excluir.dataset
                             .excluirFechamento
+
                     );
 
                 }
@@ -1593,7 +1509,9 @@ function configurarEventos() {
         );
 
 
-    /* AÇÕES DEPÓSITOS */
+    /* =====================================================
+       AÇÕES DEPÓSITOS
+    ===================================================== */
 
     $("tabelaDepositos")
         .addEventListener(
@@ -1617,8 +1535,10 @@ function configurarEventos() {
                 if (editar) {
 
                     editarDeposito(
+
                         editar.dataset
                             .editarDeposito
+
                     );
 
                 }
@@ -1627,8 +1547,10 @@ function configurarEventos() {
                 if (excluir) {
 
                     excluirDeposito(
+
                         excluir.dataset
                             .excluirDeposito
+
                     );
 
                 }
@@ -1636,7 +1558,6 @@ function configurarEventos() {
             }
 
         );
-
 }
 
 
