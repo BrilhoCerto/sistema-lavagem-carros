@@ -289,46 +289,6 @@
                         </div>
 
 
-                        <!-- MB WAY -->
-
-                        <div class="col-md-3">
-
-                            <label class="form-label">
-                                MB WAY (€)
-                            </label>
-
-                            <input
-                                type="number"
-                                id="mbway"
-                                class="form-control"
-                                min="0"
-                                step="0.01"
-                                value="0"
-                            >
-
-                        </div>
-
-
-                        <!-- OUTROS -->
-
-                        <div class="col-md-3">
-
-                            <label class="form-label">
-                                Outros (€)
-                            </label>
-
-                            <input
-                                type="number"
-                                id="outros"
-                                class="form-control"
-                                min="0"
-                                step="0.01"
-                                value="0"
-                            >
-
-                        </div>
-
-
                         <!-- TOTAL -->
 
                         <div class="col-md-6">
@@ -348,6 +308,54 @@
                         </div>
 
 
+                        <!-- VALOR RETIRADO -->
+
+                        <div class="col-md-3">
+
+                            <label class="form-label">
+                                Valor retirado do caixa (€)
+                            </label>
+
+                            <input
+                                type="number"
+                                id="valorRetirado"
+                                class="form-control"
+                                min="0"
+                                step="0.01"
+                                value="0"
+                            >
+
+                            <small class="text-muted">
+                                Apenas para controlo. Não reduz o valor disponível para depósito.
+                            </small>
+
+                        </div>
+
+
+                        <!-- DINHEIRO REAL -->
+
+                        <div class="col-md-3">
+
+                            <label class="form-label">
+                                Dinheiro real no caixa (€)
+                            </label>
+
+                            <input
+                                type="number"
+                                id="dinheiroReal"
+                                class="form-control"
+                                min="0"
+                                step="0.01"
+                                value="0"
+                            >
+
+                            <small class="text-muted">
+                                Valor físico encontrado no caixa.
+                            </small>
+
+                        </div>
+
+
                         <!-- OBSERVAÇÕES -->
 
                         <div class="col-12">
@@ -360,7 +368,7 @@
                                 id="observacoesFechamento"
                                 class="form-control"
                                 rows="2"
-                                placeholder="Opcional"
+                                placeholder="Ex.: valor retirado pelo responsável, reposição posterior, etc."
                             ></textarea>
 
                         </div>
@@ -411,19 +419,13 @@
                             <tr>
 
                                 <th>Data</th>
-
                                 <th>Carros</th>
-
                                 <th>Dinheiro</th>
-
                                 <th>Multibanco</th>
-
-                                <th>MB WAY</th>
-
-                                <th>Outros</th>
-
                                 <th>Total</th>
-
+                                <th>Retirado</th>
+                                <th>Dinheiro real</th>
+                                <th>Observações</th>
                                 <th>Ações</th>
 
                             </tr>
@@ -436,11 +438,10 @@
                             <tr>
 
                                 <td
-                                    colspan="8"
+                                    colspan="9"
                                     class="text-center"
                                 >
                                     A carregar...
-
                                 </td>
 
                             </tr>
@@ -465,7 +466,6 @@
             id="tab-depositos"
             class="tab-content"
         >
-
 
             <!-- RESUMO DOS DEPÓSITOS -->
 
@@ -540,10 +540,8 @@
                         </h4>
 
                         <small class="text-muted">
-
                             O depósito movimenta o dinheiro já recebido;
                             não é nova receita.
-
                         </small>
 
                     </div>
@@ -569,7 +567,6 @@
 
 
                     <div class="row g-3">
-
 
                         <!-- DATA DO DEPÓSITO -->
 
@@ -667,11 +664,8 @@
                             <tr>
 
                                 <th>Data</th>
-
                                 <th>Valor</th>
-
                                 <th>Observações</th>
-
                                 <th>Ações</th>
 
                             </tr>
