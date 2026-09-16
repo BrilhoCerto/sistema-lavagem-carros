@@ -338,7 +338,7 @@ function renderizarFechamentos() {
             <tr>
 
                 <td
-                    colspan="9"
+                    colspan="10"
                     class="vazio"
                 >
                     Nenhum fechamento encontrado.
@@ -354,6 +354,39 @@ function renderizarFechamentos() {
     tbody.innerHTML =
         lista.map(item => {
 
+            /* =============================================
+               DIA DA SEMANA
+            ============================================= */
+
+            let diaSemana = "—";
+
+            if (item.data) {
+
+                const data =
+                    new Date(
+                        item.data + "T12:00:00"
+                    );
+
+                const dias =
+                    [
+                        "Domingo",
+                        "Segunda-feira",
+                        "Terça-feira",
+                        "Quarta-feira",
+                        "Quinta-feira",
+                        "Sexta-feira",
+                        "Sábado"
+                    ];
+
+                diaSemana =
+                    dias[data.getDay()];
+            }
+
+
+            /* =============================================
+               VALOR RETIRADO
+            ============================================= */
+
             const retirado =
                 item.valorRetirado === undefined ||
                 item.valorRetirado === null ||
@@ -364,6 +397,10 @@ function renderizarFechamentos() {
                     );
 
 
+            /* =============================================
+               DINHEIRO REAL
+            ============================================= */
+
             const dinheiroReal =
                 item.dinheiroReal === undefined ||
                 item.dinheiroReal === null ||
@@ -373,6 +410,10 @@ function renderizarFechamentos() {
                         item.dinheiroReal
                     );
 
+
+            /* =============================================
+               OBSERVAÇÕES
+            ============================================= */
 
             const observacoes =
                 item.observacoes
@@ -390,11 +431,20 @@ function renderizarFechamentos() {
                         ${escapeHtml(item.data)}
                     </td>
 
+
+                    <td>
+                        <strong>
+                            ${diaSemana}
+                        </strong>
+                    </td>
+
+
                     <td>
                         ${numero(
                             item.quantidadeCarros
                         )}
                     </td>
+
 
                     <td>
                         ${dinheiro(
@@ -402,11 +452,13 @@ function renderizarFechamentos() {
                         )}
                     </td>
 
+
                     <td>
                         ${dinheiro(
                             item.multibanco
                         )}
                     </td>
+
 
                     <td>
 
@@ -418,17 +470,21 @@ function renderizarFechamentos() {
 
                     </td>
 
+
                     <td>
                         ${retirado}
                     </td>
+
 
                     <td>
                         ${dinheiroReal}
                     </td>
 
+
                     <td>
                         ${observacoes}
                     </td>
+
 
                     <td>
 
@@ -438,6 +494,7 @@ function renderizarFechamentos() {
                         >
                             ✏️ Editar
                         </button>
+
 
                         <button
                             class="btn btn-sm btn-danger acao-btn"
@@ -454,7 +511,6 @@ function renderizarFechamentos() {
 
         }).join("");
 }
-
 
 /* =========================================================
    RENDERIZAR DEPÓSITOS
