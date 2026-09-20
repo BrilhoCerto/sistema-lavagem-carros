@@ -705,6 +705,8 @@ let totalCartao = 0;
 
 let totalHoje = 0;
 
+let totalDebito = 0;
+
 
 despesas.forEach((item) => {
 
@@ -733,15 +735,29 @@ despesas.forEach((item) => {
     const mesItem =
         Number(partes[1]) - 1;
 
+if (
+    anoItem === ano &&
+    mesItem === mes
+) {
+
+    totalMes += valor;
 
     if (
-        anoItem === ano &&
-        mesItem === mes
+        (
+            item.origem === "Cartão de Débito" ||
+            item.tipo === "debito" ||
+            String(
+                item.subcategoria || ""
+            ).startsWith("Cartão Débito")
+        ) &&
+        obterStatus(item) === "Pago"
     ) {
 
-        totalMes += valor;
+        totalDebito += valor;
 
     }
+
+}
 
 
     const status =
@@ -795,6 +811,11 @@ definirTexto(
     "despesasHoje",
     "Hoje: " +
     formatarEuro(totalHoje)
+);
+
+definirTexto(
+    "totalDebito",
+    formatarEuro(totalDebito)
 );
 
 }
