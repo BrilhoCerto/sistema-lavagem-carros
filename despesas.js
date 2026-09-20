@@ -1013,19 +1013,55 @@ const totaisDebito = {
 
 despesas.forEach((item) => {
 
+    const ehDebito =
+        item.origem === "Cartão de Débito" ||
+        item.tipo === "debito" ||
+        String(
+            item.subcategoria || ""
+        ).startsWith("Cartão Débito");
+
+
+    /* ================================
+       CARTÃO DE DÉBITO
+    ================================= */
+
+    if (ehDebito) {
+
+        const cartaoDebito =
+            item.subcategoria;
+
+        if (
+            Object.prototype.hasOwnProperty
+                .call(
+                    totaisDebito,
+                    cartaoDebito
+                )
+        ) {
+
+            totaisDebito[cartaoDebito] +=
+                Number(item.valor || 0);
+
+        }
+
+        return;
+
+    }
+
+
+    /* ================================
+       CARTÃO DE CRÉDITO
+    ================================= */
+
     if (!ehDespesaCartao(item)) {
         return;
     }
-
 
     if (obterStatus(item) === "Pago") {
         return;
     }
 
-
     const cartao =
         item.subcategoria;
-
 
     if (
         Object.prototype.hasOwnProperty
