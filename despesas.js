@@ -1159,7 +1159,7 @@ container.innerHTML =
                         Valor pago no mês
                     </div>
 
-                    <div class="cartao-status ${vazio ? "ok" : ""}">
+                    <div class="cartao-status ok">
 
                         ${
                             vazio
