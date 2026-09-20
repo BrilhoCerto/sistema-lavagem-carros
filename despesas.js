@@ -270,6 +270,9 @@ campoOrigem.addEventListener(
         const ehCartao =
             this.value === "Cartões";
 
+        const ehDebito =
+            this.value === "Cartão de Débito";
+
         const campoCartao =
             document.getElementById("campoCartao");
 
@@ -282,6 +285,13 @@ campoOrigem.addEventListener(
         const selectSituacao =
             document.getElementById("situacao");
 
+        const selectSubcategoria =
+            document.getElementById("subcategoria");
+
+
+        /* ================================
+           CARTÃO DE CRÉDITO
+        ================================= */
 
         if (ehCartao) {
 
@@ -303,7 +313,14 @@ campoOrigem.addEventListener(
                 campoSituacao.style.display = "none";
             }
 
-        } else {
+        }
+
+
+        /* ================================
+           CARTÃO DE DÉBITO
+        ================================= */
+
+        else if (ehDebito) {
 
             if (campoCartao) {
                 campoCartao.classList.add(
@@ -316,8 +333,85 @@ campoOrigem.addEventListener(
                 selectCartao.value = "";
             }
 
+
+            if (selectSubcategoria) {
+
+                selectSubcategoria.innerHTML =
+                    '<option value="">Selecione</option>';
+
+                subcategoriasDebito.forEach(
+                    (item) => {
+
+                        const option =
+                            document.createElement(
+                                "option"
+                            );
+
+                        option.value = item;
+
+                        option.textContent = item;
+
+                        selectSubcategoria.appendChild(
+                            option
+                        );
+
+                    }
+                );
+
+                selectSubcategoria.required = true;
+
+            }
+
+
+            /*
+             * Débito é considerado pago
+             * no momento do lançamento.
+             */
+
+            if (selectSituacao) {
+                selectSituacao.value = "Pago";
+            }
+
+            if (campoSituacao) {
+                campoSituacao.style.display = "none";
+            }
+
+        }
+
+
+        /* ================================
+           OUTRAS FORMAS
+        ================================= */
+
+        else {
+
+            if (campoCartao) {
+                campoCartao.classList.add(
+                    "campo-oculto"
+                );
+            }
+
+            if (selectCartao) {
+                selectCartao.required = false;
+                selectCartao.value = "";
+            }
+
+            if (selectSubcategoria) {
+                selectSubcategoria.required = false;
+            }
+
             if (campoSituacao) {
                 campoSituacao.style.display = "block";
+            }
+
+            if (selectSituacao) {
+                selectSituacao.value = "";
+            }
+
+            if (campoCategoria) {
+                campoCategoria.dispatchEvent(
+                    new Event("change")
+                );
             }
 
         }
@@ -326,7 +420,6 @@ campoOrigem.addEventListener(
 );
 
 }
-
 /* =========================================
 FILTRO DE CATEGORIAS
 ========================================= */
