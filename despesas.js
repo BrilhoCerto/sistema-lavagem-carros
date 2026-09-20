@@ -1030,18 +1030,19 @@ despesas.forEach((item) => {
         const cartaoDebito =
             item.subcategoria;
 
-        if (
-            Object.prototype.hasOwnProperty
-                .call(
-                    totaisDebito,
-                    cartaoDebito
-                )
-        ) {
+      if (
+    Object.prototype.hasOwnProperty
+        .call(
+            totaisDebito,
+            cartaoDebito
+        )
+    &&
+    obterStatus(item) !== "Pago"
+) {
 
-            totaisDebito[cartaoDebito] +=
-                Number(item.valor || 0);
-
-        }
+    totaisDebito[cartaoDebito] +=
+        Number(item.valor || 0);
+}
 
         return;
 
