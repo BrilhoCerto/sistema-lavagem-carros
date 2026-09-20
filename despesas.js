@@ -1087,7 +1087,6 @@ const container =
 
 if (!container) return;
 
-
 container.innerHTML =
     Object.keys(cartoes)
         .map((nome) => {
@@ -1131,8 +1130,50 @@ container.innerHTML =
             `;
 
         })
-        .join("");
+        .join("")
 
+    +
+
+    Object.keys(totaisDebito)
+        .map((nome) => {
+
+            const valor =
+                totaisDebito[nome];
+
+            const vazio =
+                valor === 0;
+
+
+            return `
+                <div class="cartao-card ${vazio ? "vazio" : ""}">
+
+                    <div class="cartao-nome">
+                        💳 ${escaparHTML(nome)}
+                    </div>
+
+                    <div class="cartao-valor">
+                        ${formatarEuro(valor)}
+                    </div>
+
+                    <div class="cartao-label">
+                        Valor pago no mês
+                    </div>
+
+                    <div class="cartao-status ${vazio ? "ok" : ""}">
+
+                        ${
+                            vazio
+                                ? "✓ Sem movimentos"
+                                : "● Pago"
+                        }
+
+                    </div>
+
+                </div>
+            `;
+
+        })
+        .join("");
 
 carregarTabelaCartoes();
 
