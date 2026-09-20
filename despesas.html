@@ -168,6 +168,24 @@ href="despesas.css">
 
         </div>
 
+
+        <!-- NOVO CARD -->
+        <div class="resumo-card">
+
+            <div class="resumo-titulo">
+                Débito pago no mês
+            </div>
+
+            <div
+                id="totalDebito"
+                class="resumo-valor verde">
+
+                € 0,00
+
+            </div>
+
+        </div>
+
     </div>
 
 
@@ -404,6 +422,8 @@ href="despesas.css">
                     </div>
 
 
+                    <!-- FORMA DE PAGAMENTO -->
+
                     <div>
 
                         <label>
@@ -431,10 +451,16 @@ href="despesas.css">
                                 Cartão de Crédito
                             </option>
 
+                            <option value="Cartão de Débito">
+                                Cartão de Débito
+                            </option>
+
                         </select>
 
                     </div>
 
+
+                    <!-- CARTÃO DE CRÉDITO -->
 
                     <div
                         id="campoCartao"
@@ -789,7 +815,11 @@ href="despesas.css">
                         </option>
 
                         <option value="Cartões">
-                            Cartões
+                            Cartão de Crédito
+                        </option>
+
+                        <option value="Cartão de Débito">
+                            Cartão de Débito
                         </option>
 
                     </select>
@@ -939,6 +969,8 @@ href="despesas.css">
         </div>
 
 
+        <!-- ORIGEM DA BAIXA -->
+
         <div class="form-group">
 
             <label>
@@ -959,6 +991,14 @@ href="despesas.css">
 
                 <option value="Caixa IMO Wash Car">
                     Caixa IMO Wash Car
+                </option>
+
+                <option value="Conta Eliane Millennium">
+                    Conta Eliane Millennium
+                </option>
+
+                <option value="Conta Samuel CCA">
+                    Conta Samuel CCA
                 </option>
 
             </select>
