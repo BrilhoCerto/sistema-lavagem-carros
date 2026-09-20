@@ -572,10 +572,12 @@ formDespesa.addEventListener(
                         ? "Aberto"
                         : situacao,
 
-                tipo:
-                    ehCartao
-                        ? "cartao"
-                        : "normal",
+               tipo:
+    ehCartao
+        ? "cartao"
+        : ehDebito
+            ? "debito"
+            : "normal",
 
                 statusCartao:
                     ehCartao
