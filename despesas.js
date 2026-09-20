@@ -1003,6 +1003,13 @@ const totais = {
 
 };
 
+const totaisDebito = {
+
+    "Cartão Débito Eliane Millennium": 0,
+
+    "Cartão Débito Samuel CCA": 0
+
+};
 
 despesas.forEach((item) => {
 
