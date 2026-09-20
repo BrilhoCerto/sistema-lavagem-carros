@@ -477,7 +477,10 @@ formDespesa.addEventListener(
                     .value;
 
             const ehCartao =
-                origem === "Cartões";
+    origem === "Cartões";
+
+const ehDebito =
+    origem === "Cartão de Débito";
 
 
             const dataDespesa =
