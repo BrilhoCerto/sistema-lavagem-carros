@@ -1151,7 +1151,7 @@ container.innerHTML =
                         💳 ${escaparHTML(nome)}
                     </div>
 
-                    <div class="cartao-valor">
+                    <div class="cartao-valor ok">
                         ${formatarEuro(valor)}
                     </div>
 
