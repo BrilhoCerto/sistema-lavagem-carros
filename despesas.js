@@ -117,6 +117,11 @@ const subcategorias = {
 
 };
 
+const subcategoriasDebito = [
+    "Cartão Débito Eliane Millennium",
+    "Cartão Débito Samuel CCA"
+];
+
 /* =========================================
 CARTÕES
 ========================================= */
