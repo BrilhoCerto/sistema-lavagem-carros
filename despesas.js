@@ -145,17 +145,6 @@ const cartoes = {
 };
 
 /* =========================================
-NOVOS CARTÕES DE DÉBITO
-========================================= */
-
-const subcategoriasDebito = [
-
-"Cartão Débito Eliane Millennium",
-"Cartão Débito Samuel CCA"
-
-];
-
-/* =========================================
 FIRESTORE
 IMPORTANTE:
 firestoreId = ID REAL DO DOCUMENTO
@@ -281,9 +270,6 @@ campoOrigem.addEventListener(
         const ehCartao =
             this.value === "Cartões";
 
-        const ehDebito =
-            this.value === "Cartão de Débito";
-
         const campoCartao =
             document.getElementById("campoCartao");
 
@@ -295,9 +281,6 @@ campoOrigem.addEventListener(
 
         const selectSituacao =
             document.getElementById("situacao");
-
-        const selectSubcategoria =
-            document.getElementById("subcategoria");
 
 
         if (ehCartao) {
@@ -320,50 +303,6 @@ campoOrigem.addEventListener(
                 campoSituacao.style.display = "none";
             }
 
-        } else if (ehDebito) {
-
-            if (campoCartao) {
-                campoCartao.classList.add(
-                    "campo-oculto"
-                );
-            }
-
-            if (selectCartao) {
-                selectCartao.required = false;
-                selectCartao.value = "";
-            }
-
-            if (selectSubcategoria) {
-
-                selectSubcategoria.innerHTML =
-                    '<option value="">Selecione</option>';
-
-                subcategoriasDebito.forEach(
-                    (item) => {
-
-                        const option =
-                            document.createElement("option");
-
-                        option.value = item;
-                        option.textContent = item;
-
-                        selectSubcategoria.appendChild(option);
-
-                    }
-                );
-
-                selectSubcategoria.required = true;
-
-            }
-
-            if (selectSituacao) {
-                selectSituacao.value = "Pago";
-            }
-
-            if (campoSituacao) {
-                campoSituacao.style.display = "none";
-            }
-
         } else {
 
             if (campoCartao) {
@@ -377,22 +316,8 @@ campoOrigem.addEventListener(
                 selectCartao.value = "";
             }
 
-            if (selectSubcategoria) {
-                selectSubcategoria.required = false;
-            }
-
             if (campoSituacao) {
                 campoSituacao.style.display = "block";
-            }
-
-            if (selectSituacao) {
-                selectSituacao.value = "";
-            }
-
-            if (campoCategoria) {
-                campoCategoria.dispatchEvent(
-                    new Event("change")
-                );
             }
 
         }
@@ -429,153 +354,68 @@ Object.keys(subcategorias).forEach(
 }
 
 /* =========================================
-FORMULÁRIO
+SALVAR DESPESA
 ========================================= */
 
-const formulario =
+const formDespesa =
 document.getElementById("formDespesa");
 
-if (formulario) {
+if (formDespesa) {
 
-formulario.addEventListener(
+formDespesa.addEventListener(
     "submit",
-    async function (event) {
+    async function (e) {
 
-        event.preventDefault();
+        e.preventDefault();
 
         try {
 
-            const nome =
-                document.getElementById("nome")?.value.trim() || "";
-
-            const categoria =
-                document.getElementById("categoria")?.value || "";
+            const agora = new Date();
 
             const origem =
-                document.getElementById("origem")?.value || "";
-
-            const subcategoria =
-                document.getElementById("subcategoria")?.value || "";
-
-            const cartao =
-                document.getElementById("cartao")?.value || "";
-
-            const valorCampo =
-                document.getElementById("valor")?.value || "0";
-
-            const observacao =
-                document.getElementById("observacao")?.value.trim() || "";
-
-            const dataCampo =
-                document.getElementById("data")?.value || "";
-
-            const situacaoCampo =
-                document.getElementById("situacao")?.value || "";
-
-
-            const valor =
-                Number(
-                    valorCampo
-                        .replace(",", ".")
-                );
-
-
-            if (!nome) {
-
-                alert(
-                    "Informe o nome da despesa."
-                );
-
-                return;
-
-            }
-
-
-            if (!categoria) {
-
-                alert(
-                    "Selecione uma categoria."
-                );
-
-                return;
-
-            }
-
-
-            if (!origem) {
-
-                alert(
-                    "Selecione a origem."
-                );
-
-                return;
-
-            }
-
+                document
+                    .getElementById("origem")
+                    .value;
 
             const ehCartao =
                 origem === "Cartões";
 
-            const ehDebito =
-                origem === "Cartão de Débito";
+
+            const dataDespesa =
+                document
+                    .getElementById("dataDespesa")
+                    .value;
 
 
-            let situacao =
-                situacaoCampo;
+            const descricao =
+                document
+                    .getElementById("descricao")
+                    .value
+                    .trim();
 
 
-            /*
-             * Cartão de débito:
-             *
-             * A despesa já foi paga.
-             * Portanto entra diretamente como Pago.
-             */
-
-            if (ehDebito) {
-
-                situacao = "Pago";
-
-            }
+            const categoria =
+                document
+                    .getElementById("categoria")
+                    .value;
 
 
-            /*
-             * Para cartão de crédito,
-             * a subcategoria é o cartão selecionado.
-             */
-
-            let subcategoriaFinal =
-                subcategoria;
-
-
-            if (ehCartao) {
-
-                if (!cartao) {
-
-                    alert(
-                        "Selecione o cartão de crédito."
-                    );
-
-                    return;
-
-                }
-
-                subcategoriaFinal =
-                    cartao;
-
-                situacao = "A Pagar";
-
-            }
+            const subcategoria =
+                ehCartao
+                    ? document
+                        .getElementById("cartao")
+                        .value
+                    : document
+                        .getElementById("subcategoria")
+                        .value;
 
 
-            if (!subcategoriaFinal) {
-
-                alert(
-                    "Selecione uma subcategoria."
+            const valor =
+                Number(
+                    document
+                        .getElementById("valor")
+                        .value
                 );
-
-                return;
-
-            }
 
 
             if (!valor || valor <= 0) {
@@ -589,115 +429,69 @@ formulario.addEventListener(
             }
 
 
-            if (!dataCampo) {
-
-                alert(
-                    "Informe a data da despesa."
-                );
-
-                return;
-
-            }
-
-
-            /*
-             * Tipo da despesa
-             */
-
-            let tipo = "normal";
-
-            if (ehCartao) {
-
-                tipo = "cartao";
-
-            } else if (ehDebito) {
-
-                tipo = "debito";
-
-            }
-
-
-            /*
-             * Crédito:
-             * fica Aberto até Dar Baixa.
-             *
-             * Débito:
-             * já fica Pago.
-             *
-             * Normal:
-             * respeita a situação escolhida.
-             */
-
-            const status =
+            const situacao =
                 ehCartao
-                    ? "Aberto"
-                    : situacao;
-
-
-            /*
-             * Para débito, a própria data
-             * da despesa é a data do pagamento.
-             */
-
-            const dataPagamento =
-                ehDebito
-                    ? dataCampo
-                    : "";
-
-
-            /*
-             * Para débito, guardamos
-             * a conta/cartão utilizado
-             * em origemPagamento.
-             *
-             * Exemplo:
-             * Cartão Débito Eliane Millennium
-             * Cartão Débito Samuel CCA
-             */
-
-            const origemPagamento =
-                ehDebito
-                    ? subcategoriaFinal
-                    : "";
+                    ? "A Pagar"
+                    : document
+                        .getElementById("situacao")
+                        .value;
 
 
             const novaDespesa = {
 
-                nome,
+                criadoEm:
+                    agora.toISOString(),
 
-                categoria,
+                data:
+                    agora
+                        .toISOString()
+                        .split("T")[0],
 
-                subcategoria:
-                    subcategoriaFinal,
+                hora:
+                    agora.toLocaleTimeString(
+                        "pt-PT",
+                        {
+                            hour: "2-digit",
+                            minute: "2-digit"
+                        }
+                    ),
+
+                dataDespesa,
+
+                descricao,
 
                 origem,
 
+                categoria,
+
+                subcategoria,
+
                 valor,
 
-                observacao,
-
-                data:
-                    dataCampo,
-
-                situacao,
-
-                status,
-
-                tipo,
-
-                cartao:
+                status:
                     ehCartao
-                        ? cartao
-                        : "",
+                        ? "Aberto"
+                        : situacao,
+
+                tipo:
+                    ehCartao
+                        ? "cartao"
+                        : "normal",
 
                 statusCartao:
                     ehCartao
                         ? "Aberto"
                         : "",
 
-                dataPagamento,
+                dataPagamento: "",
 
-                origemPagamento
+                origemPagamento: "",
+
+                observacoes:
+                    document
+                        .getElementById("observacoes")
+                        .value
+                        .trim()
 
             };
 
@@ -708,35 +502,13 @@ formulario.addEventListener(
             );
 
 
-            alert(
-                "Despesa registada com sucesso!"
-            );
+            formDespesa.reset();
 
-
-            formulario.reset();
-
-
-            /*
-             * Depois de gravar,
-             * restauramos o estado normal
-             * do formulário.
-             */
 
             const campoCartao =
-                document.getElementById("campoCartao");
-
-            const campoSituacao =
-                document.getElementById("campoSituacao");
-
-            const selectCartao =
-                document.getElementById("cartao");
-
-            const selectSituacao =
-                document.getElementById("situacao");
-
-            const selectSubcategoria =
-                document.getElementById("subcategoria");
-
+                document.getElementById(
+                    "campoCartao"
+                );
 
             if (campoCartao) {
 
@@ -747,22 +519,10 @@ formulario.addEventListener(
             }
 
 
-            if (selectCartao) {
-
-                selectCartao.required = false;
-
-            }
-
-
-            if (selectSubcategoria) {
-
-                selectSubcategoria.required = false;
-
-                selectSubcategoria.innerHTML =
-                    '<option value="">Selecione</option>';
-
-            }
-
+            const campoSituacao =
+                document.getElementById(
+                    "campoSituacao"
+                );
 
             if (campoSituacao) {
 
@@ -772,22 +532,36 @@ formulario.addEventListener(
             }
 
 
-            if (selectSituacao) {
+            const selectCartao =
+                document.getElementById(
+                    "cartao"
+                );
 
-                selectSituacao.value = "";
+            if (selectCartao) {
+
+                selectCartao.required =
+                    false;
 
             }
+
+
+            alert(
+                "Despesa registada com sucesso."
+            );
+
+
+            mudarAba("visao");
 
 
         } catch (error) {
 
             console.error(
-                "Erro ao guardar despesa:",
+                "Erro ao registar despesa:",
                 error
             );
 
             alert(
-                "Não foi possível guardar a despesa."
+                "Não foi possível registar a despesa."
             );
 
         }
@@ -797,21 +571,24 @@ formulario.addEventListener(
 
 }
 
-
 /* =========================================
 RESUMO
 ========================================= */
 
 function atualizarResumo() {
 
+const agora = new Date();
+
 const hoje =
-new Date();
+    agora
+        .toISOString()
+        .split("T")[0];
 
-const anoAtual =
-hoje.getFullYear();
+const mes =
+    agora.getMonth();
 
-const mesAtual =
-hoje.getMonth();
+const ano =
+    agora.getFullYear();
 
 
 let totalMes = 0;
@@ -820,208 +597,101 @@ let totalPago = 0;
 
 let totalAberto = 0;
 
-let totalCartoes = 0;
+let totalCartao = 0;
 
 let totalHoje = 0;
 
-let totalDebito = 0;
+
+despesas.forEach((item) => {
+
+    const valor =
+        Number(item.valor || 0);
+
+    const data =
+        item.dataDespesa ||
+        item.data ||
+        "";
 
 
-despesas.forEach(
-    (despesa) => {
+    if (data === hoje) {
 
-        if (!despesa.data) {
-            return;
-        }
+        totalHoje += valor;
 
-
-        const data =
-            new Date(
-                despesa.data + "T00:00:00"
-            );
+    }
 
 
-        if (
-            data.getFullYear() !== anoAtual ||
-            data.getMonth() !== mesAtual
-        ) {
+    const partes =
+        data.split("-");
 
-            return;
+    const anoItem =
+        Number(partes[0]);
 
-        }
+    const mesItem =
+        Number(partes[1]) - 1;
 
 
-        const valor =
-            Number(despesa.valor) || 0;
-
+    if (
+        anoItem === ano &&
+        mesItem === mes
+    ) {
 
         totalMes += valor;
 
-
-        const status =
-            String(
-                despesa.status ||
-                despesa.situacao ||
-                ""
-            ).toLowerCase();
+    }
 
 
-        if (
-            status === "pago"
-        ) {
-
-            totalPago += valor;
-
-        }
+    const status =
+        obterStatus(item);
 
 
-        if (
-            status === "aberto" ||
-            status === "a pagar"
-        ) {
+    if (status === "Pago") {
 
-            totalAberto += valor;
+        totalPago += valor;
 
-        }
+    } else {
 
-
-        /*
-         * Cartões de crédito
-         */
-
-        if (
-            despesa.origem === "Cartões" ||
-            despesa.tipo === "cartao"
-        ) {
-
-            if (
-                status === "aberto" ||
-                status === "a pagar"
-            ) {
-
-                totalCartoes += valor;
-
-            }
-
-        }
-
-
-        /*
-         * Cartões de débito
-         */
-
-        if (
-            despesa.origem === "Cartão de Débito"
-        ) {
-
-            totalDebito += valor;
-
-        }
-
-
-        /*
-         * Despesas de hoje
-         */
-
-        const dataHoje =
-            hoje.toISOString()
-                .split("T")[0];
-
-
-        if (
-            despesa.data === dataHoje
-        ) {
-
-            totalHoje += valor;
-
-        }
+        totalAberto += valor;
 
     }
-);
 
 
-/* =========================================
-ATUALIZA OS CARDS
-========================================= */
+    if (
+        ehDespesaCartao(item) &&
+        status !== "Pago"
+    ) {
+
+        totalCartao += valor;
+
+    }
+
+});
+
 
 definirTexto(
-    "totalMes",
+    "despesasMes",
     formatarEuro(totalMes)
 );
 
-
 definirTexto(
-    "totalPago",
+    "despesasPagas",
     formatarEuro(totalPago)
 );
 
-
 definirTexto(
-    "totalAberto",
+    "despesasAbertas",
     formatarEuro(totalAberto)
 );
 
-
 definirTexto(
     "totalCartoes",
-    formatarEuro(totalCartoes)
+    formatarEuro(totalCartao)
 );
 
-
 definirTexto(
-    "totalHoje",
+    "despesasHoje",
+    "Hoje: " +
     formatarEuro(totalHoje)
 );
-
-
-/*
- * Novo card:
- * Débito pago no mês
- */
-
-definirTexto(
-    "totalDebito",
-    formatarEuro(totalDebito)
-);
-
-}
-
-
-/* =========================================
-FORMATAR EURO
-========================================= */
-
-function formatarEuro(valor) {
-
-return Number(valor || 0)
-    .toLocaleString(
-        "pt-PT",
-        {
-            style: "currency",
-            currency: "EUR"
-        }
-    );
-
-}
-
-
-/* =========================================
-DEFINIR TEXTO
-========================================= */
-
-function definirTexto(
-    id,
-    texto
-) {
-
-const elemento =
-document.getElementById(id);
-
-if (elemento) {
-
-    elemento.textContent = texto;
-
-}
 
 }
 
@@ -1031,241 +701,274 @@ VISÃO GERAL
 
 function atualizarVisao() {
 
-const tabela =
-document.getElementById("tabelaDespesas");
-
-if (!tabela) return;
-
-const corpo =
-tabela.querySelector("tbody");
-
-if (!corpo) return;
-
-corpo.innerHTML = "";
+const categorias = {};
 
 
-/* =========================================
-ORDENAÇÃO
-Mais recente primeiro
-========================================= */
+despesas.forEach((item) => {
 
-const lista =
-[...despesas].sort(
-    (a, b) => {
+    const categoria =
+        item.categoria ||
+        "Outros";
 
-        const dataA =
-            new Date(
-                (a.data || "") +
-                "T00:00:00"
-            );
+    const valor =
+        Number(item.valor || 0);
 
-        const dataB =
-            new Date(
-                (b.data || "") +
-                "T00:00:00"
-            );
 
-        return dataB - dataA;
+    if (!categorias[categoria]) {
+
+        categorias[categoria] = 0;
 
     }
-);
 
 
-/* =========================================
-MONTAR TABELA
-========================================= */
+    categorias[categoria] += valor;
 
-lista.forEach(
-    (despesa) => {
-
-        const tr =
-            document.createElement("tr");
+});
 
 
-        const status =
-            despesa.status ||
-            despesa.situacao ||
-            "";
+const container =
+    document.getElementById(
+        "resumoCategorias"
+    );
 
 
-        let classeStatus = "";
+if (!container) return;
 
 
-        if (
-            String(status)
-                .toLowerCase() === "pago"
-        ) {
-
-            classeStatus =
-                "status-pago";
-
-        } else if (
-            String(status)
-                .toLowerCase() === "aberto" ||
-            String(status)
-                .toLowerCase() === "a pagar"
-        ) {
-
-            classeStatus =
-                "status-aberto";
-
-        }
+const entradas =
+    Object.entries(categorias)
+        .sort(
+            (a, b) =>
+                b[1] - a[1]
+        );
 
 
-        tr.innerHTML = `
+if (!entradas.length) {
 
-            <td>
-                ${formatarData(despesa.data)}
-            </td>
-
-            <td>
-                ${escaparHTML(despesa.nome)}
-            </td>
-
-            <td>
-                ${escaparHTML(
-                    despesa.categoria || ""
-                )}
-            </td>
-
-            <td>
-                ${escaparHTML(
-                    despesa.subcategoria || ""
-                )}
-            </td>
-
-            <td>
-                ${escaparHTML(
-                    despesa.origem || ""
-                )}
-            </td>
-
-            <td>
-                ${formatarEuro(
-                    despesa.valor
-                )}
-            </td>
-
-            <td class="${classeStatus}">
-                ${escaparHTML(status)}
-            </td>
-
-            <td>
-                ${escaparHTML(
-                    despesa.observacao || ""
-                )}
-            </td>
-
+    container.innerHTML =
+        `
+        <div class="estado-vazio">
+            Ainda não existem despesas registadas.
+        </div>
         `;
 
+} else {
 
-        corpo.appendChild(tr);
+    container.innerHTML =
+        entradas
+            .map(
+                (item) => `
+                    <div class="linha-resumo">
 
-    }
-);
+                        <span>
+                            ${escaparHTML(item[0])}
+                        </span>
+
+                        <strong>
+                            ${formatarEuro(item[1])}
+                        </strong>
+
+                    </div>
+                `
+            )
+            .join("");
 
 }
 
 
+/* ÚLTIMAS DESPESAS */
+
+const ultimas =
+    [...despesas]
+        .sort(
+            (a, b) =>
+                obterDataOrdenacao(b) -
+                obterDataOrdenacao(a)
+        )
+        .slice(0, 5);
+
+
+const ultimasContainer =
+    document.getElementById(
+        "ultimasDespesas"
+    );
+
+
+if (!ultimasContainer) return;
+
+
+if (!ultimas.length) {
+
+    ultimasContainer.innerHTML =
+        `
+        <div class="estado-vazio">
+            Ainda não existem despesas registadas.
+        </div>
+        `;
+
+    return;
+
+}
+
+
+ultimasContainer.innerHTML =
+    ultimas
+        .map(
+            (item) => `
+                <div class="linha-resumo">
+
+                    <span>
+                        ${escaparHTML(
+                            item.descricao ||
+                            item.observacoes ||
+                            item.subcategoria ||
+                            "Despesa"
+                        )}
+                    </span>
+
+                    <strong>
+                        ${formatarEuro(
+                            Number(item.valor || 0)
+                        )}
+                    </strong>
+
+                </div>
+            `
+        )
+        .join("");
+
+}
+
 /* =========================================
-ATUALIZAR CARTÕES
+IDENTIFICAR CARTÃO
+========================================= */
+
+function ehDespesaCartao(item) {
+
+return (
+    item.origem === "Cartões" ||
+
+    item.tipo === "cartao" ||
+
+    (
+        item.categoria === "Cartões" &&
+        String(
+            item.subcategoria || ""
+        ).startsWith("Cartão Crédito")
+    )
+);
+
+}
+
+/* =========================================
+CARTÕES
 ========================================= */
 
 function atualizarCartoes() {
 
+const totais = {
+
+    "Cartão Crédito Samuel CCA": 0,
+
+    "Cartão Crédito Samuel Millenium": 0,
+
+    "Cartão Crédito Samuel Cetelem": 0,
+
+    "Cartão Crédito Eliane": 0
+
+};
+
+
+despesas.forEach((item) => {
+
+    if (!ehDespesaCartao(item)) {
+        return;
+    }
+
+
+    if (obterStatus(item) === "Pago") {
+        return;
+    }
+
+
+    const cartao =
+        item.subcategoria;
+
+
+    if (
+        Object.prototype.hasOwnProperty
+            .call(
+                totais,
+                cartao
+            )
+    ) {
+
+        totais[cartao] +=
+            Number(item.valor || 0);
+
+    }
+
+});
+
+
 const container =
-document.getElementById("cardsCartoes");
+    document.getElementById(
+        "listaCartoes"
+    );
+
 
 if (!container) return;
 
-container.innerHTML = "";
+
+container.innerHTML =
+    Object.keys(cartoes)
+        .map((nome) => {
+
+            const dados =
+                cartoes[nome];
+
+            const valor =
+                totais[nome];
+
+            const vazio =
+                valor === 0;
 
 
-Object.entries(cartoes)
-.forEach(
-    ([nomeCartao, dados]) => {
+            return `
+                <div class="cartao-card ${vazio ? "vazio" : ""}">
 
-        let total = 0;
+                    <div class="cartao-nome">
+                        💳 ${escaparHTML(dados.nome)}
+                    </div>
 
+                    <div class="cartao-valor">
+                        ${formatarEuro(valor)}
+                    </div>
 
-        despesas.forEach(
-            (despesa) => {
+                    <div class="cartao-label">
+                        Valor em aberto
+                    </div>
 
-                const ehCartao =
-                    despesa.origem === "Cartões" ||
-                    despesa.tipo === "cartao";
+                    <div class="cartao-status ${vazio ? "ok" : ""}">
 
+                        ${
+                            vazio
+                                ? "✓ Sem pendências"
+                                : "● Em aberto"
+                        }
 
-                if (!ehCartao) {
-                    return;
-                }
+                    </div>
 
+                </div>
+            `;
 
-                const cartaoDespesa =
-                    despesa.cartao ||
-                    despesa.subcategoria;
-
-
-                if (
-                    cartaoDespesa !== nomeCartao
-                ) {
-                    return;
-                }
-
-
-                const status =
-                    String(
-                        despesa.status ||
-                        despesa.situacao ||
-                        ""
-                    ).toLowerCase();
+        })
+        .join("");
 
 
-                if (
-                    status === "aberto" ||
-                    status === "a pagar"
-                ) {
-
-                    total +=
-                        Number(despesa.valor) || 0;
-
-                }
-
-            }
-        );
-
-
-        const card =
-            document.createElement("div");
-
-        card.className =
-            "card-cartao";
-
-
-        card.innerHTML = `
-
-            <div class="cartao-titulo">
-                ${escaparHTML(dados.nome)}
-            </div>
-
-            <div class="cartao-valor">
-                ${formatarEuro(total)}
-            </div>
-
-            <div class="cartao-legenda">
-                Em aberto
-            </div>
-
-        `;
-
-
-        container.appendChild(card);
-
-    }
-);
+carregarTabelaCartoes();
 
 }
-
 
 /* =========================================
 TABELA DE CARTÕES
@@ -1273,852 +976,789 @@ TABELA DE CARTÕES
 
 function carregarTabelaCartoes() {
 
-const tabela =
-document.getElementById(
-    "tabelaCartoes"
-);
+const tbody =
+    document.getElementById(
+        "tabelaCartoes"
+    );
 
-if (!tabela) return;
 
-const corpo =
-tabela.querySelector("tbody");
-
-if (!corpo) return;
-
-corpo.innerHTML = "";
+if (!tbody) return;
 
 
 const lista =
-despesas.filter(
-    (despesa) => {
-
-        const ehCartao =
-            despesa.origem === "Cartões" ||
-            despesa.tipo === "cartao";
-
-
-        if (!ehCartao) {
-            return false;
-        }
-
-
-        const status =
-            String(
-                despesa.status ||
-                despesa.situacao ||
-                ""
-            ).toLowerCase();
-
-
-        return (
-            status === "aberto" ||
-            status === "a pagar"
+    despesas
+        .filter(
+            (item) =>
+                ehDespesaCartao(item) &&
+                obterStatus(item) !== "Pago"
+        )
+        .sort(
+            (a, b) =>
+                obterDataOrdenacao(b) -
+                obterDataOrdenacao(a)
         );
 
-    }
-);
 
+if (!lista.length) {
 
-lista.forEach(
-    (despesa) => {
+    tbody.innerHTML =
+        `
+        <tr>
 
-        const tr =
-            document.createElement("tr");
+            <td
+                colspan="7"
+                class="estado-vazio">
 
+                Não existem compras em aberto.
 
-        const nomeCartao =
-            despesa.cartao ||
-            despesa.subcategoria ||
-            "";
-
-
-        tr.innerHTML = `
-
-            <td>
-                ${formatarData(
-                    despesa.data
-                )}
             </td>
 
-            <td>
-                ${escaparHTML(
-                    despesa.nome
-                )}
-            </td>
-
-            <td>
-                ${escaparHTML(
-                    nomeCartao
-                )}
-            </td>
-
-            <td>
-                ${formatarEuro(
-                    despesa.valor
-                )}
-            </td>
-
-            <td>
-                <button
-                    type="button"
-                    class="btn-baixa"
-                    onclick="abrirModalPagamento('${despesa.firestoreId}')"
-                >
-                    Dar baixa
-                </button>
-            </td>
-
+        </tr>
         `;
 
-
-        corpo.appendChild(tr);
-
-    }
-);
+    return;
 
 }
 
 
+tbody.innerHTML =
+    lista
+        .map((item) => {
+
+            return `
+                <tr>
+
+                    <td>
+                        ${formatarData(
+                            item.dataDespesa ||
+                            item.data
+                        )}
+                    </td>
+
+                    <td>
+                        ${escaparHTML(
+                            item.descricao ||
+                            item.observacoes ||
+                            "Despesa"
+                        )}
+                    </td>
+
+                    <td>
+                        ${escaparHTML(
+                            nomeCartao(
+                                item.subcategoria
+                            )
+                        )}
+                    </td>
+
+                    <td>
+                        ${escaparHTML(
+                            item.categoria || ""
+                        )}
+                    </td>
+
+                    <td>
+
+                        <strong>
+                            ${formatarEuro(
+                                Number(item.valor || 0)
+                            )}
+                        </strong>
+
+                    </td>
+
+                    <td>
+
+                        <span class="status status-cartao">
+                            🔵 Em aberto
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        <button
+                            type="button"
+                            class="btn-acao btn-baixa btn-dar-baixa"
+                            data-id="${escaparHTML(item.firestoreId)}"
+                            data-valor="${Number(item.valor || 0)}"
+                            data-descricao="${encodeURIComponent(
+                                item.descricao ||
+                                item.observacoes ||
+                                item.subcategoria ||
+                                "Despesa"
+                            )}"
+                            onclick="window.abrirModalPagamento(this)"
+                        >
+                            Dar baixa
+                        </button>
+
+                    </td>
+
+                </tr>
+            `;
+
+        })
+        .join("");
+
+}
+
 /* =========================================
-APENAS A PAGAR
+A PAGAR
 ========================================= */
 
 function atualizarApenasPagar() {
 
-const tabela =
-document.getElementById(
-    "tabelaPagar"
-);
+const tbody =
+    document.getElementById(
+        "tabelaPagar"
+    );
 
-if (!tabela) return;
 
-const corpo =
-tabela.querySelector("tbody");
-
-if (!corpo) return;
-
-corpo.innerHTML = "";
+if (!tbody) return;
 
 
 const lista =
-despesas.filter(
-    (despesa) => {
-
-        const status =
-            String(
-                despesa.status ||
-                despesa.situacao ||
-                ""
-            ).toLowerCase();
-
-
-        return (
-            status === "aberto" ||
-            status === "a pagar"
+    despesas
+        .filter(
+            (item) =>
+                obterStatus(item) !== "Pago"
+        )
+        .sort(
+            (a, b) =>
+                obterDataOrdenacao(b) -
+                obterDataOrdenacao(a)
         );
 
-    }
-);
 
+if (!lista.length) {
 
-lista.forEach(
-    (despesa) => {
+    tbody.innerHTML =
+        `
+        <tr>
 
-        const tr =
-            document.createElement("tr");
+            <td
+                colspan="7"
+                class="estado-vazio">
 
+                Não existem despesas a pagar.
 
-        tr.innerHTML = `
-
-            <td>
-                ${formatarData(
-                    despesa.data
-                )}
             </td>
 
-            <td>
-                ${escaparHTML(
-                    despesa.nome
-                )}
-            </td>
-
-            <td>
-                ${escaparHTML(
-                    despesa.categoria
-                )}
-            </td>
-
-            <td>
-                ${escaparHTML(
-                    despesa.subcategoria
-                )}
-            </td>
-
-            <td>
-                ${formatarEuro(
-                    despesa.valor
-                )}
-            </td>
-
-            <td>
-                <button
-                    type="button"
-                    class="btn-pagar"
-                    onclick="marcarDespesaPaga('${despesa.firestoreId}')"
-                >
-                    Pagar
-                </button>
-            </td>
-
+        </tr>
         `;
 
-
-        corpo.appendChild(tr);
-
-    }
-);
-
-
-/* =========================================
-ATUALIZA TABELA ESPECÍFICA DE CARTÕES
-========================================= */
-
-carregarTabelaCartoes();
-
-}
-
-/* =========================================
-CARREGAR TABELA PRINCIPAL
-========================================= */
-
-function carregarTabela() {
-
-const tabela =
-document.getElementById(
-    "tabelaHistorico"
-);
-
-if (!tabela) return;
-
-const corpo =
-tabela.querySelector("tbody");
-
-if (!corpo) return;
-
-corpo.innerHTML = "";
-
-
-const lista =
-[...despesas].sort(
-    (a, b) => {
-
-        const dataA =
-            new Date(
-                (a.data || "") +
-                "T00:00:00"
-            );
-
-        const dataB =
-            new Date(
-                (b.data || "") +
-                "T00:00:00"
-            );
-
-        return dataB - dataA;
-
-    }
-);
-
-
-lista.forEach(
-    (despesa) => {
-
-        const tr =
-            document.createElement("tr");
-
-
-        const status =
-            despesa.status ||
-            despesa.situacao ||
-            "";
-
-
-        let informacaoPagamento = "";
-
-
-        if (
-            String(status)
-                .toLowerCase() === "pago"
-        ) {
-
-            if (despesa.dataPagamento) {
-
-                informacaoPagamento +=
-                    `Pago em ${formatarData(
-                        despesa.dataPagamento
-                    )}`;
-
-            }
-
-
-            if (despesa.origemPagamento) {
-
-                informacaoPagamento +=
-                    ` — ${escaparHTML(
-                        despesa.origemPagamento
-                    )}`;
-
-            }
-
-        }
-
-
-        const botoes = [];
-
-
-        /*
-         * Despesa em aberto:
-         * permite marcar como paga.
-         */
-
-        if (
-            String(status)
-                .toLowerCase() === "aberto" ||
-            String(status)
-                .toLowerCase() === "a pagar"
-        ) {
-
-            botoes.push(`
-                <button
-                    type="button"
-                    class="btn-pagar"
-                    onclick="marcarDespesaPaga('${despesa.firestoreId}')"
-                >
-                    Pagar
-                </button>
-            `);
-
-        }
-
-
-        /*
-         * Excluir:
-         * utiliza sempre o firestoreId.
-         */
-
-        botoes.push(`
-            <button
-                type="button"
-                class="btn-excluir"
-                onclick="excluirDespesa('${despesa.firestoreId}')"
-            >
-                Excluir
-            </button>
-        `);
-
-
-        tr.innerHTML = `
-
-            <td>
-                ${formatarData(
-                    despesa.data
-                )}
-            </td>
-
-            <td>
-                ${escaparHTML(
-                    despesa.nome
-                )}
-            </td>
-
-            <td>
-                ${escaparHTML(
-                    despesa.categoria || ""
-                )}
-            </td>
-
-            <td>
-                ${escaparHTML(
-                    despesa.subcategoria || ""
-                )}
-            </td>
-
-            <td>
-                ${escaparHTML(
-                    despesa.origem || ""
-                )}
-            </td>
-
-            <td>
-                ${formatarEuro(
-                    despesa.valor
-                )}
-            </td>
-
-            <td>
-                ${escaparHTML(status)}
-            </td>
-
-            <td>
-                ${informacaoPagamento}
-            </td>
-
-            <td>
-                ${botoes.join("")}
-            </td>
-
-        `;
-
-
-        corpo.appendChild(tr);
-
-    }
-);
-
-
-/*
- * Também atualiza a tabela dos cartões.
- */
-
-carregarTabelaCartoes();
+    return;
 
 }
 
 
+tbody.innerHTML =
+    lista
+        .map((item) => {
+
+            const cartao =
+                ehDespesaCartao(item);
+
+
+            return `
+                <tr>
+
+                    <td>
+                        ${formatarData(
+                            item.dataDespesa ||
+                            item.data
+                        )}
+                    </td>
+
+                    <td>
+                        ${escaparHTML(
+                            item.descricao ||
+                            item.observacoes ||
+                            "Despesa"
+                        )}
+                    </td>
+
+                    <td>
+                        ${escaparHTML(
+                            item.categoria || ""
+                        )}
+                    </td>
+
+                    <td>
+
+                        ${
+                            cartao
+                                ? "Cartão — " +
+                                  escaparHTML(
+                                      nomeCartao(
+                                          item.subcategoria
+                                      )
+                                  )
+                                : escaparHTML(
+                                      item.origem || ""
+                                  )
+                        }
+
+                    </td>
+
+                    <td>
+
+                        <strong>
+                            ${formatarEuro(
+                                Number(item.valor || 0)
+                            )}
+                        </strong>
+
+                    </td>
+
+                    <td>
+
+                        <span class="status status-aberto">
+
+                            ⏳
+                            ${
+                                cartao
+                                    ? "Cartão em aberto"
+                                    : "A pagar"
+                            }
+
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        ${
+                            cartao
+
+                                ?
+
+                                `
+                                <button
+                                    type="button"
+                                    class="btn-acao btn-baixa btn-dar-baixa"
+                                    data-id="${escaparHTML(item.firestoreId)}"
+                                    data-valor="${Number(item.valor || 0)}"
+                                    data-descricao="${encodeURIComponent(
+                                        item.descricao ||
+                                        item.observacoes ||
+                                        item.subcategoria ||
+                                        "Despesa"
+                                    )}"
+                                    onclick="window.abrirModalPagamento(this)"
+                                >
+                                    Dar baixa
+                                </button>
+                                `
+
+                                :
+
+                                `
+                                <button
+                                    type="button"
+                                    class="btn-acao btn-baixa"
+                                    onclick="window.marcarDespesaPaga('${escaparHTML(item.firestoreId)}')"
+                                >
+                                    Marcar como paga
+                                </button>
+                                `
+                        }
+
+                    </td>
+
+                </tr>
+            `;
+
+        })
+        .join("");
+
+}
+
 /* =========================================
-FILTRO DE DESPESAS
+HISTÓRICO
+========================================= */
+
+function carregarTabela(
+lista = despesas
+) {
+
+const tbody =
+    document.getElementById(
+        "tabelaDespesas"
+    );
+
+
+if (!tbody) return;
+
+
+const ordenada =
+    [...lista]
+        .sort(
+            (a, b) =>
+                obterDataOrdenacao(b) -
+                obterDataOrdenacao(a)
+        );
+
+
+if (!ordenada.length) {
+
+    tbody.innerHTML =
+        `
+        <tr>
+
+            <td
+                colspan="10"
+                class="estado-vazio">
+
+                Nenhuma despesa encontrada.
+
+            </td>
+
+        </tr>
+        `;
+
+    return;
+
+}
+
+
+tbody.innerHTML =
+    ordenada
+        .map((item) => {
+
+            const cartao =
+                ehDespesaCartao(item);
+
+            const status =
+                obterStatus(item);
+
+
+            let statusHTML;
+
+
+            if (status === "Pago") {
+
+                statusHTML =
+                    `
+                    <span class="status status-pago">
+                        🟢 Pago
+                    </span>
+                    `;
+
+            } else if (cartao) {
+
+                statusHTML =
+                    `
+                    <span class="status status-cartao">
+                        🔵 Em aberto
+                    </span>
+                    `;
+
+            } else {
+
+                statusHTML =
+                    `
+                    <span class="status status-aberto">
+                        ⏳ A pagar
+                    </span>
+                    `;
+
+            }
+
+
+            const pagamento =
+                item.dataPagamento
+                    ? formatarData(
+                          item.dataPagamento
+                      )
+                    : "—";
+
+
+            return `
+                <tr>
+
+                    <td>
+                        ${formatarData(
+                            item.dataDespesa ||
+                            item.data
+                        )}
+                    </td>
+
+                    <td>
+                        ${escaparHTML(
+                            item.descricao ||
+                            item.observacoes ||
+                            "Despesa"
+                        )}
+                    </td>
+
+                    <td>
+                        ${escaparHTML(
+                            item.categoria || ""
+                        )}
+                    </td>
+
+                    <td>
+                        ${escaparHTML(
+                            item.subcategoria || ""
+                        )}
+                    </td>
+
+                    <td>
+
+                        ${
+                            cartao
+                                ? "Cartão"
+                                : escaparHTML(
+                                      item.origem || ""
+                                  )
+                        }
+
+                    </td>
+
+                    <td>
+
+                        ${
+                            cartao
+                                ? escaparHTML(
+                                      nomeCartao(
+                                          item.subcategoria
+                                      )
+                                  )
+                                : "—"
+                        }
+
+                    </td>
+
+                    <td>
+
+                        <strong>
+                            ${formatarEuro(
+                                Number(item.valor || 0)
+                            )}
+                        </strong>
+
+                    </td>
+
+                    <td>
+                        ${statusHTML}
+                    </td>
+
+                    <td>
+
+                        ${
+                            item.dataPagamento
+
+                                ?
+
+                                escaparHTML(
+                                    pagamento +
+                                    (
+                                        item.origemPagamento
+                                            ? " • " +
+                                              item.origemPagamento
+                                            : ""
+                                    )
+                                )
+
+                                : "—"
+                        }
+
+                    </td>
+
+                    <td>
+
+                        ${
+                            cartao &&
+                            status !== "Pago"
+
+                                ?
+
+                                `
+                                <button
+                                    type="button"
+                                    class="btn-acao btn-baixa btn-dar-baixa"
+                                    data-id="${escaparHTML(item.firestoreId)}"
+                                    data-valor="${Number(item.valor || 0)}"
+                                    data-descricao="${encodeURIComponent(
+                                        item.descricao ||
+                                        item.observacoes ||
+                                        item.subcategoria ||
+                                        "Despesa"
+                                    )}"
+                                    onclick="window.abrirModalPagamento(this)"
+                                >
+                                    Dar baixa
+                                </button>
+                                `
+
+                                :
+
+                                `
+                                <button
+                                    type="button"
+                                    class="btn-acao btn-excluir"
+                                    onclick="window.excluirDespesa('${escaparHTML(item.firestoreId)}')"
+                                >
+                                    Excluir
+                                </button>
+                                `
+                        }
+
+                    </td>
+
+                </tr>
+            `;
+
+        })
+        .join("");
+
+}
+
+/* =========================================
+FILTROS
 ========================================= */
 
 function filtrarDespesas() {
 
-const campoDataInicial =
-document.getElementById(
-    "filtroDataInicial"
-);
-
-const campoDataFinal =
-document.getElementById(
-    "filtroDataFinal"
-);
-
-const campoCategoria =
-document.getElementById(
-    "filtroCategoria"
-);
-
-const campoOrigem =
-document.getElementById(
-    "filtroOrigem"
-);
+let resultado =
+    [...despesas];
 
 
-const dataInicial =
-campoDataInicial?.value || "";
+const inicio =
+    document
+        .getElementById("filtroInicio")
+        ?.value || "";
 
-const dataFinal =
-campoDataFinal?.value || "";
+
+const fim =
+    document
+        .getElementById("filtroFim")
+        ?.value || "";
+
 
 const categoria =
-campoCategoria?.value || "";
+    document
+        .getElementById("filtroCategoria")
+        ?.value || "";
+
 
 const origem =
-campoOrigem?.value || "";
+    document
+        .getElementById("filtroOrigem")
+        ?.value || "";
 
 
-const tabela =
-document.getElementById(
-    "tabelaHistorico"
-);
+if (inicio) {
 
-if (!tabela) return;
+    resultado =
+        resultado.filter(
+            (item) =>
+                (
+                    item.dataDespesa ||
+                    item.data ||
+                    ""
+                ) >= inicio
+        );
 
-
-const corpo =
-tabela.querySelector("tbody");
-
-if (!corpo) return;
-
-corpo.innerHTML = "";
-
-
-const lista =
-despesas.filter(
-    (despesa) => {
-
-        if (
-            dataInicial &&
-            despesa.data < dataInicial
-        ) {
-
-            return false;
-
-        }
+}
 
 
-        if (
-            dataFinal &&
-            despesa.data > dataFinal
-        ) {
+if (fim) {
 
-            return false;
+    resultado =
+        resultado.filter(
+            (item) =>
+                (
+                    item.dataDespesa ||
+                    item.data ||
+                    ""
+                ) <= fim
+        );
 
-        }
-
-
-        if (
-            categoria &&
-            despesa.categoria !== categoria
-        ) {
-
-            return false;
-
-        }
+}
 
 
-        if (
-            origem &&
-            despesa.origem !== origem
-        ) {
+if (categoria) {
 
-            return false;
+    resultado =
+        resultado.filter(
+            (item) =>
+                item.categoria === categoria
+        );
 
-        }
-
-
-        return true;
-
-    }
-)
-.sort(
-    (a, b) => {
-
-        const dataA =
-            new Date(
-                (a.data || "") +
-                "T00:00:00"
-            );
-
-        const dataB =
-            new Date(
-                (b.data || "") +
-                "T00:00:00"
-            );
-
-        return dataB - dataA;
-
-    }
-);
+}
 
 
-lista.forEach(
-    (despesa) => {
+if (origem) {
 
-        const tr =
-            document.createElement("tr");
+    resultado =
+        resultado.filter(
+            (item) =>
+                item.origem === origem
+        );
 
-
-        const status =
-            despesa.status ||
-            despesa.situacao ||
-            "";
+}
 
 
-        let pagamento = "";
+carregarTabela(resultado);
+
+}
+
+function limparFiltros() {
+
+const filtroInicio =
+    document.getElementById(
+        "filtroInicio"
+    );
+
+const filtroFim =
+    document.getElementById(
+        "filtroFim"
+    );
+
+const filtroCategoria =
+    document.getElementById(
+        "filtroCategoria"
+    );
+
+const filtroOrigem =
+    document.getElementById(
+        "filtroOrigem"
+    );
 
 
-        if (
-            String(status)
-                .toLowerCase() === "pago"
-        ) {
+if (filtroInicio) {
+    filtroInicio.value = "";
+}
 
-            pagamento =
-                despesa.dataPagamento
-                    ? `Pago em ${formatarData(
-                        despesa.dataPagamento
-                    )}`
-                    : "Pago";
+if (filtroFim) {
+    filtroFim.value = "";
+}
 
+if (filtroCategoria) {
+    filtroCategoria.value = "";
+}
 
-            if (
-                despesa.origemPagamento
-            ) {
-
-                pagamento +=
-                    ` — ${escaparHTML(
-                        despesa.origemPagamento
-                    )}`;
-
-            }
-
-        }
+if (filtroOrigem) {
+    filtroOrigem.value = "";
+}
 
 
-        tr.innerHTML = `
+carregarTabela();
 
-            <td>
-                ${formatarData(
-                    despesa.data
-                )}
-            </td>
+}
 
-            <td>
-                ${escaparHTML(
-                    despesa.nome
-                )}
-            </td>
+/* =========================================
+ABRIR MODAL DE PAGAMENTO
+========================================= */
 
-            <td>
-                ${escaparHTML(
-                    despesa.categoria || ""
-                )}
-            </td>
+function abrirModalPagamento(botao) {
 
-            <td>
-                ${escaparHTML(
-                    despesa.subcategoria || ""
-                )}
-            </td>
+/*
+ * Aqui o data-id agora contém exclusivamente
+ * o firestoreId real.
+ */
 
-            <td>
-                ${escaparHTML(
-                    despesa.origem || ""
-                )}
-            </td>
-
-            <td>
-                ${formatarEuro(
-                    despesa.valor
-                )}
-            </td>
-
-            <td>
-                ${escaparHTML(status)}
-            </td>
-
-            <td>
-                ${pagamento}
-            </td>
-
-            <td>
-
-                <button
-                    type="button"
-                    class="btn-excluir"
-                    onclick="excluirDespesa('${despesa.firestoreId}')"
-                >
-                    Excluir
-                </button>
-
-            </td>
-
-        `;
+const firestoreId =
+    botao.getAttribute("data-id");
 
 
-        corpo.appendChild(tr);
+const valor =
+    Number(
+        botao.getAttribute("data-valor") || 0
+    );
 
-    }
-);
+
+const descricaoCodificada =
+    botao.getAttribute(
+        "data-descricao"
+    ) || "";
+
+
+let descricao =
+    "Despesa";
+
+
+try {
+
+    descricao =
+        decodeURIComponent(
+            descricaoCodificada
+        ) || "Despesa";
+
+} catch (error) {
+
+    console.error(error);
+
+}
 
 
 /*
- * Se não houver resultados.
+ * Verificação de segurança.
  */
 
-if (!lista.length) {
+if (!firestoreId) {
 
-    const tr =
-        document.createElement("tr");
-
-    tr.innerHTML = `
-        <td
-            colspan="10"
-            style="text-align:center;"
-        >
-            Nenhuma despesa encontrada.
-        </td>
-    `;
-
-    corpo.appendChild(tr);
-
-}
-
-}
-
-
-/* =========================================
-EVENTOS DOS FILTROS
-========================================= */
-
-[
-    "filtroDataInicial",
-    "filtroDataFinal",
-    "filtroCategoria",
-    "filtroOrigem"
-].forEach(
-    (id) => {
-
-        const elemento =
-            document.getElementById(id);
-
-        if (!elemento) return;
-
-        elemento.addEventListener(
-            "change",
-            filtrarDespesas
-        );
-
-    }
-);
-
-
-/* =========================================
-LIMPAR FILTROS
-========================================= */
-
-const btnLimparFiltros =
-document.getElementById(
-    "limparFiltros"
-);
-
-if (btnLimparFiltros) {
-
-btnLimparFiltros.addEventListener(
-    "click",
-    () => {
-
-        const ids = [
-
-            "filtroDataInicial",
-            "filtroDataFinal",
-            "filtroCategoria",
-            "filtroOrigem"
-
-        ];
-
-
-        ids.forEach(
-            (id) => {
-
-                const elemento =
-                    document.getElementById(id);
-
-                if (elemento) {
-
-                    elemento.value = "";
-
-                }
-
-            }
-        );
-
-
-        carregarTabela();
-
-    }
-);
-
-}
-
-
-/* =========================================
-MODAL — DAR BAIXA
-========================================= */
-
-let despesaSelecionadaParaPagamento =
-null;
-
-
-function abrirModalPagamento(
-    firestoreId
-) {
-
-    const despesa =
-        despesas.find(
-            (item) =>
-                item.firestoreId === firestoreId
-        );
-
-
-    if (!despesa) {
-
-        alert(
-            "Despesa não encontrada."
-        );
-
-        return;
-
-    }
-
-
-    despesaSelecionadaParaPagamento =
-        despesa;
-
-
-    const modal =
-        document.getElementById(
-            "modalPagamento"
-        );
-
-
-    if (!modal) return;
-
-
-    const nome =
-        document.getElementById(
-            "nomeDespesaPagamento"
-        );
-
-
-    const valor =
-        document.getElementById(
-            "valorDespesaPagamento"
-        );
-
-
-    if (nome) {
-
-        nome.textContent =
-            despesa.nome || "";
-
-    }
-
-
-    if (valor) {
-
-        valor.textContent =
-            formatarEuro(
-                despesa.valor
-            );
-
-    }
-
-
-    /*
-     * Limpa a seleção anterior.
-     */
-
-    const origemPagamento =
-        document.getElementById(
-            "origemPagamento"
-        );
-
-
-    if (origemPagamento) {
-
-        origemPagamento.value = "";
-
-    }
-
-
-    modal.classList.add(
-        "ativo"
+    alert(
+        "Não foi possível identificar esta despesa."
     );
 
-    modal.style.display =
-        "flex";
+    return;
 
 }
 
+
+document
+    .getElementById("pagamentoId")
+    .value = firestoreId;
+
+
+document
+    .getElementById("pagamentoDescricao")
+    .textContent = descricao;
+
+
+document
+    .getElementById("pagamentoValor")
+    .textContent =
+    formatarEuro(valor);
+
+
+document
+    .getElementById("dataPagamento")
+    .value =
+    new Date()
+        .toISOString()
+        .split("T")[0];
+
+
+document
+    .getElementById("origemPagamento")
+    .value = "";
+
+
+const modal =
+    document.getElementById(
+        "modalPagamento"
+    );
+
+
+if (!modal) {
+
+    alert(
+        "A janela de pagamento não foi encontrada na página."
+    );
+
+    return;
+
+}
+
+
+modal.classList.add("aberto");
+
+}
 
 /* =========================================
 FECHAR MODAL
@@ -2127,26 +1767,19 @@ FECHAR MODAL
 function fecharModalPagamento() {
 
 const modal =
-document.getElementById(
-    "modalPagamento"
-);
+    document.getElementById(
+        "modalPagamento"
+    );
+
 
 if (!modal) return;
 
 
 modal.classList.remove(
-    "ativo"
+    "aberto"
 );
 
-modal.style.display =
-    "none";
-
-
-despesaSelecionadaParaPagamento =
-    null;
-
 }
-
 
 /* =========================================
 CONFIRMAR PAGAMENTO DO CARTÃO
@@ -2154,33 +1787,32 @@ CONFIRMAR PAGAMENTO DO CARTÃO
 
 async function confirmarPagamentoCartao() {
 
-if (
-    !despesaSelecionadaParaPagamento
-) {
+/*
+ * Este valor agora é SEMPRE o firestoreId.
+ */
 
-    alert(
-        "Nenhuma despesa selecionada."
-    );
+const firestoreId =
+    document
+        .getElementById("pagamentoId")
+        .value;
 
-    return;
 
-}
+const dataPagamento =
+    document
+        .getElementById("dataPagamento")
+        .value;
 
 
 const origemPagamento =
-document.getElementById(
-    "origemPagamento"
-);
+    document
+        .getElementById("origemPagamento")
+        .value;
 
 
-const origem =
-origemPagamento?.value || "";
-
-
-if (!origem) {
+if (!firestoreId) {
 
     alert(
-        "Selecione de onde saiu o dinheiro."
+        "Não foi possível identificar a despesa."
     );
 
     return;
@@ -2188,50 +1820,107 @@ if (!origem) {
 }
 
 
-const despesa =
-despesaSelecionadaParaPagamento;
+/*
+ * Confere se a despesa existe
+ * na lista carregada.
+ */
+
+const item =
+    despesas.find(
+        (despesa) =>
+            String(
+                despesa.firestoreId
+            ) ===
+            String(firestoreId)
+    );
+
+
+if (!item) {
+
+    alert(
+        "A despesa não foi encontrada. Atualize a página e tente novamente."
+    );
+
+    console.error(
+        "firestoreId não encontrado:",
+        firestoreId
+    );
+
+    return;
+
+}
+
+
+if (!dataPagamento) {
+
+    alert(
+        "Informe a data do pagamento."
+    );
+
+    return;
+
+}
+
+
+if (!origemPagamento) {
+
+    alert(
+        "Informe de onde saiu o dinheiro."
+    );
+
+    return;
+
+}
 
 
 try {
+
+    /*
+     * ATENÇÃO:
+     *
+     * Aqui NÃO usamos item.id.
+     *
+     * Usamos exclusivamente:
+     *
+     * firestoreId
+     */
 
     await updateDoc(
         doc(
             db,
             "despesas",
-            despesa.firestoreId
+            firestoreId
         ),
         {
 
             status: "Pago",
 
-            situacao: "Pago",
-
             statusCartao: "Pago",
 
             dataPagamento:
-                new Date()
-                    .toISOString()
-                    .split("T")[0],
+
+                dataPagamento,
 
             origemPagamento:
-                origem
+
+                origemPagamento
 
         }
-    );
-
-
-    alert(
-        "Pagamento registado com sucesso!"
     );
 
 
     fecharModalPagamento();
 
 
+    alert(
+        "Pagamento registado. A despesa não foi duplicada."
+    );
+
+
 } catch (error) {
 
     console.error(
-        "Erro ao registar pagamento:",
+        "ERRO AO DAR BAIXA:",
         error
     );
 
@@ -2244,26 +1933,18 @@ try {
 
 }
 
-
 /* =========================================
 MARCAR DESPESA NORMAL COMO PAGA
 ========================================= */
 
 async function marcarDespesaPaga(
-    firestoreId
+firestoreId
 ) {
 
-const despesa =
-    despesas.find(
-        (item) =>
-            item.firestoreId === firestoreId
-    );
-
-
-if (!despesa) {
+if (!firestoreId) {
 
     alert(
-        "Despesa não encontrada."
+        "Não foi possível identificar a despesa."
     );
 
     return;
@@ -2271,7 +1952,45 @@ if (!despesa) {
 }
 
 
+const item =
+    despesas.find(
+        (despesa) =>
+            String(
+                despesa.firestoreId
+            ) ===
+            String(firestoreId)
+    );
+
+
+if (!item) {
+
+    alert(
+        "A despesa não foi encontrada. Atualize a página e tente novamente."
+    );
+
+    return;
+
+}
+
+
+if (
+    !confirm(
+        "Confirmar que esta despesa foi paga?"
+    )
+) {
+
+    return;
+
+}
+
+
 try {
+
+    const hoje =
+        new Date()
+            .toISOString()
+            .split("T")[0];
+
 
     await updateDoc(
         doc(
@@ -2283,22 +2002,12 @@ try {
 
             status: "Pago",
 
-            situacao: "Pago",
-
-            dataPagamento:
-                new Date()
-                    .toISOString()
-                    .split("T")[0],
+            dataPagamento: hoje,
 
             origemPagamento:
-                despesa.origem || ""
+                item.origem || ""
 
         }
-    );
-
-
-    alert(
-        "Despesa marcada como paga."
     );
 
 
@@ -2318,19 +2027,18 @@ try {
 
 }
 
-
 /* =========================================
 EXCLUIR DESPESA
 ========================================= */
 
 async function excluirDespesa(
-    firestoreId
+firestoreId
 ) {
 
 if (!firestoreId) {
 
     alert(
-        "ID da despesa não encontrado."
+        "Não foi possível identificar a despesa."
     );
 
     return;
@@ -2338,16 +2046,48 @@ if (!firestoreId) {
 }
 
 
-const confirmar =
-    confirm(
-        "Tem certeza que deseja excluir esta despesa?"
+/*
+ * Procuramos usando firestoreId.
+ */
+
+const item =
+    despesas.find(
+        (despesa) =>
+            String(
+                despesa.firestoreId
+            ) ===
+            String(firestoreId)
     );
 
 
-if (!confirmar) return;
+if (!item) {
+
+    alert(
+        "A despesa não foi encontrada."
+    );
+
+    return;
+
+}
+
+
+if (
+    !confirm(
+        "Deseja realmente excluir esta despesa?"
+    )
+) {
+
+    return;
+
+}
 
 
 try {
+
+    /*
+     * Exclusão usando o ID REAL
+     * do documento Firestore.
+     */
 
     await deleteDoc(
         doc(
@@ -2355,11 +2095,6 @@ try {
             "despesas",
             firestoreId
         )
-    );
-
-
-    alert(
-        "Despesa excluída com sucesso."
     );
 
 
@@ -2380,239 +2115,329 @@ try {
 }
 
 /* =========================================
-FUNÇÕES AUXILIARES
+ABAS
 ========================================= */
 
-function formatarData(data) {
+function mudarAba(nome) {
 
-    if (!data) {
-        return "";
-    }
+document
+    .querySelectorAll(".aba-conteudo")
+    .forEach(
+        (aba) => {
 
-    const partes =
-        String(data).split("-");
-
-    if (partes.length === 3) {
-
-        return `${partes[2]}/${partes[1]}/${partes[0]}`;
-
-    }
-
-    return data;
-
-}
-
-
-/* =========================================
-ESCAPAR HTML
-========================================= */
-
-function escaparHTML(valor) {
-
-    if (valor === null ||
-        valor === undefined) {
-
-        return "";
-
-    }
-
-    return String(valor)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-
-}
-
-
-/* =========================================
-FECHAR MODAL AO CLICAR FORA
-========================================= */
-
-const modalPagamento =
-    document.getElementById(
-        "modalPagamento"
-    );
-
-if (modalPagamento) {
-
-    modalPagamento.addEventListener(
-        "click",
-        function (event) {
-
-            if (
-                event.target ===
-                modalPagamento
-            ) {
-
-                fecharModalPagamento();
-
-            }
+            aba.classList.remove(
+                "ativo"
+            );
 
         }
     );
 
-}
 
+document
+    .querySelectorAll(".aba-btn")
+    .forEach(
+        (botao) => {
 
-/* =========================================
-BOTÃO CONFIRMAR PAGAMENTO
-========================================= */
-
-const btnConfirmarPagamento =
-    document.getElementById(
-        "confirmarPagamento"
-    );
-
-if (btnConfirmarPagamento) {
-
-    btnConfirmarPagamento.addEventListener(
-        "click",
-        confirmarPagamentoCartao
-    );
-
-}
-
-
-/* =========================================
-BOTÃO FECHAR MODAL
-========================================= */
-
-const btnFecharModal =
-    document.getElementById(
-        "fecharModalPagamento"
-    );
-
-if (btnFecharModal) {
-
-    btnFecharModal.addEventListener(
-        "click",
-        fecharModalPagamento
-    );
-
-}
-
-
-/* =========================================
-BOTÃO CANCELAR MODAL
-========================================= */
-
-const btnCancelarPagamento =
-    document.getElementById(
-        "cancelarPagamento"
-    );
-
-if (btnCancelarPagamento) {
-
-    btnCancelarPagamento.addEventListener(
-        "click",
-        fecharModalPagamento
-    );
-
-}
-
-
-/* =========================================
-ATUALIZAR FILTRO DE ORIGEM
-========================================= */
-
-const filtroOrigem =
-    document.getElementById(
-        "filtroOrigem"
-    );
-
-if (filtroOrigem) {
-
-    /*
-     * Mantém as opções existentes
-     * e garante a existência de
-     * Cartão de Débito.
-     */
-
-    const existeDebito =
-        Array.from(
-            filtroOrigem.options
-        ).some(
-            option =>
-                option.value ===
-                "Cartão de Débito"
-        );
-
-
-    if (!existeDebito) {
-
-        const option =
-            document.createElement(
-                "option"
+            botao.classList.remove(
+                "ativo"
             );
 
-        option.value =
-            "Cartão de Débito";
+        }
+    );
 
-        option.textContent =
-            "Cartão de Débito";
 
-        filtroOrigem.appendChild(
-            option
-        );
+const aba =
+    document.getElementById(
+        "aba-" + nome
+    );
 
-    }
+
+const botao =
+    document.querySelector(
+        `.aba-btn[data-aba="${nome}"]`
+    );
+
+
+if (aba) {
+
+    aba.classList.add(
+        "ativo"
+    );
 
 }
 
 
+if (botao) {
+
+    botao.classList.add(
+        "ativo"
+    );
+
+}
+
+}
+
+function abrirAbaNovaDespesa() {
+
+mudarAba("nova");
+
+
+const campo =
+    document.getElementById(
+        "dataDespesa"
+    );
+
+
+if (
+    campo &&
+    !campo.value
+) {
+
+    campo.value =
+        new Date()
+            .toISOString()
+            .split("T")[0];
+
+}
+
+}
+
 /* =========================================
-EXPORTAÇÕES
+FUNÇÕES AUXILIARES
 ========================================= */
 
-window.abrirModalPagamento =
-    abrirModalPagamento;
+function obterStatus(item) {
+
+if (item.status) {
+
+    return item.status;
+
+}
 
 
-window.fecharModalPagamento =
-    fecharModalPagamento;
+if (
+    item.statusCartao === "Pago"
+) {
+
+    return "Pago";
+
+}
 
 
-window.confirmarPagamentoCartao =
-    confirmarPagamentoCartao;
+if (
+    ehDespesaCartao(item)
+) {
+
+    return "Aberto";
+
+}
 
 
-window.marcarDespesaPaga =
-    marcarDespesaPaga;
+return "Pago";
+
+}
+
+function nomeCartao(valor) {
+
+if (cartoes[valor]) {
+
+    return cartoes[valor].nome;
+
+}
 
 
-window.excluirDespesa =
-    excluirDespesa;
+return valor || "—";
 
+}
+
+function obterDataOrdenacao(item) {
+
+const valor =
+    item.dataDespesa ||
+    item.data ||
+    item.criadoEm ||
+    "";
+
+
+const tempo =
+    new Date(valor).getTime();
+
+
+return isNaN(tempo)
+    ? 0
+    : tempo;
+
+}
+
+function formatarData(data) {
+
+if (!data) {
+
+    return "—";
+
+}
+
+
+const partes =
+    String(data).split("-");
+
+
+if (
+    partes.length === 3
+) {
+
+    return (
+        partes[2] +
+        "/" +
+        partes[1] +
+        "/" +
+        partes[0]
+    );
+
+}
+
+
+return data;
+
+}
+
+function formatarEuro(valor) {
+
+return Number(
+    valor || 0
+).toLocaleString(
+    "pt-PT",
+    {
+        style: "currency",
+        currency: "EUR"
+    }
+);
+
+}
+
+function definirTexto(
+id,
+texto
+) {
+
+const elemento =
+    document.getElementById(id);
+
+
+if (elemento) {
+
+    elemento.textContent =
+        texto;
+
+}
+
+}
+
+function escaparHTML(valor) {
+
+return String(
+    valor ?? ""
+)
+    .replaceAll(
+        "&",
+        "&amp;"
+    )
+    .replaceAll(
+        "<",
+        "&lt;"
+    )
+    .replaceAll(
+        ">",
+        "&gt;"
+    )
+    .replaceAll(
+        '"',
+        "&quot;"
+    )
+    .replaceAll(
+        "'",
+        "&#039;"
+    );
+
+}
+
+/* =========================================
+LOGOUT
+========================================= */
+
+function logout() {
+
+if (
+    !confirm(
+        "Deseja realmente sair do sistema?"
+    )
+) {
+
+    return;
+
+}
+
+
+localStorage.removeItem(
+    "perfil"
+);
+
+
+window.location.href =
+    "login.html";
+
+}
+
+/* =========================================
+DISPONIBILIZAR FUNÇÕES PARA O HTML
+========================================= */
+
+window.mudarAba =
+mudarAba;
+
+window.abrirAbaNovaDespesa =
+abrirAbaNovaDespesa;
 
 window.filtrarDespesas =
-    filtrarDespesas;
+filtrarDespesas;
 
+window.limparFiltros =
+limparFiltros;
 
-window.carregarTabela =
-    carregarTabela;
+window.abrirModalPagamento =
+abrirModalPagamento;
 
+window.fecharModalPagamento =
+fecharModalPagamento;
+
+window.confirmarPagamentoCartao =
+confirmarPagamentoCartao;
+
+window.marcarDespesaPaga =
+marcarDespesaPaga;
+
+window.excluirDespesa =
+excluirDespesa;
+
+window.logout =
+logout;
 
 /* =========================================
 INICIALIZAÇÃO
 ========================================= */
 
-document.addEventListener(
-    "DOMContentLoaded",
-    () => {
-
-        /*
-         * A sincronização principal
-         * é feita pelo onSnapshot.
-         *
-         * Aqui apenas garantimos que
-         * os elementos existentes sejam
-         * atualizados quando a página
-         * termina de carregar.
-         */
-
-        atualizarTudo();
-
-    }
+const dataInicial =
+document.getElementById(
+"dataDespesa"
 );
+
+if (dataInicial) {
+
+dataInicial.value =
+    new Date()
+        .toISOString()
+        .split("T")[0];
+
+}
+
+atualizarTudo();
