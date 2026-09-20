@@ -409,8 +409,14 @@ function carregarRelatorios() {
                     </td>
 
                     <td>
-                        Despesa
-                    </td>
+    ${
+        item.origem === "Cartão de Débito" ||
+        item.tipo === "debito" ||
+        String(item.subcategoria || "").startsWith("Cartão Débito")
+            ? "Despesa - Cartão de Débito"
+            : "Despesa"
+    }
+</td>
 
                     <td>
                         ${item.categoria || "Despesa"}
