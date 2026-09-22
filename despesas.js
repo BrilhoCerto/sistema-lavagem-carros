@@ -402,9 +402,17 @@ campoOrigem.addEventListener(
                 selectSubcategoria.required = false;
             }
 
-            if (campoSituacao) {
-                campoSituacao.style.display = "block";
-            }
+           if (campoSituacao) {
+    if (
+        this.value === "Caixa Brilho Certo" ||
+        this.value === "Caixa IMO Wash Car"
+    ) {
+        campoSituacao.style.display = "none";
+    } else {
+        campoSituacao.style.display = "block";
+    }
+}
+
 
             if (selectSituacao) {
                 selectSituacao.value = "";
