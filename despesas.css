@@ -324,13 +324,13 @@ display:none;
 ========================================= */
 
 .cartoes-grid{
-display:grid;
-grid-template-columns:
-repeat(3, minmax(0, 1fr));
-gap:15px;
-width:100%;
-box-sizing:border-box;
-margin-left:0;
+    display:grid;
+    grid-template-columns:repeat(3, minmax(0, 1fr));
+    gap:15px;
+    width:100%;
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
 .cartao-card{
