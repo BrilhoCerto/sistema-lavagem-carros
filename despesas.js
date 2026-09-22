@@ -301,8 +301,6 @@ campoOrigem.addEventListener(
 
         if (ehCartao) {
 
-          if (ehCartao) {
-
     if (campoCartao) {
         campoCartao.classList.add(
             "campo-oculto"
