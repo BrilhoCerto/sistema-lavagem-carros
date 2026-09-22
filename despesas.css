@@ -330,6 +330,7 @@ repeat(3, minmax(0, 1fr));
 gap:15px;
 width:100%;
 box-sizing:border-box;
+margin-left:0;
 }
 
 .cartao-card{
