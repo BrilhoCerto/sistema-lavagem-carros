@@ -1108,23 +1108,23 @@ container.innerHTML =
                         💳 ${escaparHTML(dados.nome)}
                     </div>
 
-                    <div class="cartao-valor">
-                        ${formatarEuro(valor)}
-                    </div>
+                   <div class="cartao-valor ${vazio ? "ok" : ""}">
+    ${formatarEuro(valor)}
+</div>
 
                     <div class="cartao-label">
                         Valor em aberto
                     </div>
 
-                    <div class="cartao-status ok">
+                    <<div class="cartao-status ${vazio ? "ok" : ""}">
 
-                        ${
-                            vazio
-                                ? "✓ Sem pendências"
-                                : "● Em aberto"
-                        }
+    ${
+        vazio
+            ? "✓ Sem pendências"
+            : "● Em aberto"
+    }
 
-                    </div>
+</div>
 
                 </div>
             `;
