@@ -570,10 +570,8 @@ const ehDebito =
 
                 valor,
 
-                status:
-                    ehCartao
-                        ? "Aberto"
-                        : situacao,
+               status:
+    situacao,
 
                tipo:
     ehCartao
