@@ -301,19 +301,22 @@ campoOrigem.addEventListener(
 
         if (ehCartao) {
 
-            if (campoCartao) {
-                campoCartao.classList.remove(
-                    "campo-oculto"
-                );
-            }
+          if (ehCartao) {
 
-            if (selectCartao) {
-                selectCartao.required = true;
-            }
+    if (campoCartao) {
+        campoCartao.classList.add(
+            "campo-oculto"
+        );
+    }
 
-            if (selectSituacao) {
-                selectSituacao.value = "A Pagar";
-            }
+    if (selectCartao) {
+        selectCartao.required = false;
+        selectCartao.value = "";
+    }
+
+    if (selectSituacao) {
+        selectSituacao.value = "A Pagar";
+    }
 
             if (campoSituacao) {
                 campoSituacao.style.display = "block";
@@ -507,13 +510,9 @@ const ehDebito =
 
 
             const subcategoria =
-                ehCartao
-                    ? document
-                        .getElementById("cartao")
-                        .value
-                    : document
-                        .getElementById("subcategoria")
-                        .value;
+    document
+        .getElementById("subcategoria")
+        .value;
 
 
             const valor =
