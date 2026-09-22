@@ -201,6 +201,14 @@ display:none;
 display:block;
 }
 
+#aba-cartoes,
+#aba-pagar,
+#aba-historico{
+    margin-left:0;
+    margin-right:0;
+    width:100%;
+    box-sizing:border-box;
+}
 
 /* =========================================
    CABEÇALHOS DAS SEÇÕES
