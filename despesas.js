@@ -2,7 +2,7 @@ import { db } from "./firebase.js";
 
 
 import {
-collection,
+collection,f
 addDoc,
 deleteDoc,
 doc,
@@ -316,7 +316,7 @@ campoOrigem.addEventListener(
             }
 
             if (campoSituacao) {
-                campoSituacao.style.display = "none";
+                campoSituacao.style.display = "block";
             }
 
         }
@@ -374,13 +374,9 @@ campoOrigem.addEventListener(
              * no momento do lançamento.
              */
 
-            if (selectSituacao) {
-                selectSituacao.value = "Pago";
-            }
-
-            if (campoSituacao) {
-                campoSituacao.style.display = "none";
-            }
+          if (campoSituacao) {
+    campoSituacao.style.display = "block";
+}
 
         }
 
