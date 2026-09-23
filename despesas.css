@@ -668,8 +668,10 @@ padding:9px;
 }
 
 .content{
-margin-left:0;
-padding:12px;
+    width:100%;
+    margin-left:0;
+    padding:12px;
+    box-sizing:border-box;
 }
 
 .page-header{
