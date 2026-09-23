@@ -197,6 +197,9 @@ color:white;
 
 .aba-conteudo{
 display:none;
+width:100%;
+min-width:0;
+box-sizing:border-box;
 }
 
 .aba-conteudo.ativo{
