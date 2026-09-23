@@ -804,3 +804,17 @@ white-space:nowrap;
     }
 
 }
+
+@media (min-width: 801px) {
+
+    #aba-cartoes,
+    #aba-pagar,
+    #aba-historico {
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+}
