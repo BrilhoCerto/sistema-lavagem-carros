@@ -769,3 +769,22 @@ color:#475467;
 .linha-resumo strong{
 white-space:nowrap;
 }
+
+/* =========================================
+   AJUSTE FINAL — ABAS DE DESPESAS DESKTOP
+========================================= */
+
+@media (min-width: 801px) {
+
+    #aba-cartoes,
+    #aba-pagar,
+    #aba-historico {
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 28px;
+        padding-right: 28px;
+        box-sizing: border-box;
+    }
+
+}
