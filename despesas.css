@@ -66,11 +66,11 @@ color:white;
 ========================================= */
 
 .content{
-margin-left:260px;
-padding:28px;
-max-width:1600px;
-width:calc(100% - 260px);
-box-sizing:border-box;
+    margin-left:260px;
+    padding:28px;
+    max-width:1600px;
+    width:auto;
+    box-sizing:border-box;
 }
 
 
