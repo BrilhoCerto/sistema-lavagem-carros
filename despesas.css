@@ -788,3 +788,16 @@ white-space:nowrap;
     }
 
 }
+
+@media (min-width: 801px) {
+
+    .content > .aba-conteudo {
+        outline: 3px solid red !important;
+        position: relative !important;
+        left: 0 !important;
+        right: auto !important;
+        transform: none !important;
+        margin-left: 0 !important;
+    }
+
+}
