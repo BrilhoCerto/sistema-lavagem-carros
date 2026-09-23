@@ -1116,7 +1116,7 @@ container.innerHTML =
                         Valor em aberto
                     </div>
 
-                    <<div class="cartao-status ${vazio ? "ok" : ""}">
+                    <div class="cartao-status ${vazio ? "ok" : ""}">
 
     ${
         vazio
