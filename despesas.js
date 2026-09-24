@@ -92,6 +92,14 @@ const subcategorias = {
     "Diversos"
 ],
 
+"Prestações": [
+    "IVA",
+    "Coimas",
+    "Segurança Social",
+    "Taxas",
+    "Outros"
+],
+
 "Cartões": [
     "Cartão Crédito Samuel CCA",
     "Cartão Crédito Samuel Millenium",
