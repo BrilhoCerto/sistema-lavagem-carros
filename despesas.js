@@ -519,6 +519,12 @@ const ehDebito =
                         .getElementById("valor")
                         .value
                 );
+                const numeroPrestacoes =
+                Number(
+                    document
+                        .getElementById("numeroPrestacoes")
+                        .value
+                ) || 1;
 
 
             if (!valor || valor <= 0) {
@@ -571,6 +577,8 @@ const ehDebito =
 
                 valor,
 
+                numeroPrestacoes,
+                
                status:
     situacao,
 
