@@ -242,7 +242,17 @@ campoCategoria.addEventListener(
             document.getElementById("subcategoria");
 
         if (!select) return;
+         const campoSituacao =
+            document.getElementById("campoSituacao");
 
+    if (campoSituacao) {
+
+    campoSituacao.style.display =
+        categoria === "Prestações"
+            ? "block"
+            : "none";
+
+}
         select.innerHTML =
             '<option value="">Selecione</option>';
 
@@ -649,9 +659,7 @@ const ehDebito =
 
 
             const campoSituacao =
-                document.getElementById(
-                    "campoSituacao"
-                );
+                document.getElementById("campoSituacao");
 
             if (campoSituacao) {
 
