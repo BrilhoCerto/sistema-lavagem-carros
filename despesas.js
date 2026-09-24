@@ -413,15 +413,23 @@ campoOrigem.addEventListener(
                 selectSubcategoria.required = false;
             }
 
-           if (campoSituacao) {
+          if (campoSituacao) {
+
+    const categoriaAtual =
+        document.getElementById("categoria")?.value || "";
+
     if (
-        this.value === "Caixa Brilho Certo" ||
-        this.value === "Caixa IMO Wash Car"
+        (
+            this.value === "Caixa Brilho Certo" ||
+            this.value === "Caixa IMO Wash Car"
+        ) &&
+        categoriaAtual !== "Prestações"
     ) {
         campoSituacao.style.display = "none";
     } else {
         campoSituacao.style.display = "block";
     }
+
 }
 
 
