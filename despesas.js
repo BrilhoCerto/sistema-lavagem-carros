@@ -1734,6 +1734,137 @@ tbody.innerHTML =
 }
 
 /* =========================================
+PRESTAÇÕES
+========================================= */
+
+function carregarTabelaPrestacoes() {
+
+    const tbody =
+        document.getElementById(
+            "tabelaPrestacoes"
+        );
+
+    if (!tbody) return;
+
+
+    const lista =
+        despesas
+            .filter(
+                (item) =>
+                    Number(
+                        item.numeroPrestacoes || 1
+                    ) > 1
+            )
+            .sort(
+                (a, b) =>
+                    obterDataOrdenacao(b) -
+                    obterDataOrdenacao(a)
+            );
+
+
+    if (!lista.length) {
+
+        tbody.innerHTML =
+            `
+            <tr>
+
+                <td
+                    colspan="8"
+                    class="estado-vazio">
+
+                    Não existem despesas parceladas.
+
+                </td>
+
+            </tr>
+            `;
+
+        return;
+
+    }
+
+
+    tbody.innerHTML =
+        lista
+            .map((item) => {
+
+                const total =
+                    Number(
+                        item.numeroPrestacoes || 1
+                    );
+
+                const pagas =
+                    obterStatus(item) === "Pago"
+                        ? total
+                        : 0;
+
+                const restantes =
+                    total - pagas;
+
+
+                return `
+                    <tr>
+
+                        <td>
+                            ${escaparHTML(
+                                item.descricao ||
+                                item.observacoes ||
+                                "Despesa"
+                            )}
+                        </td>
+
+                        <td>
+                            ${escaparHTML(
+                                item.categoria || ""
+                            )}
+                        </td>
+
+                        <td>
+                            <strong>
+                                ${formatarEuro(
+                                    Number(
+                                        item.valor || 0
+                                    )
+                                )}
+                            </strong>
+                        </td>
+
+                        <td>
+                            ${total}
+                        </td>
+
+                        <td>
+                            ${pagas}
+                        </td>
+
+                        <td>
+                            ${restantes}
+                        </td>
+
+                        <td>
+                            ${
+                                restantes === 0
+                                    ? "🟢 Concluída"
+                                    : "⏳ Em aberto"
+                            }
+                        </td>
+
+                        <td>
+                            —
+                        </td>
+
+                    </tr>
+                `;
+
+            })
+            .join("");
+
+}
+
+
+
+
+/* =========================================
 FILTROS
 ========================================= */
 
