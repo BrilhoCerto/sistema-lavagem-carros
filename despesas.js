@@ -212,6 +212,8 @@ atualizarApenasPagar();
 
 carregarTabela();
 
+carregarTabelaPrestacoes();
+
 }
 
 /* =========================================
