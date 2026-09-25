@@ -1823,12 +1823,15 @@ function carregarTabelaPrestacoes() {
                     );
 
                 const pagas =
-                    obterStatus(item) === "Pago"
-                        ? total
-                        : 0;
+    Math.min(
+        Number(
+            item.prestacoesPagas || 0
+        ),
+        total
+    );
 
-                const restantes =
-                    total - pagas;
+const restantes =
+    total - pagas;
 
 
                 return `
