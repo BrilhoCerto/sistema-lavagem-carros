@@ -3044,6 +3044,9 @@ limparFiltros;
 window.abrirModalPagamento =
 abrirModalPagamento;
 
+window.abrirBaixaPrestacao =
+abrirBaixaPrestacao;
+
 window.fecharModalPagamento =
 fecharModalPagamento;
 
