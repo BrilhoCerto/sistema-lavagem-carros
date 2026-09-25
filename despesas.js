@@ -1882,8 +1882,22 @@ const restantes =
                         </td>
 
                         <td>
-                            —
-                        </td>
+
+    ${
+        restantes > 0
+            ? `
+                <button
+                    type="button"
+                    class="btn-acao btn-baixa"
+                    onclick="abrirBaixaPrestacao('${escaparHTML(item.firestoreId)}')"
+                >
+                    Dar baixa
+                </button>
+              `
+            : "—"
+    }
+
+</td>
 
                     </tr>
                 `;
