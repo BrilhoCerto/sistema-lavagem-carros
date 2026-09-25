@@ -609,6 +609,8 @@ const ehDebito =
                 numeroPrestacoes,
 
                 prestacoesPagas,
+
+                pagamentosPrestacoes: [],
                 
                status:
     situacao,
