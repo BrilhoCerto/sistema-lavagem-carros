@@ -1975,12 +1975,12 @@ const restantes =
         restantes > 0
             ? `
                 <button
-                    type="button"
-                    class="btn-acao btn-baixa"
-                    onclick="abrirBaixaPrestacao('${escaparHTML(item.firestoreId)}')"
-                >
-                    Dar baixa
-                </button>
+    type="button"
+    class="btn-acao btn-baixa"
+    onclick="window.abrirBaixaPrestacao('${escaparHTML(item.firestoreId)}')"
+>
+    Dar baixa
+</button>
               `
             : "—"
     }
