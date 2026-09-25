@@ -2512,8 +2512,7 @@ if (tipoPagamento === "prestacao") {
 }
 
 try {
-    await updateDoc(
-    /*
+     /*
      * ATENÇÃO:
      *
      * Aqui NÃO usamos item.id.
