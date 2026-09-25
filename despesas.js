@@ -1615,9 +1615,7 @@ tbody.innerHTML =
 HISTÓRICO
 ========================================= */
 
-function carregarTabela(
-lista = despesas
-) {
+function carregarTabela(lista = despesas) {
 
 const tbody =
     document.getElementById(
@@ -1704,15 +1702,51 @@ tbody.innerHTML =
 
 
             const pagamento =
-                item.dataPagamento
-                    ? formatarData(
-                          item.dataPagamento
-                      )
-                    : "—";
+    item.dataPagamento
+        ? formatarData(
+              item.dataPagamento
+          )
+        : "—";
 
+const prestacoesHTML =
+    Array.isArray(
+        item.pagamentosPrestacoes
+    ) &&
+    item.pagamentosPrestacoes.length
+        ? `
+            <tr>
+                <td colspan="10">
+                    <div>
+                        <strong>
+                            Pagamentos das prestações
+                        </strong>
 
-            return `
-                <tr>
+                        ${item.pagamentosPrestacoes
+                            .map((pagamentoPrestacao) => `
+                                <div>
+                                    ↳ ${pagamentoPrestacao.prestacao}ª prestação de ${pagamentoPrestacao.totalPrestacoes}
+                                    — ${formatarEuro(
+                                        Number(
+                                            pagamentoPrestacao.valor || 0
+                                        )
+                                    )}
+                                    — ${formatarData(
+                                        pagamentoPrestacao.dataPagamento
+                                    )}
+                                    — ${escaparHTML(
+                                        pagamentoPrestacao.origemPagamento || ""
+                                    )}
+                                </div>
+                            `)
+                            .join("")}
+                    </div>
+                </td>
+            </tr>
+          `
+        : "";
+
+return `
+    <tr>
 
                     <td>
                         ${formatarData(
@@ -1844,8 +1878,10 @@ tbody.innerHTML =
 
                     </td>
 
-                </tr>
-            `;
+              </tr>
+
+${prestacoesHTML}
+`;
 
         })
         .join("");
