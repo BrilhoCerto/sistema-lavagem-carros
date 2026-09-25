@@ -2070,7 +2070,10 @@ function abrirBaixaPrestacao(firestoreId) {
     document
         .getElementById("pagamentoId")
         .value = firestoreId;
-
+    
+    document
+    .getElementById("pagamentoId")
+    .dataset.tipo = "prestacao";
 
     document
         .getElementById("pagamentoDescricao")
