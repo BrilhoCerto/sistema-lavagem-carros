@@ -1996,7 +1996,127 @@ const restantes =
 }
 
 
+/* =========================================
+BAIXA DE PRESTAÇÃO
+========================================= */
 
+function abrirBaixaPrestacao(firestoreId) {
+
+    const item =
+        despesas.find(
+            (despesa) =>
+                String(
+                    despesa.firestoreId
+                ) === String(firestoreId)
+        );
+
+    if (!item) {
+
+        alert(
+            "A prestação não foi encontrada."
+        );
+
+        return;
+
+    }
+
+
+    const totalPrestacoes =
+        Number(
+            item.numeroPrestacoes || 1
+        );
+
+    const pagas =
+        Number(
+            item.prestacoesPagas || 0
+        );
+
+
+    if (
+        pagas >= totalPrestacoes
+    ) {
+
+        alert(
+            "Todas as prestações já foram pagas."
+        );
+
+        return;
+
+    }
+
+
+    const valorPrestacao =
+        pagas === totalPrestacoes - 1
+
+            ? Number(
+                (
+                    Number(item.valor || 0) -
+                    (
+                        Number(item.valor || 0) /
+                        totalPrestacoes
+                    ).toFixed(2) *
+                    pagas
+                ).toFixed(2)
+            )
+
+            : Number(
+                (
+                    Number(item.valor || 0) /
+                    totalPrestacoes
+                ).toFixed(2)
+            );
+
+
+    document
+        .getElementById("pagamentoId")
+        .value = firestoreId;
+
+
+    document
+        .getElementById("pagamentoDescricao")
+        .textContent =
+        `${item.descricao || "Prestação"} — ${pagas + 1}ª prestação`;
+
+
+    document
+        .getElementById("pagamentoValor")
+        .textContent =
+        formatarEuro(valorPrestacao);
+
+
+    document
+        .getElementById("dataPagamento")
+        .value =
+        new Date()
+            .toISOString()
+            .split("T")[0];
+
+
+    document
+        .getElementById("origemPagamento")
+        .value = "";
+
+
+    const modal =
+        document.getElementById(
+            "modalPagamento"
+        );
+
+
+    if (!modal) {
+
+        alert(
+            "A janela de pagamento não foi encontrada."
+        );
+
+        return;
+
+    }
+
+
+    modal.classList.add("aberto");
+
+}
 
 /* =========================================
 FILTROS
