@@ -2413,6 +2413,10 @@ const origemPagamento =
         .getElementById("origemPagamento")
         .value;
 
+const tipoPagamento =
+    document
+        .getElementById("pagamentoId")
+        .dataset.tipo || "";
 
 if (!firestoreId) {
 
