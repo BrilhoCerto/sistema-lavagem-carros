@@ -2472,18 +2472,47 @@ if (!dataPagamento) {
 
 
 if (!origemPagamento) {
+    alert("Selecione de onde saiu o dinheiro.");
+    return;
+}
+
+if (tipoPagamento === "prestacao") {
+
+    const totalPrestacoes =
+        Number(item.numeroPrestacoes || 1);
+
+    const pagas =
+        Number(item.prestacoesPagas || 0);
+
+    const novasPagas =
+        pagas + 1;
+
+    await updateDoc(
+        doc(db, "despesas", firestoreId),
+        {
+            prestacoesPagas: novasPagas,
+            status:
+                novasPagas >= totalPrestacoes
+                    ? "Pago"
+                    : "A Pagar",
+            dataPagamento: dataPagamento,
+            origemPagamento: origemPagamento
+        }
+    );
+
+    fecharModalPagamento();
 
     alert(
-        "Informe de onde saiu o dinheiro."
+        novasPagas >= totalPrestacoes
+            ? "Última prestação paga. Despesa concluída."
+            : "Prestação paga com sucesso."
     );
 
     return;
-
 }
 
-
 try {
-
+    await updateDoc(
     /*
      * ATENÇÃO:
      *
