@@ -2487,20 +2487,58 @@ if (tipoPagamento === "prestacao") {
         Number(item.prestacoesPagas || 0);
 
     const novasPagas =
-        pagas + 1;
+    pagas + 1;
 
-    await updateDoc(
-        doc(db, "despesas", firestoreId),
-        {
-            prestacoesPagas: novasPagas,
-            status:
-                novasPagas >= totalPrestacoes
-                    ? "Pago"
-                    : "A Pagar",
-            dataPagamento: dataPagamento,
-            origemPagamento: origemPagamento
-        }
-    );
+const valorPrestacao =
+    novasPagas === totalPrestacoes
+        ? Number(
+            (
+                Number(item.valor || 0) -
+                (
+                    Number(item.valor || 0) /
+                    totalPrestacoes
+                ).toFixed(2) *
+                pagas
+            ).toFixed(2)
+        )
+        : Number(
+            (
+                Number(item.valor || 0) /
+                totalPrestacoes
+            ).toFixed(2)
+        );
+
+const pagamentosPrestacoes =
+    Array.isArray(
+        item.pagamentosPrestacoes
+    )
+        ? item.pagamentosPrestacoes
+        : [];
+
+const novoPagamento = {
+    prestacao: novasPagas,
+    totalPrestacoes: totalPrestacoes,
+    valor: valorPrestacao,
+    dataPagamento: dataPagamento,
+    origemPagamento: origemPagamento
+};
+
+await updateDoc(
+    doc(db, "despesas", firestoreId),
+    {
+        prestacoesPagas: novasPagas,
+        pagamentosPrestacoes: [
+            ...pagamentosPrestacoes,
+            novoPagamento
+        ],
+        status:
+            novasPagas >= totalPrestacoes
+                ? "Pago"
+                : "A Pagar",
+        dataPagamento: dataPagamento,
+        origemPagamento: origemPagamento
+    }
+);
 
     fecharModalPagamento();
 
