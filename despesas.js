@@ -1368,7 +1368,8 @@ const lista =
     despesas
         .filter(
             (item) =>
-                obterStatus(item) !== "Pago"
+                obterStatus(item) !== "Pago" &&
+                item.categoria !== "Prestações"
         )
         .sort(
             (a, b) =>
