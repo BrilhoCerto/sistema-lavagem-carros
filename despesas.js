@@ -554,6 +554,7 @@ const ehDebito =
                         .value
                 ) || 1;
 
+            const prestacoesPagas = 0;
 
             if (!valor || valor <= 0) {
 
@@ -606,6 +607,8 @@ const ehDebito =
                 valor,
 
                 numeroPrestacoes,
+
+                prestacoesPagas,
                 
                status:
     situacao,
