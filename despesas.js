@@ -747,7 +747,50 @@ let totalDebito = 0;
 despesas.forEach((item) => {
 
     const valor =
-        Number(item.valor || 0);
+    Number(item.valor || 0);
+
+const totalPrestacoes =
+    Number(
+        item.numeroPrestacoes || 1
+    );
+
+const pagasPrestacoes =
+    Math.min(
+        Number(
+            item.prestacoesPagas || 0
+        ),
+        totalPrestacoes
+    );
+
+const valorPagoItem =
+    item.categoria === "Prestações"
+        ? Number(
+              (
+                  valor -
+                  (
+                      valor -
+                      (
+                          valor -
+                          (
+                              valor /
+                              totalPrestacoes
+                          ) *
+                          pagasPrestacoes
+                      )
+                  )
+              ).toFixed(2)
+          )
+        : valor;
+
+const valorAbertoItem =
+    item.categoria === "Prestações"
+        ? Number(
+              (
+                  valor -
+                  valorPagoItem
+              ).toFixed(2)
+          )
+        : valor;
 
     const data =
         item.dataDespesa ||
@@ -800,15 +843,59 @@ if (
         obterStatus(item);
 
 
-    if (status === "Pago") {
+    if (
+    item.categoria === "Prestações" &&
+    Number(item.numeroPrestacoes || 1) > 1
+) {
 
-        totalPago += valor;
+    const totalPrestacoes =
+        Number(item.numeroPrestacoes);
 
-    } else {
+    const pagasPrestacoes =
+        Math.min(
+            Number(item.prestacoesPagas || 0),
+            totalPrestacoes
+        );
 
-        totalAberto += valor;
+    const valorPrestacao =
+        Number(
+            (
+                valor /
+                totalPrestacoes
+            ).toFixed(2)
+        );
 
-    }
+    const valorPago =
+        pagasPrestacoes >= totalPrestacoes
+            ? valor
+            : Number(
+                (
+                    valorPrestacao *
+                    pagasPrestacoes
+                ).toFixed(2)
+            );
+
+    const valorAberto =
+        Number(
+            (
+                valor -
+                valorPago
+            ).toFixed(2)
+        );
+
+    totalPago += valorPago;
+
+    totalAberto += valorAberto;
+
+} else if (status === "Pago") {
+
+    totalPago += valor;
+
+} else {
+
+    totalAberto += valor;
+
+}
 
 
     if (
