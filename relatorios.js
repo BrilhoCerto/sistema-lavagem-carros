@@ -451,8 +451,17 @@ tabela.innerHTML += `
         </td>
 
         <td>
-            Despesa
-        </td>
+    ${
+        item.origem === "Cartão de Débito" ||
+        item.tipo === "debito" ||
+        String(item.subcategoria || "").startsWith("Cartão Débito")
+            ? "Despesa - Cartão de Débito"
+            : item.origem === "Cartão de Crédito" ||
+              item.tipo === "cartao"
+                ? "Despesa - Cartão de Crédito"
+                : "Despesa"
+    }
+</td>
 
         <td>
             ${item.categoria || "Despesa"}
