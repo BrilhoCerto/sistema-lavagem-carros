@@ -415,10 +415,11 @@ function carregarRelatorios() {
         String(item.status || "");
 
     // DESPESA PARCELADA
-    if (
-        item.categoria === "Prestações" &&
-        Array.isArray(item.pagamentosPrestacoes)
-    ) {
+   if (
+    item.categoria === "Prestações" &&
+    Array.isArray(item.pagamentosPrestacoes) &&
+    item.pagamentosPrestacoes.length > 0
+) {
 
         item.pagamentosPrestacoes.forEach(
     pagamento => {
