@@ -562,7 +562,7 @@ tabela.innerHTML += `
 
             `;
 
-        }
+       
 
     });
 
