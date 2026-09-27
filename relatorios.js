@@ -399,7 +399,10 @@ function carregarRelatorios() {
     }
 
     const data =
-        new Date(item.data);
+    new Date(
+        item.dataPagamento ||
+        item.data
+    );
 
     if (
         data < periodo.inicio ||
