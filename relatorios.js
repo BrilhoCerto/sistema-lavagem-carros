@@ -377,28 +377,54 @@ function carregarRelatorios() {
        DESPESAS
     ================================= */
 
-    despesas.forEach(item => {
+   despesas.forEach(item => {
 
-        if (!item.data) {
-            return;
-        }
+    if (!item.data) {
+        return;
+    }
 
+    const data =
+        new Date(item.data);
 
-        const data =
-            new Date(item.data);
+    if (
+        data < periodo.inicio ||
+        data > periodo.fim
+    ) {
+        return;
+    }
 
+    const status =
+        String(item.status || "");
 
-        if (
-            data >= periodo.inicio &&
-            data <= periodo.fim
-        ) {
+    // DESPESA PARCELADA
+    if (
+        item.categoria === "Prestações" &&
+        Array.isArray(item.pagamentosPrestacoes)
+    ) {
 
-            const valor =
-                Number(item.valor || 0);
+        item.pagamentosPrestacoes.forEach(
+            pagamento => {
 
+                // aqui entra somente cada prestação
+                // que realmente foi paga
+            }
+        );
 
-            despesasTotal += valor;
+        return;
+    }
 
+    // DESPESA NORMAL
+    if (status !== "Pago") {
+        return;
+    }
+
+    const valor =
+        Number(item.valor || 0);
+
+    despesasTotal += valor;
+
+    // restante da montagem da linha
+});
 
             tabela.innerHTML += `
 
