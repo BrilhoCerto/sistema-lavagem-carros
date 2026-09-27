@@ -403,13 +403,50 @@ function carregarRelatorios() {
     ) {
 
         item.pagamentosPrestacoes.forEach(
-            pagamento => {
+    pagamento => {
 
-                // aqui entra somente cada prestação
-                // que realmente foi paga
-            }
-        );
+        if (!pagamento.dataPagamento) {
+            return;
+        }
 
+        const dataPagamento =
+            new Date(pagamento.dataPagamento);
+
+        if (
+            dataPagamento < periodo.inicio ||
+            dataPagamento > periodo.fim
+        ) {
+            return;
+        }
+
+        const valor =
+            Number(pagamento.valor || 0);
+
+        despesasTotal += valor;
+
+        tabela.innerHTML += `
+            <tr>
+                <td>
+                    ${formatarData(
+                        pagamento.dataPagamento
+                    )}
+                </td>
+
+                <td>
+                    Despesa
+                </td>
+
+                <td>
+                    ${item.categoria || "Despesa"}
+                </td>
+
+                <td>
+                    € ${valor.toFixed(2)}
+                </td>
+            </tr>
+        `;
+    }
+);
         return;
     }
 
