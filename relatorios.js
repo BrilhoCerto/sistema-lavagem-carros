@@ -514,27 +514,50 @@ tabela.innerHTML += `
                 <tr>
 
                     <td>
-                        ${formatarData(item.data)}
-                    </td>
+    ${formatarData(
+        item.dataPagamento ||
+        item.data
+    )}
+</td>
 
-                    <td>
+<td>
     ${
         item.origem === "Cartão de Débito" ||
         item.tipo === "debito" ||
         String(item.subcategoria || "").startsWith("Cartão Débito")
             ? "Despesa - Cartão de Débito"
-            : "Despesa"
+            : item.origem === "Cartão de Crédito" ||
+              item.tipo === "cartao"
+                ? "Despesa - Cartão de Crédito"
+                : "Despesa"
     }
 </td>
 
-                    <td>
-                        ${item.categoria || "Despesa"}
-                    </td>
+<td>
+    ${item.categoria || "Despesa"}
 
-                    <td>
-                        € ${valor.toFixed(2)}
-                    </td>
+    ${
+        item.subcategoria
+            ? `
+                <br>
+                <small>
+                    ${item.subcategoria}
+                </small>
+              `
+            : ""
+    }
 
+    <br>
+
+    <small>
+        Saiu de:
+        ${item.origemPagamento || item.origem || "—"}
+    </small>
+</td>
+
+<td>
+    € ${valor.toFixed(2)}
+</td>
                 </tr>
 
             `;
