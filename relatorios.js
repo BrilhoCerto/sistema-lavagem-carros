@@ -440,29 +440,34 @@ function carregarRelatorios() {
         const valor =
             Number(pagamento.valor || 0);
 
-        despesasTotal += valor;
+despesasTotal += valor;
 
-        tabela.innerHTML += `
-            <tr>
-                <td>
-                    ${formatarData(
-                        pagamento.dataPagamento
-                    )}
-                </td>
+tabela.innerHTML += `
+    <tr>
+        <td>
+            ${formatarData(
+                pagamento.dataPagamento
+            )}
+        </td>
 
-                <td>
-                    Despesa
-                </td>
+        <td>
+            Despesa
+        </td>
 
-                <td>
-                    ${item.categoria || "Despesa"}
-                </td>
+        <td>
+            ${item.categoria || "Despesa"}
+            <br>
+            <small>
+                Saiu de:
+                ${pagamento.origemPagamento || "—"}
+            </small>
+        </td>
 
-                <td>
-                    € ${valor.toFixed(2)}
-                </td>
-            </tr>
-        `;
+        <td>
+            € ${valor.toFixed(2)}
+        </td>
+    </tr>
+`;
     }
 );
         return;
