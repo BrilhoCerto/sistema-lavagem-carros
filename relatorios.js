@@ -465,13 +465,26 @@ tabela.innerHTML += `
 </td>
 
         <td>
-            ${item.categoria || "Despesa"}
-            <br>
-            <small>
-                Saiu de:
-                ${pagamento.origemPagamento || "—"}
-            </small>
-        </td>
+    ${item.categoria || "Despesa"}
+
+    ${
+        item.subcategoria
+            ? `
+                <br>
+                <small>
+                    ${item.subcategoria}
+                </small>
+              `
+            : ""
+    }
+
+    <br>
+
+    <small>
+        Saiu de:
+        ${item.origemPagamento || item.origem || "—"}
+    </small>
+</td>
 
         <td>
             € ${valor.toFixed(2)}
