@@ -131,10 +131,25 @@ function formatarData(data) {
 
 function obterPeriodo() {
 
-    const filtro =
-        document.getElementById(
-            "filtroPeriodo"
-        ).value;
+    const filtroSelecionado =
+    document.getElementById(
+        "filtroPeriodo"
+    ).value;
+
+const dataInicial =
+    document.getElementById(
+        "dataInicial"
+    ).value;
+
+const dataFinal =
+    document.getElementById(
+        "dataFinal"
+    ).value;
+
+const filtro =
+    dataInicial && dataFinal
+        ? "personalizado"
+        : filtroSelecionado;
 
     const hoje = new Date();
 
