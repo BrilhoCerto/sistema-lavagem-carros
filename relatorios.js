@@ -492,7 +492,7 @@ tabela.innerHTML += `
     </tr>
 `;
     }
-);
+
         return;
     }
 
