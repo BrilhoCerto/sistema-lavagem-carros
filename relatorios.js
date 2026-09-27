@@ -507,7 +507,7 @@ tabela.innerHTML += `
     despesasTotal += valor;
 
     // restante da montagem da linha
-});
+
 
             tabela.innerHTML += `
 
