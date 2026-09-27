@@ -482,7 +482,7 @@ tabela.innerHTML += `
 
     <small>
         Saiu de:
-        ${item.origemPagamento || item.origem || "—"}
+        ${pagamento.origemPagamento || "—"}
     </small>
 </td>
 
