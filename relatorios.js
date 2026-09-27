@@ -394,11 +394,11 @@ function carregarRelatorios() {
 
    despesas.forEach(item => {
 
-    if (!item.data) {
-        return;
-    }
+   if (!item.data && !item.dataPagamento) {
+    return;
+}
 
-    const data =
+const data =
     new Date(
         item.dataPagamento ||
         item.data
