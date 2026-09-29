@@ -469,13 +469,10 @@ tabela.innerHTML += `
 
     ${
         item.subcategoria
-            ? `
-                <br>
-                <small>
-                    ${item.subcategoria}
-                </small>
-              `
-            : ""
+    ? "\n<br><small>" +
+      item.subcategoria +
+      "</small>"
+    : ""
     }
 
     <br>
@@ -538,13 +535,10 @@ tabela.innerHTML += `
 
     ${
         item.subcategoria
-            ? `
-                <br>
-                <small>
-                    ${item.subcategoria}
-                </small>
-              `
-            : ""
+    ? "\n<br><small>" +
+      item.subcategoria +
+      "</small>"
+    : ""
     }
 
     <br>
