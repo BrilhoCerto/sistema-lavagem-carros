@@ -377,63 +377,160 @@ function carregarRelatorios() {
        DESPESAS
     ================================= */
 
-   despesas.forEach(item => {
+  despesas.forEach(item => {
 
-    if (String(item.status || "") !== "Pago") {
-        return;
-    }
-
-    if (!item.data) {
-        return;
-    }
-
-    const data =
-        new Date(item.data);
-
+    // PRESTAÇÕES
     if (
-        data >= periodo.inicio &&
-        data <= periodo.fim
+        item.categoria === "Prestações" &&
+        Array.isArray(item.pagamentosPrestacoes)
     ) {
 
-        const valor =
-            Number(item.valor || 0);
+        item.pagamentosPrestacoes.forEach(
+            pagamento => {
 
-        despesasTotal += valor;
+                if (!pagamento.dataPagamento) {
+                    return;
+                }
 
-            tabela.innerHTML += `
+                const dataPagamento =
+                    new Date(pagamento.dataPagamento);
 
-                <tr>
+                if (
+                    dataPagamento < periodo.inicio ||
+                    dataPagamento > periodo.fim
+                ) {
+                    return;
+                }
 
-                    <td>
-                        ${formatarData(item.data)}
-                    </td>
+                const valor =
+                    Number(pagamento.valor || 0);
 
-                    <td>
-    ${
-        item.origem === "Cartão de Débito" ||
-        item.tipo === "debito" ||
-        String(item.subcategoria || "").startsWith("Cartão Débito")
-            ? "Despesa - Cartão de Débito"
-            : "Despesa"
+                despesasTotal += valor;
+
+  tabela.innerHTML += `
+
+    <tr>
+
+        <td>
+            ${formatarData(
+                pagamento.dataPagamento
+            )}
+        </td>
+
+        <td>
+            Despesa - Prestação
+        </td>
+
+        <td>
+            ${item.categoria || "Prestações"}
+
+            ${
+                item.subcategoria
+                    ? "<br><small>" +
+                      item.subcategoria +
+                      "</small>"
+                    : ""
+            }
+
+            <br>
+
+            <small>
+                Saiu de:
+                ${pagamento.origemPagamento || "—"}
+            </small>
+        </td>
+
+        <td>
+            € ${valor.toFixed(2)}
+        </td>
+
+    </tr>
+
+ `;
+
+            }
+        );
+
     }
-</td>
 
-                    <td>
-                        ${item.categoria || "Despesa"}
-                    </td>
+    /* ================================
+       DESPESA NORMAL
+    ================================= */
 
-                    <td>
-                        € ${valor.toFixed(2)}
-                    </td>
+      if (String(item.status || "") !== "Pago") {
+    return;
+}
 
-                </tr>
+const data =
+    new Date(
+        item.dataPagamento ||
+        item.data
+    );
 
-            `;
+if (
+    data >= periodo.inicio &&
+    data <= periodo.fim
+) {
 
-        }
+    const valor =
+        Number(item.valor || 0);
 
-    });
+    despesasTotal += valor;
 
+    tabela.innerHTML += `
+
+        <tr>
+
+            <td>
+                ${formatarData(
+                    item.dataPagamento ||
+                    item.data
+                )}
+            </td>
+
+            <td>
+                ${
+                    item.origem === "Cartão de Débito" ||
+                    item.tipo === "debito" ||
+                    String(item.subcategoria || "").startsWith("Cartão Débito")
+                        ? "Despesa - Cartão de Débito"
+                        : item.origem === "Cartão de Crédito" ||
+                          item.tipo === "cartao"
+                            ? "Despesa - Cartão de Crédito"
+                            : "Despesa"
+                }
+            </td>
+
+            <td>
+                ${item.categoria || "Despesa"}
+
+                ${
+                    item.subcategoria
+                        ? "<br><small>" +
+                          item.subcategoria +
+                          "</small>"
+                        : ""
+                }
+
+                <br>
+
+                <small>
+                    Saiu de:
+                    ${item.origemPagamento || item.origem || "—"}
+                </small>
+            </td>
+
+            <td>
+                € ${valor.toFixed(2)}
+            </td>
+
+        </tr>
+
+    `;
+
+}
+      /* fecha despesas.forEach */
+});
 
     /* ================================
        SALDO
