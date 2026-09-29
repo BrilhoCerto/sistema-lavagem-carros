@@ -449,9 +449,11 @@ function carregarRelatorios() {
  `;
 
             }
-        );
+       );
 
-    }
+    return;
+
+}
 
     /* ================================
        DESPESA NORMAL
