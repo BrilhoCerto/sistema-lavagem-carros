@@ -377,28 +377,28 @@ function carregarRelatorios() {
        DESPESAS
     ================================= */
 
-    despesas.forEach(item => {
+   despesas.forEach(item => {
 
-        if (!item.data) {
-            return;
-        }
+    if (String(item.status || "") !== "Pago") {
+        return;
+    }
 
+    if (!item.data) {
+        return;
+    }
 
-        const data =
-            new Date(item.data);
+    const data =
+        new Date(item.data);
 
+    if (
+        data >= periodo.inicio &&
+        data <= periodo.fim
+    ) {
 
-        if (
-            data >= periodo.inicio &&
-            data <= periodo.fim
-        ) {
+        const valor =
+            Number(item.valor || 0);
 
-            const valor =
-                Number(item.valor || 0);
-
-
-            despesasTotal += valor;
-
+        despesasTotal += valor;
 
             tabela.innerHTML += `
 
