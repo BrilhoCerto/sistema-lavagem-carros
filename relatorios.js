@@ -131,25 +131,10 @@ function formatarData(data) {
 
 function obterPeriodo() {
 
-    const filtroSelecionado =
-    document.getElementById(
-        "filtroPeriodo"
-    ).value;
-
-const dataInicial =
-    document.getElementById(
-        "dataInicial"
-    ).value;
-
-const dataFinal =
-    document.getElementById(
-        "dataFinal"
-    ).value;
-
-const filtro =
-    dataInicial && dataFinal
-        ? "personalizado"
-        : filtroSelecionado;
+    const filtro =
+        document.getElementById(
+            "filtroPeriodo"
+        ).value;
 
     const hoje = new Date();
 
@@ -392,118 +377,27 @@ function carregarRelatorios() {
        DESPESAS
     ================================= */
 
-   despesas.forEach(item => {
+    despesas.forEach(item => {
 
-   if (!item.data && !item.dataPagamento) {
-    return;
-}
-
-const data =
-    new Date(
-        item.dataPagamento ||
-        item.data
-    );
-
-    if (
-        data < periodo.inicio ||
-        data > periodo.fim
-    ) {
-        return;
-    }
-
-    const status =
-        String(item.status || "");
-
-    // DESPESA PARCELADA
-   if (
-    item.categoria === "Prestações" &&
-    Array.isArray(item.pagamentosPrestacoes) &&
-    item.pagamentosPrestacoes.length > 0
-) {
-
-        item.pagamentosPrestacoes.forEach(
-    pagamento => {
-
-        if (!pagamento.dataPagamento) {
+        if (!item.data) {
             return;
         }
 
-        const dataPagamento =
-            new Date(pagamento.dataPagamento);
+
+        const data =
+            new Date(item.data);
+
 
         if (
-            dataPagamento < periodo.inicio ||
-            dataPagamento > periodo.fim
+            data >= periodo.inicio &&
+            data <= periodo.fim
         ) {
-            return;
-        }
 
-        const valor =
-            Number(pagamento.valor || 0);
+            const valor =
+                Number(item.valor || 0);
 
-despesasTotal += valor;
 
-tabela.innerHTML += `
-    <tr>
-        <td>
-            ${formatarData(
-                pagamento.dataPagamento
-            )}
-        </td>
-
-        <td>
-    ${
-        item.origem === "Cartão de Débito" ||
-        item.tipo === "debito" ||
-        String(item.subcategoria || "").startsWith("Cartão Débito")
-            ? "Despesa - Cartão de Débito"
-            : item.origem === "Cartão de Crédito" ||
-              item.tipo === "cartao"
-                ? "Despesa - Cartão de Crédito"
-                : "Despesa"
-    }
-</td>
-
-        <td>
-    ${item.categoria || "Despesa"}
-
-    ${
-        item.subcategoria
-    ? "\n<br><small>" +
-      item.subcategoria +
-      "</small>"
-    : ""
-    }
-
-    <br>
-
-    <small>
-        Saiu de:
-        ${pagamento.origemPagamento || "—"}
-    </small>
-</td>
-
-        <td>
-            € ${valor.toFixed(2)}
-        </td>
-    </tr>
-`;
-    }
-);
-        return;
-    }
-
-    // DESPESA NORMAL
-    if (status !== "Pago") {
-        return;
-    }
-
-    const valor =
-        Number(item.valor || 0);
-
-    despesasTotal += valor;
-
-    // restante da montagem da linha
+            despesasTotal += valor;
 
 
             tabela.innerHTML += `
@@ -511,52 +405,32 @@ tabela.innerHTML += `
                 <tr>
 
                     <td>
-    ${formatarData(
-        item.dataPagamento ||
-        item.data
-    )}
-</td>
+                        ${formatarData(item.data)}
+                    </td>
 
-<td>
+                    <td>
     ${
         item.origem === "Cartão de Débito" ||
         item.tipo === "debito" ||
         String(item.subcategoria || "").startsWith("Cartão Débito")
             ? "Despesa - Cartão de Débito"
-            : item.origem === "Cartão de Crédito" ||
-              item.tipo === "cartao"
-                ? "Despesa - Cartão de Crédito"
-                : "Despesa"
+            : "Despesa"
     }
 </td>
 
-<td>
-    ${item.categoria || "Despesa"}
+                    <td>
+                        ${item.categoria || "Despesa"}
+                    </td>
 
-    ${
-        item.subcategoria
-    ? "\n<br><small>" +
-      item.subcategoria +
-      "</small>"
-    : ""
-    }
+                    <td>
+                        € ${valor.toFixed(2)}
+                    </td>
 
-    <br>
-
-    <small>
-        Saiu de:
-        ${item.origemPagamento || item.origem || "—"}
-    </small>
-</td>
-
-<td>
-    € ${valor.toFixed(2)}
-</td>
                 </tr>
 
             `;
 
-   }
+        }
 
     });
 
